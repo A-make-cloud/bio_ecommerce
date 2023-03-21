@@ -1,0 +1,24 @@
+{
+  "name": "backend",
+  "version": "1.0.0",
+  "description": "Backend BIO SHOP",
+  "main": "server.js",
+  "scripts": {
+    "start": "nodemon --experimental-specifier-resolution=node server.js",
+    "test": "echo \"Error: no test specified\" && exit 1"
+  },
+  "author": "Samira && David && Agnès",
+  "license": "ISC",
+  "dependencies": {
+    "dotenv": "^16.0.3",
+    "express": "^4.18.2",
+    "mysql": "^2.18.1",
+    "mysql2": "^3.2.0",
+    "sequelize": "^6.29.3",
+    "sequelize-auto": "^0.8.8",
+    "sequelize-cli": "^6.6.0"
+  },
+  "devDependencies": {
+    "nodemon": "^2.0.21"
+  }
+}
