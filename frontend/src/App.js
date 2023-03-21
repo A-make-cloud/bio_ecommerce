@@ -1,15 +1,19 @@
-import React, { useState } from 'react'
+import React from 'react'
 import './App.css';
+import { Route, Routes, useParams, Link } from "react-router-dom";
+import Home from "./pages/Home";
+import Products from "./pages/Products";
+import NavBar from './components/layouts/Navbar';
 
 function App() {
-  const handleClick = async () => {
-    const data = await fetch('/products/list')
-    const json = await data.json()
-    console.log(json)
-  }
+
   return (
     <div className="App">
-      <button onClick={handleClick}>Get liste</button>
+      <NavBar />
+      <Routes>
+        <Route path="/" element={<Home />} />
+        <Route path="/products" element={<Products />} />
+      </Routes>
 
     </div>
   );
