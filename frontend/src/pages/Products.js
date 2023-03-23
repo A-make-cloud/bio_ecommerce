@@ -17,9 +17,9 @@ function Products() {
 
   const observer = new IntersectionObserver(([elem]) => {
     if (elem.isIntersecting) {
-      //observer.unobserve(spinnerRef.current);
-      console.log('elem.isIntersecting', elem.isIntersecting)
       const newBatch = fakeData.slice(batchOffset, batchOffset + batchSize)
+      // à remplacer par
+      //(async()=>{const newBatch =  await fetchProductBatch(filter, batchOffset, batchSize)})()
       if (newBatch.length > 0)
         addNewBatch(newBatch)
       if (newBatch.length < batchSize)
@@ -55,11 +55,11 @@ function Products() {
     }*/
   }, []);
 
-  //const fetchProductBatch = () => {
-  // fetch(`https://jsonplaceholder.typicode.com/posts`)
+  //const fetchProductBatch = (filter, batchOffset, batchSize) => {
+  // return fetch(`https://jsonplaceholder.typicode.com/posts`)
   //     .then(response => response.json())
   //     .then((products) => {
-  //         setLoadedProducts(products);
+  //         return products;
   //     })
   //}
 
