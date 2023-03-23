@@ -1,8 +1,13 @@
-
+import ControlPointIcon from '@mui/icons-material/ControlPoint';
+import Tooltip from '@mui/material/Tooltip';
 function AddCartButton({ productId }) {
   return (
-    <div style={{}}>
-        <button>Add to cart</button>
+    <div style={{}} className="addButton">
+        <Tooltip title="Ajouter au panier" placement="right-end">
+
+            <ControlPointIcon/>
+
+        </Tooltip>
     </div>
   );
 }

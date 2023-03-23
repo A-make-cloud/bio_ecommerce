@@ -1,115 +1,90 @@
-import Card from '../components/products/Card';
+import ProductCard from '../components/products/ProductCard';
 import { useState, useRef, useEffect } from 'react';
 import fakeData from '../components/products/fakeData';
+import NavBar from '../components/layouts/Navbar.js'
+import Footer from '../components/layouts/Footer.js'
+import TopCategorie from '../components/layouts/TopCategorie.js';
+import SyncIcon from '@mui/icons-material/Sync';
 
 function Products() {
-    const batchSize = 5
-    let batchOffset = 0
-    let productsSaved = []
-    //const [isLoading, setIsLoading] = useState(true);
-    const [products, setProducts] = useState([]);
-    const spinnerRef = useRef();
+  const batchSize = 5
+  let batchOffset = 0
+  let productsSaved = []
+  const [isLoading, setIsLoading] = useState(true);
+  const [products, setProducts] = useState([]);
+  const spinnerRef = useRef();
+  //const loadMoreRef = useRef();
 
-    const observer = new IntersectionObserver(([elem]) => {
+  const observer = new IntersectionObserver(([elem]) => {
+    if (elem.isIntersecting) {
+      //observer.unobserve(spinnerRef.current);
+      console.log('elem.isIntersecting', elem.isIntersecting)
+      const newBatch = fakeData.slice(batchOffset, batchOffset + batchSize)
+      if (newBatch.length > 0)
+        addNewBatch(newBatch)
+      if (newBatch.length < batchSize)
+        setIsLoading(false)
+      batchOffset += batchSize
+    }
+  })
+
+  /*    const loadMoreObserver = new IntersectionObserver(([elem]) => {
         if (elem.isIntersecting) { 
-            //observer.unobserve(spinnerRef.current);
             console.log('elem.isIntersecting',elem.isIntersecting)
             const newBatch = fakeData.slice(batchOffset, batchOffset + batchSize)
             if(newBatch.length>0)
                 addNewBatch(newBatch)
             batchOffset += batchSize  
         }
-    })
+    })*/
 
-    function addNewBatch(newProducts) {
-        const newProductsCards = newProducts.map((p, i) => <Card key={'prod' + p.id} product={p} />)
-        productsSaved=[...productsSaved, ...newProductsCards]
-        console.log('new batch')
-        setProducts(productsSaved)
-    }
-
-    useEffect(() => {
-        if (spinnerRef.current) {
-            observer.observe(spinnerRef.current);
-        }
-    }, []);
-/*
-    useEffect(() => {
-        observer.observe(spinnerRef.current)
-    });
-*/
-
-    const fetchProductBatch = () => {
-        // fetch(`https://jsonplaceholder.typicode.com/posts`)
-        //     .then(response => response.json())
-        //     .then((products) => {
-        //         setLoadedProducts(products);
-        //     })
-    }
-    //utiliser un array de components directement plutot que le map : {loadedProducts.map( (p, i)=> <Card key={'prod'+i} product={p}/> )}
-    return (
-        <div>
-            <h1>Nos produits</h1>
-            <div >
-                {console.log('return ', products)}
-                {products}
-            </div>
-            <div ref={spinnerRef}>
-                <div style={{ width: "30px", height: "30px", borderRadius: '15px', backgroundColor: 'green' }}></div>
-            </div>
-        </div>
-    );
-}
-
-export default Products;
-
-
-// ----------------------------------------
-// exemple de code pour effectuer un lazy loading en utilisant l'Intersection Observer en React :
-
-//import React, { useRef, useEffect, useState } from 'react';
-
-/*function LazyComponent() {
-  return <div>Lazy Component</div>;
-}*/
-/*
-function App() {
-  const [isVisible, setIsVisible] = useState(false);
-  const ref = useRef(null);
+  function addNewBatch(newProducts) {
+    const newProductsCards = newProducts.map((p, i) => <ProductCard key={'prod' + p.id} product={p} />)
+    productsSaved = [...productsSaved, ...newProductsCards]
+    console.log('new batch')
+    setProducts([...productsSaved])
+  }
 
   useEffect(() => {
-    const observer = new IntersectionObserver(
-      ([entry]) => {
-        if (entry.isIntersecting) {
-          setIsVisible(true);
-          observer.unobserve(entry.target);
-        }
-      },
-      {
-        rootMargin: '0px 0px 100px 0px',
-      }
-    );
+    if (spinnerRef.current) {
 
-    if (ref.current) {
-      observer.observe(ref.current);
+      observer.observe(spinnerRef.current);
     }
-
-    return () => {
-      if (ref.current) {
-        observer.unobserve(ref.current);
-      }
-    };
+    /*if (loadMoreRef.current){
+      loadMoreObserver.observe(loadMoreRef.current)
+    }*/
   }, []);
 
+  //const fetchProductBatch = () => {
+  // fetch(`https://jsonplaceholder.typicode.com/posts`)
+  //     .then(response => response.json())
+  //     .then((products) => {
+  //         setLoadedProducts(products);
+  //     })
+  //}
+
   return (
-    <div>
-      <h1>My App</h1>
-      <div style={{ height: '1000px' }}>Scroll down to load lazy component</div>
-      <div ref={ref}>
-        {isVisible && <LazyComponent />}
-      </div>
-    </div>
+    <>
+      <NavBar />
+      <body className="productsPage">
+        <h1 style={{ textAlign: 'center' }}>Nos produits</h1>
+        {/*<TopCategorie sx={{height: 5 }}/>*/}
+        <div className="productCards">
+          {console.log('return ', products)}
+          {products}
+        </div>
+        {isLoading &&
+          <div ref={spinnerRef} className="LoadingSpinner" >
+            <SyncIcon />
+          </div>
+        }
+        {/*<div ref={loadMoreRef}>
+                  <div style={{ width: "30px", height: "30px", borderRadius: '15px', backgroundColor: 'red' }}></div>
+        </div>*/}
+      </body>
+      <Footer />
+    </>
   );
 }
 
-export default App;*/
+export default Products;
