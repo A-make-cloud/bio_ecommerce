@@ -41,5 +41,7 @@
   animation: spinner-spin infinite 1s linear;
 }
 
-
+/* #PageProductsNavbar{
+  position:fixed !important;
+} */
 

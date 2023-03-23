@@ -30,7 +30,6 @@ function Products() {
 
   /*    const loadMoreObserver = new IntersectionObserver(([elem]) => {
         if (elem.isIntersecting) { 
-            console.log('elem.isIntersecting',elem.isIntersecting)
             const newBatch = fakeData.slice(batchOffset, batchOffset + batchSize)
             if(newBatch.length>0)
                 addNewBatch(newBatch)
@@ -41,13 +40,11 @@ function Products() {
   function addNewBatch(newProducts) {
     const newProductsCards = newProducts.map((p, i) => <ProductCard key={'prod' + p.id} product={p} />)
     productsSaved = [...productsSaved, ...newProductsCards]
-    console.log('new batch')
     setProducts([...productsSaved])
   }
 
   useEffect(() => {
     if (spinnerRef.current) {
-
       observer.observe(spinnerRef.current);
     }
     /*if (loadMoreRef.current){
@@ -66,11 +63,10 @@ function Products() {
   return (
     <>
       <NavBar />
-      <body className="productsPage">
+      <main className="productsPage">
         <h1 style={{ textAlign: 'center' }}>Nos produits</h1>
         {/*<TopCategorie sx={{height: 5 }}/>*/}
         <div className="productCards">
-          {console.log('return ', products)}
           {products}
         </div>
         {isLoading &&
@@ -81,7 +77,7 @@ function Products() {
         {/*<div ref={loadMoreRef}>
                   <div style={{ width: "30px", height: "30px", borderRadius: '15px', backgroundColor: 'red' }}></div>
         </div>*/}
-      </body>
+      </main>
       <Footer />
     </>
   );

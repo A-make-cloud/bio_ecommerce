@@ -20,8 +20,10 @@ import Typography from '@mui/material/Typography';
 import Button from '@mui/material/Button';
 import IconButton from '@mui/material/IconButton';
 import MenuIcon from '@mui/icons-material/Menu';
+import {BasketContext} from '../../contexts/BasketContext'
 
 export default function NavBar() {
+    const {basket, addOne} = React.useContext(BasketContext);
     return (
 
         <Box sx={{ flexGrow: 1 }} >
@@ -43,6 +45,7 @@ export default function NavBar() {
                         <Link to="/products" style={{ color: "inherit", textDecoration: "none" }} >Nos Produits</Link>
                     </Typography>
                     <ShoppingBasketIcon />
+                    {basket.nbItem > 0 && <p style={{fontSize:'small'}}>{basket.nbItem}</p>}{/*todo: il faudra faire du panier un composant à part entiere*/}
                     <Button color="inherit">Login</Button>
                 </Toolbar>
             </AppBar>
