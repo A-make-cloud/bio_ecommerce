@@ -22,3 +22,5 @@ npx create-react-app frontend
 
 npm install sequelize mysql2
 npm install sequelize sequelize-auto sequelize-cli mysql mysql2 --save
+
+
