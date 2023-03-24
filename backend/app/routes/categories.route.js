@@ -1,18 +1,13 @@
 const express = require('express')
 const router = express.Router();
-const CategoryController = require('../../src/controllers/CategoryController.js')
-const Category = new CategoryController()
-router.get("/list", (req, res) => {
-    const list = [{ id: 1, name: "cat 1" }];
-    res.json(list)
-});
-router.post("/create", (req, res) => {
+const Controller = require('../../src/controllers/CategoryController.js')
 
-});
-router.get("/find/:id", (req, res) => {
-
-});
-
-
+//find all categories
+router.get("/findAll", Controller.findAll);
+//create  form category
+router.get("/create", Controller.create);
+//find category by id
+router.get("/find/:id", Controller.findById);
 
 module.exports = router;
+

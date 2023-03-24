@@ -1,19 +1,12 @@
 const express = require('express')
 const router = express.Router();
-const UserController = require('../../src/controllers/UserController.js')
-const User = new UserController()
-router.get("/list", (req, res) => {
-    const list = User.list()
-    res.json(list)
-});
-router.post("/create", (req, res) => {
-
-});
-router.get("/find/:id", (req, res) => {
-
-
-});
-
-
-
+const Controller = require('../../src/controllers/UserController.js')
+//find all user
+router.get("/findAll", Controller.findAll);
+//register  form user
+router.get("/register", Controller.register);
+//find user by id
+router.get("/find/:id", Controller.findById);
+//find user by email
+router.get("/findByEmail/:email", Controller.findByEmail);
 module.exports = router;
