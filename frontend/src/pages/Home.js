@@ -36,28 +36,21 @@ function Home() {
             <NavBar />
 
             <Box sx={{ flexGrow: 1 }}>
-                <Grid container spacing={2} columns={16}>
+                <Grid spacing={2} columns={16}>
                     <Grid item xs={12}>
                         <Item>
-                            <div sx={{ maxWidth: 1800 }} cols={2}>
-                                <div>
+                            <div sx={{ maxWidth: 2000 }} cols={2}>
+                                <header>
 
                                     <CardMedia
                                         component="img"
                                         height="400"
                                         image={imageHead}
                                         alt="image head"
+
                                     />
-                                    {/* <CardContent>
-                                        <Typography gutterBottom variant="h5" component="div">
-                                            Lizard
-                                        </Typography>
-                                        <Typography variant="body2" color="text.secondary">
-                                            Lizards are a widespread group of squamate reptiles, with over 6,000
-                                            species, ranging across all continents except Antarctica
-                                        </Typography>
-                                    </CardContent> */}
-                                </div>
+
+                                </header>
                             </div>
                         </Item>
                     </Grid>

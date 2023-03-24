@@ -26,70 +26,75 @@ const Item = styled(Paper)(({ theme }) => ({
 export default function Concept() {
     return (
         <section>
-            <h2>3 bonnes raisons de commander nos paniers</h2>
+            <center><h2>3 bonnes raisons de commander nos paniers</h2></center>
             <Box sx={{ flexGrow: 1 }}>
                 <Grid container spacing={2} columns={16}>
                     <Grid item xs={4}>
                         <Item>
-                            <Card sx={{ maxWidth: 345 }} cols={2}>
-                                <CardActionArea>
-                                    <CardMedia sx={{ maxWidth: 80 }}
-                                        component="img"
-                                        height="80"
-                                        image={image1}
-                                        alt="green iguana"
-                                    />
-                                    <CardContent>
-                                        <Typography gutterBottom variant="h6" component="div">
-                                            Une alimentation bio ultra-locale
-                                        </Typography>
+                            <center>
+                                <Card sx={{ maxWidth: 345 }} cols={2}>
+                                    <CardActionArea>
+                                        <CardMedia sx={{ maxWidth: 80 }}
+                                            component="img"
+                                            height="80"
+                                            image={image1}
+                                            alt="img"
+                                        />
+                                        <CardContent>
+                                            <Typography gutterBottom variant="h6" component="div">
+                                                <h5 >Une alimentation bio <br /> ultra-locale</h5>
+                                            </Typography>
 
-                                    </CardContent>
-                                </CardActionArea>
-                            </Card>
+                                        </CardContent>
+                                    </CardActionArea>
+                                </Card>
+
+                            </center>
                         </Item>
                     </Grid>
                     <Grid item xs={4}>
                         <Item>
+                            <center>
+                                <Card sx={{ maxWidth: 345 }}>
+                                    <CardActionArea>
+                                        <CardMedia sx={{ maxWidth: 80 }}
+                                            component="img"
+                                            height="80"
+                                            image={image2}
+                                            alt="img"
+                                        />
+                                        <CardContent>
+                                            <Typography gutterBottom variant="h6" component="div">
+                                                <h5> Simple et <br /> sans abonnement</h5>
+                                            </Typography>
 
-                            <Card sx={{ maxWidth: 345 }}>
-                                <CardActionArea>
-                                    <CardMedia sx={{ maxWidth: 80 }}
-                                        component="img"
-                                        height="80"
-                                        image={image2}
-                                        alt="green iguana"
-                                    />
-                                    <CardContent>
-                                        <Typography gutterBottom variant="h6" component="div">
-                                            Simple et sans abonnement
-                                        </Typography>
-
-                                    </CardContent>
-                                </CardActionArea>
-                            </Card>
+                                        </CardContent>
+                                    </CardActionArea>
+                                </Card>
+                            </center>
 
                         </Item>
                     </Grid>
                     <Grid item xs={4}>
                         <Item>
-                            <Card sx={{ maxWidth: 345 }}>
-                                <CardActionArea>
-                                    <CardMedia sx={{ maxWidth: 80 }}
+                            <center>
+                                <Card sx={{ maxWidth: 345 }}>
+                                    <CardActionArea>
+                                        <CardMedia sx={{ maxWidth: 80 }}
+                                            component="img"
+                                            height="80"
+                                            image={image3}
+                                            alt="img"
+                                        />
+                                        <CardContent>
+                                            <Typography gutterBottom variant="h6" component="div">
+                                                <h5>Direct du producteur <br /> au consommateur</h5>
+                                            </Typography>
 
-                                        component="img"
-                                        height="80"
-                                        image={image3}
-                                        alt="green iguana"
-                                    />
-                                    <CardContent>
-                                        <Typography gutterBottom variant="h6" component="div">
-                                            Direct du producteur au consommateur
-                                        </Typography>
-
-                                    </CardContent>
-                                </CardActionArea>
-                            </Card>
+                                        </CardContent>
+                                    </CardActionArea>
+                                </Card>
+                            </center>
                         </Item>
                     </Grid>
                 </Grid>
