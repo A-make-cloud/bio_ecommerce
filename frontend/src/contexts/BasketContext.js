@@ -30,13 +30,16 @@ function BasketProvider({ children }) {
     }
 
     const emptyBasket = () => {
+        console.log('vidange panier')
         setBasket({ items: [] })
     }
 
     const getItemsWithDetails = () => {
         const storedBasket = JSON.parse(localStorage.getItem('basket'))
+        /*liste des articles du panier rangés par produit avec prix totaux et nb d'articles*/
         const fullBasket = []
         if (storedBasket.items.length === 0) return []
+        //pour chq elemnt du panier, le mettre dans le bon article et pour chaque, mettre à jour le nb et le prix total
         for (const item of storedBasket.items) {
             const indice = fullBasket.findIndex(article => article.id === item)
             const ItemType = fakeData.find(data => data.id === item)

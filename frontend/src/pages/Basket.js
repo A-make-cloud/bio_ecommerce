@@ -10,7 +10,7 @@ function Basket() {
 
     useEffect(() => {
         setBasketSummary(getItemsWithDetails)
-        console.log(basket)
+        //console.log(basket)
     }, [])
 
     useEffect(() => {
@@ -26,7 +26,7 @@ function Basket() {
 
                 
                 {basketSummary.length > 0 &&   
-                    <button onClick={emptyBasket}>vider panier</button>
+                    <button onClick={e=>emptyBasket}>vider panier</button>
 
                 }
                 {basketSummary.length > 0 ? 
