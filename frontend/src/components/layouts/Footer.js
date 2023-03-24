@@ -121,13 +121,14 @@ function Footer() {
 
             <div style={div2Style}>
 
+                <center>
 
-
-                <FacebookIcon style={{ marginRight: 10 }} />
-                <LinkedInIcon style={{ marginRight: 10 }} />
-                <InstagramIcon style={{ marginRight: 10 }} />
-                <TwitterIcon style={{ marginRight: 10 }} />
-                <PinterestIcon />
+                    <FacebookIcon style={{ marginRight: 10 }} />
+                    <LinkedInIcon style={{ marginRight: 10 }} />
+                    <InstagramIcon style={{ marginRight: 10 }} />
+                    <TwitterIcon style={{ marginRight: 10 }} />
+                    <PinterestIcon />
+                </center>
             </div>
 
         </div>

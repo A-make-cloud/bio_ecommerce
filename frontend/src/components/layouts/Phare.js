@@ -1,58 +1,8 @@
-/*
-import React from 'react';
-import Carousel from 'react-material-ui-carousel'
-import ArrowForwardIosIcon from '@mui/icons-material/ArrowForwardIos';
-import ArrowBackIosNewIcon from '@mui/icons-material/ArrowBackIosNew';
-import image1 from '../../static/concept_1.png'
-import image2 from '../../static/concept_2.png'
-import image3 from '../../static/concept_3.png'
-
-
-function Phare(props) {
-    var items = [
-        {
-            name: "Random Name #1",
-            description: "Probably the most random thing you have ever seen!",
-            image: { image1 }
-        },
-        {
-            name: "Random Name #2",
-            description: "Hello World!",
-            image: { image2 }
-
-        },
-        {
-            name: "Random Name #3",
-            description: "Hello trois!",
-            image: { image3 }
-
-        },
-    ]
-
-    return (
-        <section>
-            <h1>Nos produits phare</h1>
-            <ArrowForwardIosIcon />
-
-            <Carousel>
-                {
-                    items.map((item, i) => <item key={i} item={item} />)
-                }
-
-
-            </Carousel>
-            <ArrowBackIosNewIcon />
-
-        </section>
-    )
-}
-
-export default Phare;
-*/
 import "slick-carousel/slick/slick.css";
 import "slick-carousel/slick/slick-theme.css";
 import React, { Component } from "react";
 import Slider from "react-slick";
+import { Card, CardActionArea, CardContent, CardMedia, Typography } from "@mui/material";
 
 export default class Phare extends Component {
     render() {
@@ -66,30 +16,131 @@ export default class Phare extends Component {
             autoplaySpeed: 2000,
             cssEase: "linear"
         };
+
+        const div1Style = {
+
+            marginTop: "100px",
+        };
+
+
         return (
-            <div>
-                <h2>Auto Play</h2>
-                <Slider {...settings}>
-                    <div>
-                        <h3>1</h3>
-                    </div>
-                    <div>
-                        <h3>2</h3>
-                    </div>
-                    <div>
-                        <h3>3</h3>
-                    </div>
-                    <div>
-                        <h3>4</h3>
-                    </div>
-                    <div>
-                        <h3>5</h3>
-                    </div>
-                    <div>
-                        <h3>6</h3>
-                    </div>
-                </Slider>
-            </div>
+            <div style={div1Style}>
+                <center><h2>Nos produits phare</h2></center>
+                <div style={div1Style}>
+                    <Slider {...settings}>
+                        <div>
+                            <Card sx={{ maxWidth: 345 }} cols={2}>
+                                <CardActionArea>
+                                    <CardMedia sx={{ maxWidth: 80 }}
+                                        component="img"
+                                        height="80"
+                                        image='https://images.unsplash.com/photo-1551963831-b3b1ca40c98e'
+                                        alt="img"
+                                    />
+                                    <CardContent>
+                                        <Typography gutterBottom variant="h6" component="div">
+                                            <h5 >Nom produit <br /> Prix </h5>
+                                        </Typography>
+
+                                    </CardContent>
+                                </CardActionArea>
+                            </Card>
+                        </div>
+                        <div>
+                            <Card sx={{ maxWidth: 345 }} cols={2}>
+                                <CardActionArea>
+                                    <CardMedia sx={{ maxWidth: 80 }}
+                                        component="img"
+                                        height="80"
+                                        image='https://images.unsplash.com/photo-1551963831-b3b1ca40c98e'
+                                        alt="img"
+                                    />
+                                    <CardContent>
+                                        <Typography gutterBottom variant="h6" component="div">
+                                            <h5 >Nom produit <br /> Prix </h5>
+                                        </Typography>
+
+                                    </CardContent>
+                                </CardActionArea>
+                            </Card>
+                        </div>
+                        <div>
+                            <Card sx={{ maxWidth: 345 }} cols={2}>
+                                <CardActionArea>
+                                    <CardMedia sx={{ maxWidth: 80 }}
+                                        component="img"
+                                        height="80"
+                                        image='https://images.unsplash.com/photo-1551963831-b3b1ca40c98e'
+                                        alt="img"
+                                    />
+                                    <CardContent>
+                                        <Typography gutterBottom variant="h6" component="div">
+                                            <h5 >Nom Produit <br /> Prix </h5>
+                                        </Typography>
+
+                                    </CardContent>
+                                </CardActionArea>
+                            </Card>
+                        </div>
+                        <div>
+                            <Card sx={{ maxWidth: 345 }} cols={2}>
+                                <CardActionArea>
+                                    <CardMedia sx={{ maxWidth: 80 }}
+                                        component="img"
+                                        height="80"
+                                        image='https://images.unsplash.com/photo-1551963831-b3b1ca40c98e'
+                                        alt="img"
+                                    />
+                                    <CardContent>
+                                        <Typography gutterBottom variant="h6" component="div">
+                                            <h5 >Nom Produit <br /> Prix </h5>
+                                        </Typography>
+
+                                    </CardContent>
+                                </CardActionArea>
+                            </Card>
+                        </div>
+                        <div>
+                            <Card sx={{ maxWidth: 345 }} cols={2}>
+                                <CardActionArea>
+                                    <CardMedia sx={{ maxWidth: 80 }}
+                                        component="img"
+                                        height="80"
+                                        image='https://images.unsplash.com/photo-1551963831-b3b1ca40c98e'
+                                        alt="img"
+                                    />
+                                    <CardContent>
+                                        <Typography gutterBottom variant="h6" component="div">
+                                            <h5 >Nom Produit <br /> Prix </h5>
+                                        </Typography>
+
+                                    </CardContent>
+                                </CardActionArea>
+                            </Card>
+                        </div>
+                        <div>
+                            <Card sx={{ maxWidth: 345 }} cols={2}>
+                                <CardActionArea>
+                                    <CardMedia sx={{ maxWidth: 80 }}
+                                        component="img"
+                                        height="80"
+                                        image='https://images.unsplash.com/photo-1551963831-b3b1ca40c98e'
+                                        alt="img"
+                                    />
+                                    <CardContent>
+                                        <Typography gutterBottom variant="h6" component="div">
+                                            <h5 >Nom produit <br /> Prix </h5>
+                                        </Typography>
+
+                                    </CardContent>
+                                </CardActionArea>
+                            </Card>
+
+                        </div>
+
+                    </Slider>
+                </div>
+            </div >
         );
     }
 }
