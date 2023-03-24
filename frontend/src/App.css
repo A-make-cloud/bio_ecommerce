@@ -1,4 +1,4 @@
-.productsPage{
+.productsPage, .basketPage{
   max-width: 1300px;
   margin-left:auto;
   margin-right: auto;
@@ -19,7 +19,6 @@
   cursor:pointer;
 }
 
-
 @keyframes spinner-spin {
   from {
     transform: rotate(0deg);
@@ -34,12 +33,17 @@
   display:flex;
   justify-content: center;
   height : 35px;
-
 }
 
 .LoadingSpinner svg{
   animation: spinner-spin infinite 1s linear;
 }
+
+.basketTable{
+  table-layout: auto;
+  width: 100%;
+}
+
 
 /* #PageProductsNavbar{
   position:fixed !important;

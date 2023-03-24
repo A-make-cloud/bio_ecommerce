@@ -74,8 +74,10 @@ export default function NavBar() {
                                 <Link to="/" style={{ color: "inherit", textDecoration: "none", marginRight: 5 }} >Accueil</Link>
                                 <Link to="/products" style={{ color: "inherit", textDecoration: "none" }} >Nos Produits</Link>
                             </Typography>
-                            <ShoppingBasketIcon />
-                            {basket.items.length > 0 && <p style={{fontSize:'small'}}>{basket.items.length}</p>}{/*todo: il faudra faire du panier un composant à part entiere*/}
+                            <Link to="/basket" style={{ color: "inherit", textDecoration: "none" }}>{/*todo: il faudra faire de l'icone du panier un composant à part entiere*/}
+                                <ShoppingBasketIcon />
+                                {basket.items.length > 0 && <span style={{fontSize:'small'}}>{basket.items.length}</span>}
+                            </Link>
                             <Button color="inherit">Login</Button>
                         </Toolbar>
                     </Container>

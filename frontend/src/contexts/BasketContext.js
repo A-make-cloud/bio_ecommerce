@@ -25,12 +25,33 @@ function BasketProvider({ children }) {
 
     const removeLast = () => {
         const storedBasket = JSON.parse(localStorage.getItem('basket'))
-        let items = storedBasket.items.slice(-1)
+        let items = [...storedBasket.items]
+        items.pop()
+        setBasket({ items })
+    }
+
+    const removeOne = (id) => {
+        const storedBasket = JSON.parse(localStorage.getItem('basket'))
+        const indice = storedBasket.items.indexOf(id)
+        let items =storedBasket.items
+        items.splice(indice, 1)
+        setBasket({ items })
+    }
+
+    const addOneOfThis = (id) => {
+        const storedBasket = JSON.parse(localStorage.getItem('basket'))
+        let items =storedBasket.items
+        items.push(id)
+        setBasket({ items })
+    }
+
+    const removeLine = (id) => {
+        const storedBasket = JSON.parse(localStorage.getItem('basket'))
+        const items = storedBasket.items.filter(elem=>elem!==id)
         setBasket({ items })
     }
 
     const emptyBasket = () => {
-        console.log('vidange panier')
         setBasket({ items: [] })
     }
 
@@ -54,7 +75,7 @@ function BasketProvider({ children }) {
     }
 
     return (
-        <BasketContext.Provider value={{ basket, addOne, getItemsWithDetails }} >
+        <BasketContext.Provider value={{ basket, addOne, getItemsWithDetails, emptyBasket, removeLast, removeOne, removeLine, addOneOfThis }} >
             {children}
         </BasketContext.Provider>
     )
