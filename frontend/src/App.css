@@ -1,43 +1,47 @@
-.App {
-  text-align: center;
+.productsPage{
+  max-width: 1300px;
+  margin-left:auto;
+  margin-right: auto;
 }
 
-.App-logo {
-  height: 40vmin;
-  pointer-events: none;
+.priceAndAdd{
+  display : flex;
+  justify-content: space-around;
 }
 
-@media (prefers-reduced-motion: no-preference) {
-  .App-logo {
-    animation: App-logo-spin infinite 20s linear;
-  }
+.productCards{
+  display:flex;
+  justify-content: space-around;
+  flex-wrap: wrap;
 }
 
-.App-header {
-  background-color: #282c34;
-  min-height: 100vh;
-  display: flex;
-  flex-direction: column;
-  align-items: center;
-  justify-content: center;
-  font-size: calc(10px + 2vmin);
-  color: white;
+.addButton:hover{
+  cursor:pointer;
 }
 
-.App-link {
-  color: #61dafb;
-}
 
-@keyframes App-logo-spin {
+@keyframes spinner-spin {
   from {
     transform: rotate(0deg);
   }
 
   to {
-    transform: rotate(360deg);
+    transform: rotate(-360deg);
   }
 }
+.LoadingSpinner {
+  font-size: large;
+  display:flex;
+  justify-content: center;
+  height : 35px;
 
-.test {
-  background-color: blue;
 }
+
+.LoadingSpinner svg{
+  animation: spinner-spin infinite 1s linear;
+}
+
+/* #PageProductsNavbar{
+  position:fixed !important;
+} */
+
