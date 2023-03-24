@@ -23,13 +23,23 @@ import Button from '@mui/material/Button';
 import { CardMedia, Tooltip } from '@mui/material';
 import { Container } from '@mui/system';
 import logo from '../../static/logoBioShop.png'
+import { styled } from '@mui/material/styles';
+import Paper from '@mui/material/Paper';
+
 
 
 
 
 export default function NavBar() {
-
     const { basket, addOne } = React.useContext(BasketContext);
+    const Item = styled(Paper)(({ theme }) => ({
+        backgroundColor: theme.palette.mode === 'dark' ? '#1A2027' : '#346344',
+        ...theme.typography.body2,
+        padding: theme.spacing(1),
+        color: theme.palette.text.secondary,
+
+
+    }));
     return (
         <div>
             <Box sx={{ flexGrow: 1 }} >
