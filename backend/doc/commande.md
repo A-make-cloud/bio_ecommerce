@@ -62,6 +62,7 @@ npx create-react-app frontend
 
 //-----------------create table
 
+<<<<<<< HEAD
 ## Category
 
 npx sequelize-cli model:generate --name Category --attributes title:string,description:text,status:enum(1,2),image:string,top:integer
@@ -91,3 +92,9 @@ npx sequelize-cli seed:generate --name admin-user
 ## 4----seeder les données
 
 npx sequelize-cli db:seed:all
+=======
+npm install sequelize mysql2
+npm install sequelize sequelize-auto sequelize-cli mysql mysql2 --save
+
+
+>>>>>>> e139b09740c57654c282099a99aab49d1a63d6c2
