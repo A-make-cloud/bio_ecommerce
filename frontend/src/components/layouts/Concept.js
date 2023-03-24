@@ -12,18 +12,21 @@ import image1 from '../../static/concept_1.png'
 import image2 from '../../static/concept_2.png'
 import image3 from '../../static/concept_3.png'
 
+const footerEltMarginTop = 50;
 const Item = styled(Paper)(({ theme }) => ({
     backgroundColor: theme.palette.mode === 'dark' ? '#1A2027' : '#fff',
     ...theme.typography.body2,
     padding: theme.spacing(1),
-    textAlign: 'center',
     color: theme.palette.text.secondary,
+    paddingTop: `${footerEltMarginTop}px`,
+
 
 }));
 
 export default function Concept() {
     return (
         <section>
+            <h2>3 bonnes raisons de commander nos paniers</h2>
             <Box sx={{ flexGrow: 1 }}>
                 <Grid container spacing={2} columns={16}>
                     <Grid item xs={4}>
@@ -37,13 +40,10 @@ export default function Concept() {
                                         alt="green iguana"
                                     />
                                     <CardContent>
-                                        <Typography gutterBottom variant="h5" component="div">
-                                            Lizard
+                                        <Typography gutterBottom variant="h6" component="div">
+                                            Une alimentation bio ultra-locale
                                         </Typography>
-                                        <Typography variant="body2" color="text.secondary">
-                                            Lizards are a widespread group of squamate reptiles, with over 6,000
-                                            species, ranging across all continents except Antarctica
-                                        </Typography>
+
                                     </CardContent>
                                 </CardActionArea>
                             </Card>
@@ -61,13 +61,10 @@ export default function Concept() {
                                         alt="green iguana"
                                     />
                                     <CardContent>
-                                        <Typography gutterBottom variant="h5" component="div">
-                                            Lizard
+                                        <Typography gutterBottom variant="h6" component="div">
+                                            Simple et sans abonnement
                                         </Typography>
-                                        <Typography variant="body2" color="text.secondary">
-                                            Lizards are a widespread group of squamate reptiles, with over 6,000
-                                            species, ranging across all continents except Antarctica
-                                        </Typography>
+
                                     </CardContent>
                                 </CardActionArea>
                             </Card>
@@ -79,19 +76,17 @@ export default function Concept() {
                             <Card sx={{ maxWidth: 345 }}>
                                 <CardActionArea>
                                     <CardMedia sx={{ maxWidth: 80 }}
+
                                         component="img"
                                         height="80"
                                         image={image3}
                                         alt="green iguana"
                                     />
                                     <CardContent>
-                                        <Typography gutterBottom variant="h5" component="div">
-                                            Lizard
+                                        <Typography gutterBottom variant="h6" component="div">
+                                            Direct du producteur au consommateur
                                         </Typography>
-                                        <Typography variant="body2" color="text.secondary">
-                                            Lizards are a widespread group of squamate reptiles, with over 6,000
-                                            species, ranging across all continents except Antarctica
-                                        </Typography>
+
                                     </CardContent>
                                 </CardActionArea>
                             </Card>
