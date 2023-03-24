@@ -5,7 +5,7 @@ import Footer from '../components/layouts/Footer.js'
 import { BasketContext } from '../contexts/BasketContext'
 
 function Basket() {
-    const { basket, addOne, getItemsWithDetails } = useContext(BasketContext);
+    const { basket, addOne, removeLast, emptyBasket, getItemsWithDetails } = useContext(BasketContext);
     const [basketSummary, setBasketSummary] = useState([]);
 
     useEffect(() => {
@@ -23,11 +23,19 @@ function Basket() {
             <NavBar />
             <main >
                 <h1>Votre panier</h1>
-                {basketSummary.length > 0 && basketSummary.map((articleType, i) => {
-                    return (
-                        <div key={'prod_' + i}>{articleType.name} {articleType.id} {articleType.pickedQuantity} {articleType.totalPrice_ht}</div>
-                    )
-                })}
+
+                
+                {basketSummary.length > 0 &&   
+                    <button onClick={emptyBasket}>vider panier</button>
+
+                }
+                {basketSummary.length > 0 ? 
+                    basketSummary.map((articleType, i) => {
+                        return (
+                            <div key={'prod_' + i}>{articleType.name} {articleType.id} {articleType.pickedQuantity} {articleType.totalPrice_ht}</div>
+                        )
+                    })
+                :<p>panier vide</p>}
             </main>
             <Footer />
         </>

@@ -17,7 +17,7 @@ function Products() {
   const observer = new IntersectionObserver(([elem]) => {
     if (elem.isIntersecting) {
       const newBatch = fakeData.slice(batchOffset, batchOffset + batchSize)
-      // à remplacer par
+      // pour la bdd, remplacer par
       //(async()=>{const newBatch =  await fetchProductBatch(filter, batchOffset, batchSize)})()
       if (newBatch.length > 0)
         addNewBatch(newBatch)
@@ -41,7 +41,7 @@ function Products() {
 
   }, []);
 
-  
+  //todo: mettre un fetch pour récup les données de la bdd au lieu du fake
   //const fetchProductBatch = (filter, batchOffset, batchSize) => {
   // return fetch(`https://jsonplaceholder.typicode.com/posts`)
   //     .then(response => response.json())

@@ -31,7 +31,7 @@ import Paper from '@mui/material/Paper';
 
 
 export default function NavBar() {
-    const { basket, addOne } = React.useContext(BasketContext);
+    const { basket } = React.useContext(BasketContext);
     const Item = styled(Paper)(({ theme }) => ({
         backgroundColor: theme.palette.mode === 'dark' ? '#1A2027' : '#346344',
         ...theme.typography.body2,
