@@ -37,7 +37,7 @@ function Basket() {
                                 {basketSummary.map((articleType, i) => {
                                     return (
                                         <tr key={'article_' + i}>
-                                            <td>{articleType.name}</td>
+                                            <td>{articleType.name} {articleType.id}</td>
                                             <td>{articleType.pickedQuantity}</td>
                                             <td>{articleType.totalPrice_ht}</td>
                                             <td><button onClick={e=>removeOne(articleType.id)}>En enlever un</button></td>

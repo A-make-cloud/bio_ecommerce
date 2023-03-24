@@ -32,8 +32,14 @@ function BasketProvider({ children }) {
 
     const removeOne = (id) => {
         const storedBasket = JSON.parse(localStorage.getItem('basket'))
-        const indice = storedBasket.items.indexOf(id)
+        let indice = -1
         let items =storedBasket.items
+        for (let i = items.length-1; i>=0; i--){
+            if (items[i]===id){
+                indice=i
+                break
+            }      
+        }
         items.splice(indice, 1)
         setBasket({ items })
     }
