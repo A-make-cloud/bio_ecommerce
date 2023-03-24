@@ -1,24 +1,31 @@
 import { useState, createContext, useEffect } from 'react'
+import fakeData from '../components/products/fakeData';
 
 const BasketContext = createContext()
 
 function BasketProvider({ children }) {
-    const [basket, setBasket] = useState({ nbItem: 0, items: [], price:0 });
+    const [basket, setBasket] = useState({ items: [] });
 
     useEffect(() => {
-        //console.log(basket)
+        localStorage.setItem("basket", JSON.stringify(basket))
+        const storedBasket = JSON.parse(localStorage.getItem('basket'))
+        console.log(storedBasket)
     }, [basket])
 
-    const addOne = (productId, priceOne) => {
-        let items = [...basket.items, productId]
-        let price = basket.price+priceOne
-        let nbItem = parseInt(basket.nbItem) + 1
-        setBasket({
-            //...JSON.parse(JSON.stringify(basket)),
-            nbItem,
-            items,
-            price
-        })
+    const addOne = (productId) => {
+        const storedBasket = JSON.parse(localStorage.getItem('basket'))
+        let items = [...storedBasket.items, productId]
+        setBasket({ items })
+    }
+
+    const removeLast = () => {
+        const storedBasket = JSON.parse(localStorage.getItem('basket'))
+        let items = storedBasket.items.slice(-1)
+        setBasket({ items })
+    }
+
+    const emptyBasket = () => {
+        setBasket({ items:[] })
     }
 
     return (

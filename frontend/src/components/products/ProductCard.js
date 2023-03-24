@@ -23,7 +23,7 @@ function ProductCard({ product }) {
       </CardContent>
       <CardActions className="priceAndAdd">
         <p>{`${priceTTC} €`}</p>
-        <AddCartButton productId={product.id} price={priceTTC} />
+        <AddCartButton productId={product.id} />
       </CardActions>
     </Card>
   );
