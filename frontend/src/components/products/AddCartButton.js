@@ -5,8 +5,7 @@ import {useContext, useEffect} from 'react'
 
 function AddCartButton({ productId }) {
     //const {basket, setBasket} = useContext(BasketContext)
-    const {basket, addOne} = useContext(BasketContext);
-
+    const {basket, addOne, getItemsWithDetails} = useContext(BasketContext);
 
     return (
         <div style={{}} className="addButton">

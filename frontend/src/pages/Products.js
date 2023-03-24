@@ -13,7 +13,6 @@ function Products() {
   const [isLoading, setIsLoading] = useState(true);
   const [products, setProducts] = useState([]);
   const spinnerRef = useRef();
-  //const loadMoreRef = useRef();
 
   const observer = new IntersectionObserver(([elem]) => {
     if (elem.isIntersecting) {
@@ -28,14 +27,6 @@ function Products() {
     }
   })
 
-  /*    const loadMoreObserver = new IntersectionObserver(([elem]) => {
-        if (elem.isIntersecting) { 
-            const newBatch = fakeData.slice(batchOffset, batchOffset + batchSize)
-            if(newBatch.length>0)
-                addNewBatch(newBatch)
-            batchOffset += batchSize  
-        }
-    })*/
 
   function addNewBatch(newProducts) {
     const newProductsCards = newProducts.map((p, i) => <ProductCard key={'prod' + p.id} product={p} />)
@@ -47,11 +38,10 @@ function Products() {
     if (spinnerRef.current) {
       observer.observe(spinnerRef.current);
     }
-    /*if (loadMoreRef.current){
-      loadMoreObserver.observe(loadMoreRef.current)
-    }*/
+
   }, []);
 
+  
   //const fetchProductBatch = (filter, batchOffset, batchSize) => {
   // return fetch(`https://jsonplaceholder.typicode.com/posts`)
   //     .then(response => response.json())
@@ -74,9 +64,6 @@ function Products() {
             <SyncIcon />
           </div>
         }
-        {/*<div ref={loadMoreRef}>
-                  <div style={{ width: "30px", height: "30px", borderRadius: '15px', backgroundColor: 'red' }}></div>
-        </div>*/}
       </main>
       <Footer />
     </>
