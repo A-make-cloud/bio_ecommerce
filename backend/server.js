@@ -1,6 +1,6 @@
 const express = require('express')
 const app = express()
-const PORT = process.env.APP_ENV || 5000
+const PORT = process.env.APP_ENV || 9000
 //variable d'environnement
 require("dotenv").config();
 
@@ -12,44 +12,29 @@ app.listen(PORT, () => {
     console.log(`Le serveur est démarré : http://localhost:${PORT}`);
 });
 
+// parse requests of content-type - application/json
+app.use(express.json());
+
+// parse requests of content-type - application/x-www-form-urlencoded
+app.use(express.urlencoded({ extended: true }));
 //------------------------//------------------------//------------------------
 //------------------------Chargement des routes//------------------------
 //------------------------//------------------------//------------------------
-//----------------routes users
-const usersRoutes = require('./app/routes/users.route.js')
-app.use("/users", usersRoutes);
+
+
 //----------------routes categories
 const categoriesRoutes = require('./app/routes/categories.route.js')
 app.use("/categories", categoriesRoutes);
 //----------------routes products
+//*
 const productsRoutes = require('./app/routes/products.route.js')
 app.use("/products", productsRoutes);
+
+//----------------routes users
+const usersRoutes = require('./app/routes/users.route.js')
+app.use("/users", usersRoutes);
+
 //----------------routes commandes
 const commandesRoutes = require('./app/routes/commandes.route.js')
 app.use("/commandes", commandesRoutes);
-
-
-//-----------------
-
-const { Sequelize, Model, DataTypes } = require('sequelize');
-const sequelize = new Sequelize(process.env.SQL_DBNAME, process.env.SQL_USER, process.env.SQL_PASSWORD, {
-    host: process.env.SQL_HOST,
-    dialect: 'mysql',
-    port: process.env.SQL_PORT,
-});
-console.log(sequelize)
-
-class User extends Model { }
-User.init({
-    id: {
-        type: DataTypes.INTEGER,
-        primaryKey: true,
-        autoIncrement: true
-    },
-    name: DataTypes.STRING,
-    email: DataTypes.STRING,
-    password: DataTypes.STRING
-}, {
-    sequelize,
-    modelName: 'user'
-});
+//*/

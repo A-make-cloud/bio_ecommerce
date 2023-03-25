@@ -1,21 +1,13 @@
 const express = require('express')
 const router = express.Router();
-const ProductController = require('../../src/controllers/ProductController.js')
-const Product = new ProductController()
-
-router.get("/list", (req, res) => {
-    const list = [{ id: 1, title: "product 1" }, { id: 2, title: "product 2" }];
-    res.json(list)
-});
-router.post("/create", (req, res) => {
-    //traitement formulaire 
-    //enregister dans la base
-
-});
-router.get("/find/:id", (req, res) => {
-
-});
-
-
+const Controller = require('../../src/controllers/ProductController.js')
+//find all products
+router.get("/findAll", Controller.findAll);
+//find by categories
+router.get("/findByCategory/:categoryId", Controller.findByCategory);
+//create  form product
+router.get("/create/:categoryId", Controller.create);
+//find product by id
+router.get("/find/:id", Controller.findById);
 
 module.exports = router;
