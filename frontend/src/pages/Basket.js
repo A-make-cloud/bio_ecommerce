@@ -1,5 +1,4 @@
-import { useState, useRef, useEffect, useContext } from 'react';
-import fakeData from '../components/products/fakeData';
+import { useState, useEffect, useContext } from 'react';
 import NavBar from '../components/layouts/Navbar.js'
 import Footer from '../components/layouts/Footer.js'
 import { BasketContext } from '../contexts/BasketContext'
@@ -9,7 +8,7 @@ import AddShoppingCartIcon from '@mui/icons-material/AddShoppingCart';
 import RemoveShoppingCartIcon from '@mui/icons-material/RemoveShoppingCart';
 
 function Basket() {
-    const { basket, addOne, removeLast, emptyBasket, getItemsWithDetails, removeOne, removeLine, addOneOfThis } = useContext(BasketContext);
+    const { basket, removeLast, emptyBasket, getItemsWithDetails, removeOne, removeLine, addOneOfThis } = useContext(BasketContext);
     const [basketSummary, setBasketSummary] = useState([]);
 
     useEffect(() => {
