@@ -17,7 +17,7 @@ module.exports = (sequelize, DataTypes) => {
     }
   }
   Product.init({
-    categoryId: {
+    category_id: {
       allowNull: false,
       type: DataTypes.INTEGER
     },
@@ -50,6 +50,7 @@ module.exports = (sequelize, DataTypes) => {
   }, {
     sequelize,
     modelName: 'Product',
+    underscored: true
   });
   return Product;
 };

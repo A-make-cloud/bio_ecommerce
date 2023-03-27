@@ -9,14 +9,14 @@ module.exports = {
         primaryKey: true,
         type: Sequelize.INTEGER
       },
-      categoryId: {
+      category_id: {
         allowNull: false,
         type: Sequelize.INTEGER,
         onDelete: 'CASCADE',
         references: {
           model: 'Categories',
           key: 'id',
-          as: 'categoryId',
+          as: 'category_id',
         }
       },
       title: {
@@ -47,11 +47,11 @@ module.exports = {
         type: Sequelize.INTEGER,
         allowNull: true,
       },
-      createdAt: {
+      created_at: {
         allowNull: false,
         type: Sequelize.DATE
       },
-      updatedAt: {
+      updated_at: {
         allowNull: false,
         type: Sequelize.DATE
       }

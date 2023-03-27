@@ -52,7 +52,8 @@ npx sequelize-cli db:migrate
 //pour annuler une migration
 npx sequelize-cli db:migrate:undo
 //pour annuler tous les migrations
-npx sequelize-cli db:migrate:undo
+npx sequelize-cli db:migrate:undo:all
+npx sequelize-cli db:migrate
 
 ###### ### ### ### ### ### ### ### ### coté front end
 

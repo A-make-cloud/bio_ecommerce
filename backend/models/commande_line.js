@@ -18,11 +18,11 @@ module.exports = (sequelize, DataTypes) => {
   }
   Commande_line.init({
 
-    commandeId: {
+    commande_id: {
       allowNull: false,
       type: DataTypes.INTEGER,
     },
-    productId: {
+    product_id: {
       allowNull: false,
       type: DataTypes.INTEGER,
     },
@@ -42,6 +42,7 @@ module.exports = (sequelize, DataTypes) => {
   }, {
     sequelize,
     modelName: 'Commande_line',
+    underscored: true
   });
   return Commande_line;
 };

@@ -15,7 +15,7 @@ module.exports = (sequelize, DataTypes) => {
     }
   }
   Image.init({
-    productId: {
+    product_id: {
       allowNull: false,
       type: DataTypes.INTEGER
     },
@@ -35,6 +35,7 @@ module.exports = (sequelize, DataTypes) => {
   }, {
     sequelize,
     modelName: 'Image',
+    underscored: true
   });
   return Image;
 };

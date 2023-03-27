@@ -18,7 +18,7 @@ module.exports = (sequelize, DataTypes) => {
     }
   }
   Address.init({
-    userId: {
+    user_id: {
       allowNull: false,
       type: DataTypes.INTEGER
     },
@@ -52,6 +52,7 @@ module.exports = (sequelize, DataTypes) => {
   }, {
     sequelize,
     modelName: 'Address',
+    underscored: true
   }, {
     classMethods: {
       associate: function (models) {

@@ -24,8 +24,8 @@ exports.register = (req, res) => {
     //3---------------------Ajouter ==>>OK
     const element = {
         civility: 'M',
-        firstName: 'Bela',
-        lastName: 'Sam',
+        firstname: 'Bela',
+        lastname: 'Sam',
         profil: 'admin',
         email: 's1@gmail.com',
         password: 'password123',

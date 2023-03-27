@@ -23,11 +23,11 @@ module.exports = (sequelize, DataTypes) => {
       defaultValue: "M",
       allowNull: false,
     },
-    firstName: {
+    firstname: {
       type: DataTypes.STRING(50),
       allowNull: false,
     },
-    lastName: {
+    lastname: {
       type: DataTypes.STRING(50),
       allowNull: false,
     },
@@ -67,6 +67,7 @@ module.exports = (sequelize, DataTypes) => {
   }, {
     sequelize,
     modelName: 'User',
+    underscored: true
   });
   return User;
 };

@@ -39,11 +39,12 @@ exports.findById = (req, res) => {
 
 
 exports.findByCategory = (req, res) => {
-    const categoryId = req.params.categoryId;
+    const category_id = req.params.category_id;
 
-    Product.findAll({ where: { categoryId } })
+    Product.findAll({ where: { category_id } })
         .then(data => {
             if (data) {
+                console.log(data)
                 res.status(201).json({ message: "Find Product", data })
             } else {
                 res.status(500).send({
@@ -63,10 +64,10 @@ exports.create = (req, res) => {
     //3---------------------Ajouter Product  ==>>OK
     //4---------------------Ajouter images ===>>TODO
 
-    const categoryId = req.params.categoryId;
+    const category_id = req.params.category_id;
     //3---------------------Ajouter ==>>OK
     const element = {
-        categoryId,
+        category_id,
         title: 'titre img ',
         description: 'description',
         price_ht: 10.20,
@@ -78,13 +79,13 @@ exports.create = (req, res) => {
     Product.create(element).then((product) => {
 
         console.log(product.id);
-        const productId = product.id
+        const product_id = product.id
         //-------------create image
-        // `productId`, `title`, `url`, `type`,
+        // `product_id`, `title`, `url`, `type`,
         try {
-            console.log(Image.create({ productId, title: 'title img 1', url: 'url img 1' }))
-            Image.create({ productId, title: 'title img 2', url: 'url img 2' })
-            Image.create({ productId, title: 'title img 3', url: 'url img 3' })
+            console.log(Image.create({ product_id, title: 'title img 1', url: 'url img 1' }))
+            Image.create({ product_id, title: 'title img 2', url: 'url img 2' })
+            Image.create({ product_id, title: 'title img 3', url: 'url img 3' })
 
             res.status(201).json({ message: "Created product", product })
 
