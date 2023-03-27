@@ -4,6 +4,7 @@ import Card from '@mui/material/Card';
 import CardActions from '@mui/material/CardActions';
 import CardContent from '@mui/material/CardContent';
 import CardMedia from '@mui/material/CardMedia';
+import { Link } from "react-router-dom";
 //import Button from '@mui/material/Button'
 
 
@@ -12,11 +13,13 @@ function ProductCard({ product }) {
 
   return (
     <Card sx={{ maxWidth: 359, margin: 3 }}>
-      <CardMedia
-        sx={{ height: 160 }}
-        image="https://placehold.co/600x400"
-        title="toto"
-      />
+      <Link to={`/product/${product.id}`} style={{ color: "inherit", textDecoration: "none" }}>
+        <CardMedia
+          sx={{ height: 160 }}
+          image="https://placehold.co/600x400"
+          title="toto"
+        />
+      </Link>
       <CardContent>
         <h4>{product.name + ' ' + product.id}</h4>
         <p>{product.description.slice(0, 50) + "..."}</p>

@@ -2,7 +2,8 @@
 const jwt = require('jsonwebtoken');
 const Cookies = require( "cookies" );
 require('dotenv').config();
-const UserController = require('./UserController');
+//const UserController = require('./UserController');
+const { User } = require('../../models');
 
 exports.process = (req, res) => {
     console.log('req.session.user ', req.session.user)
@@ -11,10 +12,17 @@ exports.process = (req, res) => {
         return res.status(200);
     }
 
-    UserController.getUserByEmail(req.body.email).then((user) => {
+    const email = req.body.email;
+    //UserController.findByEmail(req.body.email).then((user) => {
+    User.findOne({ where: { email } }).then(data=>{
+        
+        if (data === null){
+            res.status(401).json({ error: "user not found" })
+            return
+        }
+        let user = data.dataValues
         const bcrypt = require('bcryptjs');
         //console.log('verifier request.body.password et user.password : ', request.body.password,' - ',user.password, )
-
         if(bcrypt.compareSync(req.body.password, user.password)) {
             // création du JWT pour cet user
             let accessToken = jwt.sign({id: user.id, firstname: user.firstname, lastname : user.lastname, profil: user.profil}, process.env.SECRET_JWT, {expiresIn: 604800});       
@@ -22,10 +30,10 @@ exports.process = (req, res) => {
 
             //console.log('cookie just créé : ',new Cookies(request,response).get('access_token'))
             // maintenant authentifié
-            return res.status('200').json({ message: "user connected", id: user.id });
+            return res.status('200').json({ message: "user connected", id: user.id, firstname:user.firstname, lastname:user.lastname });
         } else {
             //Erreur d'identification
-            res.status(401).json({ error: "Error connexion" })
+            res.status(401).json({ error: "wrong password" })
         }
     }).catch((err) => {
         console.log(err)

@@ -71,34 +71,3 @@ function Basket() {
 }
 
 export default Basket;
-//<div key={'prod_' + i}>{articleType.name} {articleType.id} {articleType.pickedQuantity} {articleType.totalPrice_ht}</div>
-/*
-<div>
-<h3>Votre panier :</h3>
-<p v-if="!submaryCart">Votre panier est vide</p>
-<table v-else class="table table-hover">
-  <thead>
-    <tr><th>Article</th><th>Nombre</th><th>Prix</th><th></th><th></th></tr>
-  </thead>
-  <tbody>
-
-    <tr key=''>
-      <td>{article.name}</td>
-      <td>{article.number}</td>
-      <td>{article.price}</td>
-      <td><button>enlever 1</button></td>
-      <td><button>tout enlever</button></td>
-    </tr>
-
-  </tbody>
-  <tfoot>
-    <tr>
-      <td></td>
-      <td>total : {cartOverview.nb}</td>
-      <td>total : {cartOverview.price}</td>
-      <td></td>
-      <td></td>
-    </tr>
-</tfoot>
-</table>
-</div>*/

@@ -45,7 +45,8 @@
 }
 
 
-/* #PageProductsNavbar{
-  position:fixed !important;
-} */
+.loginForm>div, .loginForm>button{
+  /*margin-top:30px;*/
+  margin-bottom:30px;
+}
 
