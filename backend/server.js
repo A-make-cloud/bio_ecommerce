@@ -11,9 +11,7 @@ require("dotenv").config();
 //----------------------ajout de express session (dj)
 app.use(session({
     //todo: utiliser un process.env.APP_KEY à la place de 'e8dec954ad98d87d249b22268df6109469417ddd'
-    secret: 'e8dec954ad98d87d249b22268df6109469417ddd',
-    resave: false,
-    saveUninitialized: false,
+    secret: process.env.APP_KEY, resave: false, saveUninitialized: false,
     cookie: { maxAge: 3600000 }
 }));
 //------------------------ JWT -------------------------
@@ -26,7 +24,7 @@ app.use((req, res, next) => {
     if (typeof token != 'undefined') {
 
         // on vérifie le jwt    todo: utiliser un process.env.SECRET_JWT à la place de '67d4ed8895e2b7cdbc93cb68c247e16928d3e768'
-        jwt.verify(token, '67d4ed8895e2b7cdbc93cb68c247e16928d3e768', (err, dataJwt) => {
+        jwt.verify(token, process.env.SECRET_JWT, (err, dataJwt) => {
             // Erreur du JWT (n'est pas un JWT, a été modifié, est expiré)
             if (err) {
                 res.clearCookie('access_token')
