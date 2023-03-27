@@ -69,6 +69,10 @@ app.use(express.urlencoded({ extended: true }));
 //------------------------//------------------------//------------------------
 
 
+//----------------pas route auth, ce sera dans users
+//const authController = require('./src/controllers/AuthenticationController')
+//app.post("/login", authController.process);
+
 //----------------routes categories
 const categoriesRoutes = require('./app/routes/categories.route.js')
 app.use("/categories", categoriesRoutes);
