@@ -9,14 +9,14 @@ module.exports = {
         primaryKey: true,
         type: Sequelize.INTEGER
       },
-      userId: {
+      user_id: {
         allowNull: false,
         type: Sequelize.INTEGER,
         onDelete: 'CASCADE',
         references: {
           model: 'Users',
           key: 'id',
-          as: 'userId',
+          as: 'user_id',
         }
       }, email: {
         type: Sequelize.STRING,
@@ -27,7 +27,7 @@ module.exports = {
         allowNull: false,
         type: Sequelize.STRING
       },
-      createdAt: {
+      created_at: {
         allowNull: false,
         type: Sequelize.DATE
       }

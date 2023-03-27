@@ -17,7 +17,7 @@ module.exports = (sequelize, DataTypes) => {
     }
   }
   Commande.init({
-    userId: {
+    user_id: {
       allowNull: false,
       type: DataTypes.INTEGER
     },
@@ -35,6 +35,7 @@ module.exports = (sequelize, DataTypes) => {
   }, {
     sequelize,
     modelName: 'Commande',
+    underscored: true
   });
   return Commande;
 };

@@ -9,22 +9,22 @@ module.exports = {
         primaryKey: true,
         type: Sequelize.INTEGER
       },
-      commandeId: {
+      commande_id: {
         allowNull: false,
         type: Sequelize.INTEGER,
         references: {
           model: 'Commandes',
           key: 'id',
-          as: 'commandeId',
+          as: 'commande_id',
         }
       },
-      productId: {
+      product_id: {
         allowNull: false,
         type: Sequelize.INTEGER,
         references: {
           model: 'Products',
           key: 'id',
-          as: 'productId',
+          as: 'product_id',
         }
       },
       price_ht: {
@@ -40,11 +40,11 @@ module.exports = {
         type: Sequelize.INTEGER,
       },
 
-      createdAt: {
+      created_at: {
         allowNull: false,
         type: Sequelize.DATE
       },
-      updatedAt: {
+      updated_at: {
         allowNull: false,
         type: Sequelize.DATE
       }

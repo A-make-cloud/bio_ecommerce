@@ -15,7 +15,7 @@ module.exports = (sequelize, DataTypes) => {
     }
   }
   Reset_password.init({
-    userId: {
+    user_id: {
 
       type: DataTypes.INTEGER,
       allowNull: false,
@@ -33,6 +33,7 @@ module.exports = (sequelize, DataTypes) => {
   }, {
     sequelize,
     modelName: 'Reset_password',
+    underscored: true
   });
   return Reset_password;
 };
