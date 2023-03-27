@@ -45,6 +45,9 @@ exports.create = (req, res) => {
         title: 'titre',
         description: 'description',
         img: 'image url',
+        background: "",
+        top: 1,
+
 
 
     }
