@@ -1,5 +1,5 @@
 
-import {useEffect} from 'react';
+//import {useEffect} from 'react';
 //import {CatCartouche} from './Categories';
 
 function Categories({ categories, chosenCategories, setChosenCategories }) {

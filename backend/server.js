@@ -23,7 +23,7 @@ app.use((req, res, next)=>{
     // Si le cookie (access_token) existe
     if (typeof token != 'undefined'){
 
-        // on vérifie le jwt    todo: utiliser un process.env.SECRET_JWT à la place de '67d4ed8895e2b7cdbc93cb68c247e16928d3e768'
+        // on vérifie le jwt
         jwt.verify(token, process.env.SECRET_JWT, (err, dataJwt) => { 
             // Erreur du JWT (n'est pas un JWT, a été modifié, est expiré)
             if(err) {
