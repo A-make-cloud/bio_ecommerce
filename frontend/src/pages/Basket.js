@@ -1,5 +1,4 @@
-import { useState, useRef, useEffect, useContext } from 'react';
-import fakeData from '../components/products/fakeData';
+import { useState, useEffect, useContext } from 'react';
 import NavBar from '../components/layouts/Navbar.js'
 import Footer from '../components/layouts/Footer.js'
 import { BasketContext } from '../contexts/BasketContext'
@@ -9,7 +8,7 @@ import AddShoppingCartIcon from '@mui/icons-material/AddShoppingCart';
 import RemoveShoppingCartIcon from '@mui/icons-material/RemoveShoppingCart';
 
 function Basket() {
-    const { basket, addOne, removeLast, emptyBasket, getItemsWithDetails, removeOne, removeLine, addOneOfThis } = useContext(BasketContext);
+    const { basket, removeLast, emptyBasket, getItemsWithDetails, removeOne, removeLine, addOneOfThis } = useContext(BasketContext);
     const [basketSummary, setBasketSummary] = useState([]);
 
     useEffect(() => {
@@ -72,34 +71,3 @@ function Basket() {
 }
 
 export default Basket;
-//<div key={'prod_' + i}>{articleType.name} {articleType.id} {articleType.pickedQuantity} {articleType.totalPrice_ht}</div>
-/*
-<div>
-<h3>Votre panier :</h3>
-<p v-if="!submaryCart">Votre panier est vide</p>
-<table v-else class="table table-hover">
-  <thead>
-    <tr><th>Article</th><th>Nombre</th><th>Prix</th><th></th><th></th></tr>
-  </thead>
-  <tbody>
-
-    <tr key=''>
-      <td>{article.name}</td>
-      <td>{article.number}</td>
-      <td>{article.price}</td>
-      <td><button>enlever 1</button></td>
-      <td><button>tout enlever</button></td>
-    </tr>
-
-  </tbody>
-  <tfoot>
-    <tr>
-      <td></td>
-      <td>total : {cartOverview.nb}</td>
-      <td>total : {cartOverview.price}</td>
-      <td></td>
-      <td></td>
-    </tr>
-</tfoot>
-</table>
-</div>*/

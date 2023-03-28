@@ -78,7 +78,9 @@ export default function NavBar() {
                                 <ShoppingBasketIcon />
                                 {basket.items.length > 0 && <span style={{fontSize:'small'}}>{basket.items.length}</span>}
                             </Link>
-                            <Button color="inherit">Login</Button>
+                            <Link to="/login" style={{ color: "inherit", textDecoration: "none" }}>
+                                <Button color="inherit">Login</Button>
+                            </Link>
                         </Toolbar>
                     </Container>
                 </AppBar>

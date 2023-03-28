@@ -4,6 +4,7 @@ const PORT = process.env.APP_ENV || 9000
 const jwt = require('jsonwebtoken');
 const Cookies = require("cookies");
 const session = require('express-session');
+// const cors = require('cors');
 //variable d'environnement
 require("dotenv").config();
 
@@ -74,6 +75,10 @@ app.use(express.urlencoded({ extended: true }));
 //------------------------//------------------------//------------------------
 
 
+//----------------pas route auth, ce sera dans users
+//const authController = require('./src/controllers/AuthenticationController')
+//app.post("/login", authController.process);
+//app.post("/toto", console.log(toto));
 //----------------routes categories
 const categoriesRoutes = require('./app/routes/categories.route.js')
 app.use("/categories", categoriesRoutes);

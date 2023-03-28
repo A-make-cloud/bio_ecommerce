@@ -110,7 +110,7 @@ exports.register = (req, res) => {
         firstname: 'Bela',
         lastname: 'Sam',
         profil: 'admin',
-        email: 's1@gmail.com',
+        email: 's21@gmail.com',
         password: 'password123',
         token: 'pdasswfrd123',
     }

@@ -11,7 +11,7 @@ module.exports = {
       civility: 'Mme',
       firstName: 'Sam',
       lastName: 'Bela',
-      email: 'lilou2008@live.fr',
+      email: 'lilou2ff008@live.fr',
       password: hashedPassword,
       profil: 'admin',
       status: '1',

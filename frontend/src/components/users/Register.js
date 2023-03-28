@@ -37,12 +37,13 @@ const Register = () => {
             await fetch('/users/login', {
                 method: 'POST',
                 headers: { 'Content-Type': 'application/json' },
-                body: JSON.stringify(values, null, 2)
+                body: JSON.stringify(values, null, 2),
+                credentials: 'include'
             })
                 .then(response => {
                     // Affiche le statut de la réponse (par exemple, 200 pour OK)
 
-                    if (response.status === 500) {
+                    if (response.status !== 200) {
                         // alert("error")
                         setColor("error")
                     } else {

@@ -1,8 +1,10 @@
 const express = require('express')
 const router = express.Router();
 const Controller = require('../../src/controllers/UserController.js')
-//register  form user
-router.post("/login", Controller.login);
+const authController = require('../../src/controllers/AuthenticationController')
+
+//login
+router.post("/login", authController.process);
 //find all user
 router.get("/findAll", Controller.findAll);
 //register  form user
