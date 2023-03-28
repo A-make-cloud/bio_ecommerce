@@ -24,7 +24,7 @@ function App() {
         <Route path="/" element={<Home />} />
         <Route path="/products" element={<Products />} />
         <Route path="/basket" element={<Basket />} />
-        <Route path="/register" element={<Register />} />
+        <Route path="/register" element={<Register setIsLogged={setIsLogged} isLogged={isLogged} />} />
         <Route path="/login" element={<Login setIsLogged={setIsLogged} isLogged={isLogged} />} />
         <Route path="/product/:id" element={<Product />} />
 
