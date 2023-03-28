@@ -4,6 +4,8 @@ const { Product, Image } = require('../../models');
 
 
 exports.findAll = (req, res) => {
+
+
     Product.findAll()
         .then(data => {
             res.send(data);
@@ -37,24 +39,31 @@ exports.findById = (req, res) => {
         });
 }
 
-
+/**
+ * 
+ * @param {*} req 
+ * @param {*} res 
+ */
 exports.findByCategory = (req, res) => {
     const category_id = req.params.category_id;
+    const offset = req.params.offset ? parseInt(req.params.offset) : null;
+    const limit = req.params.limit ? parseInt(req.params.limit) : null;
 
-    Product.findAll({ where: { category_id } })
+
+    Product.findAll({ where: { category_id }, offset: offset, limit: limit })
         .then(data => {
             if (data) {
                 console.log(data)
                 res.status(201).json({ message: "Find Product", data })
             } else {
                 res.status(500).send({
-                    message: `Cannot find Product with id=${id}.`
+                    message: `Cannot find Product with category_id=${category_id}.`
                 });
             }
         })
         .catch(err => {
             res.status(500).send({
-                message: "Error retrieving Product with id=" + id
+                message: `Error retrieving Product with  category_id=${category_id}.`
             });
         });
 }

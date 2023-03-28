@@ -2,71 +2,61 @@ const express = require('express')
 const app = express()
 const PORT = process.env.APP_ENV || 9000
 const jwt = require('jsonwebtoken');
-const Cookies = require( "cookies" );
+const Cookies = require("cookies");
 const session = require('express-session');
-const cors = require('cors');
+// const cors = require('cors');
 //variable d'environnement
 require("dotenv").config();
 
-app.use(express.urlencoded({ extended: true }));
+// parse requests of content-type - application/json
 app.use(express.json());
-
-const corsOptions = {
-    //à changer au déploiment ?
-    origin: 'http://localhost:3000'
-  }
-  
-app.use(cors(corsOptions));
-
-
-/*app.use(function(req, res, next) {
-    res.header('Access-Control-Allow-Origin', '*');
-    res.header('Access-Control-Allow-Headers', 'Content-Type');
-    next();
-});*/
-
 
 //----------------------ajout de express session (dj)
 app.use(session({
     //todo: utiliser un process.env.APP_KEY à la place de 'e8dec954ad98d87d249b22268df6109469417ddd'
-    secret: process.env.APP_KEY, resave:false, saveUninitialized:false, 
-    cookie: {maxAge: 3600000} 
+    secret: process.env.APP_KEY, resave: false, saveUninitialized: false,
+    cookie: { maxAge: 3600000 }
 }));
 //------------------------ JWT -------------------------
-app.use((req, res, next)=>{
+// app.use((req, res, next) => {
 
-    // Récupération du token dans le cookie
-    let token = new Cookies(req,res).get('access_token');
-    console.log('Récupération du token dans le cookie : ',token)
-    // Si le cookie (access_token) existe
-    if (typeof token != 'undefined'){
+//     // Récupération du token dans le cookie
+//     let token = new Cookies(req, res).get('access_token');
+//     console.log('Récupération du token dans le cookie : ', token)
+//     // Si le cookie (access_token) existe
+//     if (typeof token != 'undefined') {
 
-        // on vérifie le jwt
-        jwt.verify(token, process.env.SECRET_JWT, (err, dataJwt) => { 
-            // Erreur du JWT (n'est pas un JWT, a été modifié, est expiré)
-            if(err) {
-                res.clearCookie('access_token')
-                delete req.session.user
-                //-> revenvoyer un 404 ou 401 ?
-                next();
-            };
+//         // on vérifie le jwt    todo: utiliser un process.env.SECRET_JWT à la place de '67d4ed8895e2b7cdbc93cb68c247e16928d3e768'
+//         jwt.verify(token, process.env.SECRET_JWT, (err, dataJwt) => {
+//             // Erreur du JWT (n'est pas un JWT, a été modifié, est expiré)
+//             if (err) {
+//                 res.clearCookie('access_token')
+//                 delete req.session.user
+//                 //-> revenvoyer un 404 ou 401 ?
+//                 next();
+//             };
 
-            // A partir de là le JWT est valide on a plus qu'à vérifier les droits
-            // Si on est admin
-            //if(typeof dataJwt.roles != 'undefined' && dataJwt.roles[0] == 'admin') {
-                //return res.send(`Admin ${dataJwt.firstname}`);
-                req.session.user = { id: dataJwt.id, firstname: dataJwt.firstname, lastname : dataJwt.lastname, role : dataJwt.role };
-                res.locals.session=req.session
-            /*
-            } 
-            else {
-                // si on n'est pas admin
-                return res.send(`${dataJwt.firstname} PAS ADMIN !!!!`);
-            }*/
-        });
-    }
-    next()
-})
+//             // A partir de là le JWT est valide on a plus qu'à vérifier les droits
+//             // Si on est admin
+//             //if(typeof dataJwt.roles != 'undefined' && dataJwt.roles[0] == 'admin') {
+//             //return res.send(`Admin ${dataJwt.firstname}`);
+//             req.session.user = {
+//                 id: dataJwt.id,
+//                 firstname: dataJwt.firstname,
+//                 lastname: dataJwt.lastname,
+//                 role: dataJwt.role
+//             };
+//             res.locals.session = req.session
+//             /*
+//             } 
+//             else {
+//                 // si on n'est pas admin
+//                 return res.send(`${dataJwt.firstname} PAS ADMIN !!!!`);
+//             }*/
+//         });
+//     }
+//     next()
+// })
 
 
 //------------------lancer le serveur sur le port 
@@ -77,8 +67,6 @@ app.listen(PORT, () => {
     console.log(`Le serveur est démarré : http://localhost:${PORT}`);
 });
 
-// parse requests of content-type - application/json
-app.use(express.json());
 
 // parse requests of content-type - application/x-www-form-urlencoded
 app.use(express.urlencoded({ extended: true }));

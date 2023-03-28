@@ -1,1 +1,17 @@
-GET http://localhost:5000/commandes/list
+
+
+POST http://localhost:9000/users/login
+content-type: application/json
+
+{
+    "login": "sample",
+    "password": "Wed, 21 Oct 2015 18:27:50 GMT"
+}
+
+
+
+
+
+
+POST http://localhost:5000/users/login
+

@@ -5,57 +5,69 @@ import * as yup from 'yup';
 import TextField from '@mui/material/TextField';
 import Button from '@mui/material/Button';
 import { useNavigate } from 'react-router-dom';
+import { useState } from 'react';
+import { Alert } from '@mui/material';
 
 function Login() {
     const navigate = useNavigate();
-
+    const [isLogged, setIsLogged] = useState(false)
+    const [color, setColor] = useState()
+    const [message, setMessage] = useState()
     const validationSchema = yup.object({
         email: yup
-          .string('Entrez votre email')
-          .email('Entrez un email valide')
-          .required('Email est requis'),
+            .string('Entrez votre email')
+            .email('Entrez un email valide')
+            .required('Email est requis'),
         password: yup
-          .string('Entrez votre mot de passe')
-          .min(8, 'Le mot de passe doit être de 8 charactères minimum')
-          .required('Mot de passe est requis'),
-      });
+            .string('Entrez votre mot de passe')
+            .min(8, 'Le mot de passe doit être de 8 charactères minimum')
+            .required('Mot de passe est requis'),
+    });
 
     const formik = useFormik({
         initialValues: {
-        email: 'foobar@example.com',
-        password: 'foobar',
+            email: 'foobar@example.com',
+            password: 'foobar',
         },
         validationSchema: validationSchema,
         onSubmit: (values) => {
             //alert(JSON.stringify(values, null, 2));
-            fetch('http://localhost:9000/users/login', {
-                method:'POST',
-                headers:{
-                    "Content-Type": "application/json",
-                    'Access-Control-Allow-Origin': '*'
+            fetch('/users/login', {
+                method: 'POST',
+                headers: {
+                    "Content-Type": "application/json"
+
                 },
-                body:JSON.stringify(values)
+                body: JSON.stringify(values, null, 2),
+                credentials: 'include'
             })
-            .then(r=>r.json(r))
-            .then(result=>{
-                if(result.error==='user not found'){
-                    alert('Email inconnu !')
-                    return
-                }
-                if(result.error==='wrong password'){
-                    alert('Mauvais mot de passe !')
-                    return
-                }
-                // stocker des parametres de l'utilisateur quelque part ? ---> result.firstname id et lastname
-                //redirection si succès pour se connecter :
-                navigate('/')
-            })
-            .catch(err=>{
-                console.log('y 1 erreur : ', err)
-                if (err.message === 'Failed to fetch')
-                    alert('Une erreur est survenue sur le réseau !')
-                //alert('Une erreur est survenue ! ', err);
-            })
+                .then(response => {
+                    // Affiche le statut de la réponse (par exemple, 200 pour OK)
+                    console.log(response.status)
+                    if (response.status !== 200) {
+                        // alert("error")
+                        setColor("error")
+                    } else {
+                        // alert("OK")
+                        setColor("success")
+                        setIsLogged(true)
+                        //navigate('/')
+                    }
+                    return response.json();
+                })
+                .then(result => {
+
+                    setMessage(result.message)
+                    // stocker des parametres de l'utilisateur quelque part ? ---> result.firstname id et lastname
+                    //redirection si succès pour se connecter :
+
+                })
+                .catch(err => {
+                    console.log('y 1 erreur : ', err)
+                    if (err.message === 'Failed to fetch')
+                        alert('Une erreur est survenue sur le réseau !')
+                    //alert('Une erreur est survenue ! ', err);
+                })
 
 
         },
@@ -66,8 +78,10 @@ function Login() {
         <>
             <NavBar />
             <main className="basketPage">
-                <h1>Connectez-vous</h1>
 
+                {isLogged ? <h1>Espace personnel</h1> : <h1>Formulaire</h1>}
+
+                <Alert severity={color}>{message}</Alert>
 
                 <form onSubmit={formik.handleSubmit} className="loginForm">
                     <TextField
