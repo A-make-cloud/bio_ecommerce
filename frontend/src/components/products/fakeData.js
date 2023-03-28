@@ -2,7 +2,7 @@ const fakeData = [
     {
         id: '1',
         category_id: 1,
-        name: 'Lorem ipsum dolor',
+        title: 'Lorem ipsum dolor',
         description:
             'Lorem ipsum dolor sit amet, consectetur adipiscing elit, sed do eiusmod tempor incididunt ut labore et dolore magna aliqua. Ut enim ad minim veniam, quis nostrud exercitation ullamco laboris nisi ut aliquip ex ea commodo consequat. Duis aute irure dolor in reprehenderit in voluptate velit esse cillum dolore eu fugiat nulla pariatur.',
         price_ht: 18.99,
@@ -14,7 +14,7 @@ const fakeData = [
     {
         id: '2',
         category_id: 3,
-        name: 'Lorem ipsum dolor',
+        title: 'Lorem ipsum dolor',
         description:
             'Lorem ipsum dolor sit amet, consectetur adipiscing elit, sed do eiusmod tempor incididunt ut labore et dolore magna aliqua. Ut enim ad minim veniam, quis nostrud exercitation ullamco laboris nisi ut aliquip ex ea commodo consequat. Duis aute irure dolor in reprehenderit in voluptate velit esse cillum dolore eu fugiat nulla pariatur.',
         price_ht: 18.99,
@@ -26,7 +26,7 @@ const fakeData = [
     {
         id: '3',
         category_id: 2,
-        name: 'Lorem ipsum dolor',
+        title: 'Lorem ipsum dolor',
         description:
             'Lorem ipsum dolor sit amet, consectetur adipiscing elit, sed do eiusmod tempor incididunt ut labore et dolore magna aliqua. Ut enim ad minim veniam, quis nostrud exercitation ullamco laboris nisi ut aliquip ex ea commodo consequat. Duis aute irure dolor in reprehenderit in voluptate velit esse cillum dolore eu fugiat nulla pariatur.',
         price_ht: 18.99,
@@ -38,7 +38,7 @@ const fakeData = [
     {
         id: '4',
         category_id: 1,
-        name: 'Lorem ipsum dolor',
+        title: 'Lorem ipsum dolor',
         description:
             'Lorem ipsum dolor sit amet, consectetur adipiscing elit, sed do eiusmod tempor incididunt ut labore et dolore magna aliqua. Ut enim ad minim veniam, quis nostrud exercitation ullamco laboris nisi ut aliquip ex ea commodo consequat. Duis aute irure dolor in reprehenderit in voluptate velit esse cillum dolore eu fugiat nulla pariatur.',
         price_ht: 18.99,
@@ -50,7 +50,7 @@ const fakeData = [
     {
         id: '5',
         category_id: 2,
-        name: 'Lorem ipsum dolor',
+        title: 'Lorem ipsum dolor',
         description:
             'Lorem ipsum dolor sit amet, consectetur adipiscing elit, sed do eiusmod tempor incididunt ut labore et dolore magna aliqua. Ut enim ad minim veniam, quis nostrud exercitation ullamco laboris nisi ut aliquip ex ea commodo consequat. Duis aute irure dolor in reprehenderit in voluptate velit esse cillum dolore eu fugiat nulla pariatur.',
         price_ht: 18.99,
@@ -62,7 +62,7 @@ const fakeData = [
     {
         id: '6',
         category_id: 4,
-        name: 'Lorem ipsum dolor',
+        title: 'Lorem ipsum dolor',
         description:
             'Lorem ipsum dolor sit amet, consectetur adipiscing elit, sed do eiusmod tempor incididunt ut labore et dolore magna aliqua. Ut enim ad minim veniam, quis nostrud exercitation ullamco laboris nisi ut aliquip ex ea commodo consequat. Duis aute irure dolor in reprehenderit in voluptate velit esse cillum dolore eu fugiat nulla pariatur.',
         price_ht: 18.99,
@@ -74,7 +74,7 @@ const fakeData = [
     {
         id: '7',
         category_id: 2,
-        name: 'Lorem ipsum dolor',
+        title: 'Lorem ipsum dolor',
         description:
             'Lorem ipsum dolor sit amet, consectetur adipiscing elit, sed do eiusmod tempor incididunt ut labore et dolore magna aliqua. Ut enim ad minim veniam, quis nostrud exercitation ullamco laboris nisi ut aliquip ex ea commodo consequat. Duis aute irure dolor in reprehenderit in voluptate velit esse cillum dolore eu fugiat nulla pariatur.',
         price_ht: 18.99,
@@ -86,7 +86,7 @@ const fakeData = [
     {
         id: '8',
         category_id: 4,
-        name: 'Lorem ipsum dolor',
+        title: 'Lorem ipsum dolor',
         description:
             'Lorem ipsum dolor sit amet, consectetur adipiscing elit, sed do eiusmod tempor incididunt ut labore et dolore magna aliqua. Ut enim ad minim veniam, quis nostrud exercitation ullamco laboris nisi ut aliquip ex ea commodo consequat. Duis aute irure dolor in reprehenderit in voluptate velit esse cillum dolore eu fugiat nulla pariatur.',
         price_ht: 18.99,
@@ -98,7 +98,7 @@ const fakeData = [
     {
         id: '9',
         category_id: 1,
-        name: 'Lorem ipsum dolor',
+        title: 'Lorem ipsum dolor',
         description:
             'Lorem ipsum dolor sit amet, consectetur adipiscing elit, sed do eiusmod tempor incididunt ut labore et dolore magna aliqua. Ut enim ad minim veniam, quis nostrud exercitation ullamco laboris nisi ut aliquip ex ea commodo consequat. Duis aute irure dolor in reprehenderit in voluptate velit esse cillum dolore eu fugiat nulla pariatur.',
         price_ht: 18.99,
@@ -110,7 +110,7 @@ const fakeData = [
     {
         id: '10',
         category_id: 2,
-        name: 'Lorem ipsum dolor',
+        title: 'Lorem ipsum dolor',
         description:
             'Lorem ipsum dolor sit amet, consectetur adipiscing elit, sed do eiusmod tempor incididunt ut labore et dolore magna aliqua. Ut enim ad minim veniam, quis nostrud exercitation ullamco laboris nisi ut aliquip ex ea commodo consequat. Duis aute irure dolor in reprehenderit in voluptate velit esse cillum dolore eu fugiat nulla pariatur.',
         price_ht: 18.99,
@@ -122,7 +122,7 @@ const fakeData = [
     {
         id: '11',
         category_id: 4,
-        name: 'Lorem ipsum dolor',
+        title: 'Lorem ipsum dolor',
         description:
             'Lorem ipsum dolor sit amet, consectetur adipiscing elit, sed do eiusmod tempor incididunt ut labore et dolore magna aliqua. Ut enim ad minim veniam, quis nostrud exercitation ullamco laboris nisi ut aliquip ex ea commodo consequat. Duis aute irure dolor in reprehenderit in voluptate velit esse cillum dolore eu fugiat nulla pariatur.',
         price_ht: 18.99,
@@ -134,7 +134,7 @@ const fakeData = [
     {
         id: '12',
         category_id: 3,
-        name: 'Lorem ipsum dolor',
+        title: 'Lorem ipsum dolor',
         description:
             'Lorem ipsum dolor sit amet, consectetur adipiscing elit, sed do eiusmod tempor incididunt ut labore et dolore magna aliqua. Ut enim ad minim veniam, quis nostrud exercitation ullamco laboris nisi ut aliquip ex ea commodo consequat. Duis aute irure dolor in reprehenderit in voluptate velit esse cillum dolore eu fugiat nulla pariatur.',
         price_ht: 18.99,
@@ -146,7 +146,7 @@ const fakeData = [
     {
         id: '13',
         category_id: 2,
-        name: 'Lorem ipsum dolor',
+        title: 'Lorem ipsum dolor',
         description:
             'Lorem ipsum dolor sit amet, consectetur adipiscing elit, sed do eiusmod tempor incididunt ut labore et dolore magna aliqua. Ut enim ad minim veniam, quis nostrud exercitation ullamco laboris nisi ut aliquip ex ea commodo consequat. Duis aute irure dolor in reprehenderit in voluptate velit esse cillum dolore eu fugiat nulla pariatur.',
         price_ht: 18.99,
@@ -158,7 +158,7 @@ const fakeData = [
     {
         id: '14',
         category_id: 4,
-        name: 'Lorem ipsum dolor',
+        title: 'Lorem ipsum dolor',
         description:
             'Lorem ipsum dolor sit amet, consectetur adipiscing elit, sed do eiusmod tempor incididunt ut labore et dolore magna aliqua. Ut enim ad minim veniam, quis nostrud exercitation ullamco laboris nisi ut aliquip ex ea commodo consequat. Duis aute irure dolor in reprehenderit in voluptate velit esse cillum dolore eu fugiat nulla pariatur.',
         price_ht: 18.99,
@@ -170,7 +170,7 @@ const fakeData = [
     {
         id: '15',
         category_id: 1,
-        name: 'Lorem ipsum dolor',
+        title: 'Lorem ipsum dolor',
         description:
             'Lorem ipsum dolor sit amet, consectetur adipiscing elit, sed do eiusmod tempor incididunt ut labore et dolore magna aliqua. Ut enim ad minim veniam, quis nostrud exercitation ullamco laboris nisi ut aliquip ex ea commodo consequat. Duis aute irure dolor in reprehenderit in voluptate velit esse cillum dolore eu fugiat nulla pariatur.',
         price_ht: 18.99,
@@ -182,7 +182,7 @@ const fakeData = [
     {
         id: '16',
         category_id: 3,
-        name: 'Lorem ipsum dolor',
+        title: 'Lorem ipsum dolor',
         description:
             'Lorem ipsum dolor sit amet, consectetur adipiscing elit, sed do eiusmod tempor incididunt ut labore et dolore magna aliqua. Ut enim ad minim veniam, quis nostrud exercitation ullamco laboris nisi ut aliquip ex ea commodo consequat. Duis aute irure dolor in reprehenderit in voluptate velit esse cillum dolore eu fugiat nulla pariatur.',
         price_ht: 18.99,
@@ -194,7 +194,7 @@ const fakeData = [
     {
         id: '17',
         category_id: 2,
-        name: 'Lorem ipsum dolor',
+        title: 'Lorem ipsum dolor',
         description:
             'Lorem ipsum dolor sit amet, consectetur adipiscing elit, sed do eiusmod tempor incididunt ut labore et dolore magna aliqua. Ut enim ad minim veniam, quis nostrud exercitation ullamco laboris nisi ut aliquip ex ea commodo consequat. Duis aute irure dolor in reprehenderit in voluptate velit esse cillum dolore eu fugiat nulla pariatur.',
         price_ht: 18.99,
@@ -206,7 +206,7 @@ const fakeData = [
     {
         id: '18',
         category_id: 1,
-        name: 'Lorem ipsum dolor',
+        title: 'Lorem ipsum dolor',
         description:
             'Lorem ipsum dolor sit amet, consectetur adipiscing elit, sed do eiusmod tempor incididunt ut labore et dolore magna aliqua. Ut enim ad minim veniam, quis nostrud exercitation ullamco laboris nisi ut aliquip ex ea commodo consequat. Duis aute irure dolor in reprehenderit in voluptate velit esse cillum dolore eu fugiat nulla pariatur.',
         price_ht: 18.99,
@@ -218,7 +218,7 @@ const fakeData = [
     {
         id: '19',
         category_id: 4,
-        name: 'Lorem ipsum dolor',
+        title: 'Lorem ipsum dolor',
         description:
             'Lorem ipsum dolor sit amet, consectetur adipiscing elit, sed do eiusmod tempor incididunt ut labore et dolore magna aliqua. Ut enim ad minim veniam, quis nostrud exercitation ullamco laboris nisi ut aliquip ex ea commodo consequat. Duis aute irure dolor in reprehenderit in voluptate velit esse cillum dolore eu fugiat nulla pariatur.',
         price_ht: 18.99,

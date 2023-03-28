@@ -42,7 +42,7 @@ function Basket() {
                                         backgroundPosition: 'center', backgroundSize: 'cover'}}>
                                     </div>
                                     <div>
-                                        <h3>{articleType.name} {articleType.id}</h3>
+                                        <h3>{articleType.title} {articleType.id}</h3>
                                         <p>{articleType.pickedQuantity} article{articleType.pickedQuantity>1 && 's'}</p>
                                     </div>
                                     <p>{articleType.totalPrice_ht} €</p>
