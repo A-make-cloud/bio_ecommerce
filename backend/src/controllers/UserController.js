@@ -11,7 +11,7 @@ exports.login = async (req, res) => {
     //3-------------verifier le password ==>>OK
     //4--------------generer le JWT  ==>>OK
 
-    //recuperer email login 
+    //recuperer email lpasswordogin 
     email = req.body.email;
     password = req.body.password;
 
@@ -57,7 +57,7 @@ exports.login = async (req, res) => {
 
                         } else {
                             res.status(500).send({
-                                message: "Login ou mot de passe invalide"
+                                message: "Email ou mot de passe invalide"
                             });
                         }
                     });
@@ -68,7 +68,7 @@ exports.login = async (req, res) => {
                 // return data
             } else {
                 res.status(500).send({
-                    message: "Login ou mot de passe invalide"
+                    message: "Email ou mot de passe invalide"
                 });
             }
         })
@@ -97,7 +97,7 @@ exports.findAll = (req, res) => {
         });
 };
 
-exports.register = (req, res) => {
+exports.create = (req, res) => {
     //1---------------recuperer le body ==>>TODO
     //2----------------valider form ==>>TODO
     //3---------------------Ajouter user  ==>>OK

@@ -49,8 +49,6 @@ exports.create = (req, res) => {
         background: "red",
         top: 1,
 
-
-
     }
     Category.create(element).then((category) => {
         res.status(201).json({ message: "Created Category", category })

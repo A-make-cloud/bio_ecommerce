@@ -30,7 +30,7 @@ exports.findById = (req, res) => {
     Product.findByPk(id)
         .then(data => {
             if (data) {
-                res.status(201).json({ message: "Find Product", data })
+                res.status(201).json({ data })
             } else {
                 res.status(500).send({
                     message: `Cannot find user with id=${id}.`
@@ -61,7 +61,7 @@ exports.findByCategory = (req, res) => {
             if (data) {
                 res.status(201).json({ message: "Find Product", data })
             } else {
-                res.status(500).send({
+                res.status(401).send({
                     message: `Cannot find Product with category_id=${category_id}.`
                 });
             }
