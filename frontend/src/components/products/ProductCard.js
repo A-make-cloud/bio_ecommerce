@@ -21,7 +21,7 @@ function ProductCard({ product }) {
         />
       </Link>
       <CardContent>
-        <h4>{product.name + ' ' + product.id}</h4>
+        <h4>{product.title + ' ' + product.id}</h4>
         <p>{product.description.slice(0, 50) + "..."}</p>
       </CardContent>
       <CardActions className="priceAndAdd">

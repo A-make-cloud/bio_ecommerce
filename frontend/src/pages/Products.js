@@ -1,33 +1,37 @@
 import Categories from '../components/products/Categories';
 import ProductCard from '../components/products/ProductCard';
 import { useState, useRef, useEffect } from 'react';
-import fakeData from '../components/products/fakeData';
-import fakeCategories from '../components/products/fakeCategories';
+//import fakeData from '../components/products/fakeData';
+//import fakeCategories from '../components/products/fakeCategories';
 
-import TopCategorie from '../components/layouts/TopCategorie.js';
 import SyncIcon from '@mui/icons-material/Sync';
+import { Link } from "react-router-dom";
 
 function Products() {
-  const batchSize = 5
+  const batchSize = 10
   let batchOffset = 0
   let productsSaved = []
-  const categories = fakeCategories //todo: remplacer par un fetch
+  //const categories = fakeCategories //todo: remplacer par un fetch
   const [isLoading, setIsLoading] = useState(true);
   const [products, setProducts] = useState([]);
-  const [chosenCategories, setChosenCategories] = useState([...categories]);
+  const [categories, setCategories] = useState([]);
+  const [chosenCategories, setChosenCategories] = useState(categories.map(c => c.id));
   const spinnerRef = useRef();
 
   const observer = new IntersectionObserver(([elem]) => {
     if (elem.isIntersecting) {
-      const newBatch = fakeData.slice(batchOffset, batchOffset + batchSize)
-      // pour la bdd, remplacer par
-      //(async()=>{const newBatch =  await fetchProductBatch(filter, batchOffset, batchSize)})()
-      if (newBatch.length > 0)
-        addNewBatch(newBatch)
-      if (newBatch.length < batchSize)
-        setIsLoading(false)
-      batchOffset += batchSize
+      fetch(`/products/findAll?offset=${batchOffset}&limit=${batchSize}`)
+        .then(response => response.json())
+        .then((res) => {
+          const products = res.data
+          if (products.length > 0)
+            addNewBatch(products)
+          if (products.length < batchSize)
+            setIsLoading(false)
+          batchOffset += batchSize
+        })
     }
+    //observer.observe(elem.target);
   })
 
   function addNewBatch(newProducts) {
@@ -40,39 +44,53 @@ function Products() {
     if (spinnerRef.current) {
       observer.observe(spinnerRef.current);
     }
-    //setChosenCategories([...categories])
+    //RECUPERATION des catégories dans BDD
+    async function fetchCat() {
+      const response = await fetch('/categories/findAll')
+      if (response.status !== 500) {
+        const json = await response.json()
+        setCategories(json)
+      } else {
+        console.log('pas de catégories')
+      }
+    }
+    fetchCat()
   }, []);
 
   useEffect(() => {
-    //fetchProductBatch avec filtre avec chosenCategories.map(c=>c.id)
-    batchOffset = 0
-    productsSaved = []
-    setProducts([])
+    setProducts([...products])
   }, [chosenCategories]);
 
-  //todo: mettre un fetch pour récup les données de la bdd au lieu du fake
-  //const fetchProductBatch = (filter, batchOffset, batchSize) => {
-  // return fetch(`https://jsonplaceholder.typicode.com/posts`)
-  //     .then(response => response.json())
-  //     .then((products) => {
-  //         return products;
-  //     })
-  //}
+  useEffect(() => {
+    //observer.observe(spinnerRef.current);
+    console.log(products.length)
+  });
+
 
   return (
     <>
 
       <main className="productsPage">
         <h1 style={{ textAlign: 'center' }}>Nos produits</h1>
-        {/*<TopCategorie sx={{height: 5 }}/>*/}
         <Categories categories={categories} chosenCategories={chosenCategories} setChosenCategories={setChosenCategories} />
 
         {categories.length === chosenCategories.length || chosenCategories.length === 0 ?
-          <p>Tout nos produits :</p>
-          : chosenCategories.map((c, i) => ' ' + c.title) + ' :'}
 
+          <p>Tout nos produits :</p>
+          :
+          <div style={{ display: 'flex', justifyContent: 'space-between' }}>
+            {chosenCategories.map((c, i) => ' ' + c.title) + ' :'}
+            <Link onClick={(e) => { setChosenCategories([]) }}>Afficher les produits de toutes les catégories</Link>
+          </div>
+        }
         <div className="productCards">
-          {products}
+          {products.filter(p => {
+            if (chosenCategories.length === 1)
+              return p.props.product.category_id === chosenCategories[0].id
+            else
+              return true
+          })}
+
         </div>
         {isLoading &&
           <div ref={spinnerRef} className="LoadingSpinner" >

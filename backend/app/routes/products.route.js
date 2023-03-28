@@ -4,7 +4,7 @@ const Controller = require('../../src/controllers/ProductController.js')
 //find all products
 router.get("/findAll", Controller.findAll);
 //find by categories
-router.get("/findByCategory/:category_id/:offset?/:limit?", Controller.findByCategory);
+router.get("/findByCategory", Controller.findByCategory);
 //create  form product
 router.get("/create/:category_id", Controller.create);
 //find product by id

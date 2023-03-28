@@ -16,11 +16,11 @@ function Categories({ categories, chosenCategories, setChosenCategories }) {
     return (
         <ul style={{display:'flex', justifyContent:'space-around', flexWrap:'wrap', padding:'0', marginTop:'40px'}}>
             {categories.map((c, i)=> {return(
-                <li key={'cat_'+i} style={{...cartoucheStyle, backgroundColor:c.color}}
+                <li key={'cat_'+i} style={{...cartoucheStyle, backgroundColor:c.background}}
                     onClick={e=>switchCat(c.id, c.title)}>
 
                     <h3>{c.title}</h3>
-                    <div style={{width:'61px', height:'61px', backgroundImage: `url(${c.icon})`, backgroundRepeat: 'no-repeat',
+                    <div style={{width:'61px', height:'61px', backgroundImage: `url(${c.img})`, backgroundRepeat: 'no-repeat',
                         backgroundPosition: 'center', backgroundSize: 'cover'}}>
                     </div>
                 </li>

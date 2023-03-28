@@ -15,9 +15,9 @@ module.exports = {
       password: hashedPassword,
       profil: 'admin',
       status: '1',
-      createdAt: new Date(),
-      confirmedAt: new Date(),
-      updatedAt: new Date()
+      created_at: new Date(),
+      confirmed_at: new Date(),
+      updated_at: new Date()
     }], {});
 
   },
@@ -27,3 +27,7 @@ module.exports = {
 
   }
 };
+
+
+
+
