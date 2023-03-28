@@ -4,6 +4,8 @@ const { Product, Image } = require('../../models');
 
 
 exports.findAll = (req, res) => {
+
+
     Product.findAll()
         .then(data => {
             res.send(data);

@@ -1,14 +1,12 @@
-import React, { useState } from 'react';
+import React from 'react';
 import ReactDOM from 'react-dom';
 import { useFormik } from 'formik';
 import * as yup from 'yup';
 
-import { Alert, Button, TextField } from '@mui/material';
-import LoginSchema from '../../validations/LoginSchema'
-
-console.log(LoginSchema)
+import { Button, Card, CardActions, CardContent, TextField } from '@mui/material';
 
 
+console.log("register")
 const validationSchema = yup.object({
     email: yup
         .string('Enter your email')
@@ -19,61 +17,23 @@ const validationSchema = yup.object({
         .min(8, 'Password should be of minimum 8 characters length')
         .required('Password is required'),
 });
-
 console.log(validationSchema)
 const Register = () => {
-
-    const [isLogged, setIsLogged] = useState(false)
-    const [color, setColor] = useState()
-    const [message, setMessage] = useState()
     const formik = useFormik({
         initialValues: {
             email: 'foobar@example.com',
             password: 'foobar',
         },
         validationSchema: validationSchema,
-        onSubmit: async (values) => {
-
-            await fetch('/users/login', {
-                method: 'POST',
-                headers: { 'Content-Type': 'application/json' },
-                body: JSON.stringify(values, null, 2)
-            })
-                .then(response => {
-                    // Affiche le statut de la réponse (par exemple, 200 pour OK)
-
-                    if (response.status === 500) {
-                        // alert("error")
-                        setColor("error")
-                    } else {
-                        // alert("OK")
-                        setColor("success")
-                        setIsLogged(true)
-                    }
-                    return response.json();
-                })
-                .then(data => {
-                    console.log(data)
-                    // alert(data.message)
-                    setMessage(data.message)
-                })
-                .catch(error => console.error(error));
-
-
-
-
-
-
+        onSubmit: (values) => {
+            alert(JSON.stringify(values, null, 2));
+            //
         },
     });
 
-
     return (
         <div>
-            {isLogged ? <h1>Vous etre bien connecté</h1> : <h1>Formulaire</h1>}
-
-            <Alert severity={color}>{message}</Alert>
-
+            <h1>Formulaire</h1>
             <form onSubmit={formik.handleSubmit}>
                 <TextField
                     fullWidth

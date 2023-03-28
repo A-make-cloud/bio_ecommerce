@@ -1,6 +1,8 @@
 const express = require('express')
 const router = express.Router();
 const Controller = require('../../src/controllers/UserController.js')
+//register  form user
+router.post("/login", Controller.login);
 //find all user
 router.get("/findAll", Controller.findAll);
 //register  form user

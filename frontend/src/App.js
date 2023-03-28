@@ -8,8 +8,10 @@ import Register from './components/users/Register';
 
 function App() {
 
+
   return (
     <div className="App">
+
       <Routes>
         <Route path="/" element={<Home />} />
         <Route path="/products" element={<Products />} />
