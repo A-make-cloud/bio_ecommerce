@@ -4,16 +4,22 @@ const { Product, Image } = require('../../models');
 
 
 exports.findAll = (req, res) => {
+    const offset = req.query.offset ? parseInt(req.query.offset) : null;
+    const limit = req.query.limit ? parseInt(req.query.limit) : null;
 
-
-    Product.findAll()
+    Product.findAll({ offset: offset, limit: limit })
         .then(data => {
-            res.send(data);
+            if (data) {
+                res.status(201).json({ message: "Find Products", data })
+            } else {
+                res.status(500).send({
+                    message: `Cannot find Products .`
+                });
+            }
         })
         .catch(err => {
             res.status(500).send({
-                message:
-                    err.message || "Error Database."
+                message: `Error retrieving Products.`
             });
         });
 };
@@ -45,15 +51,14 @@ exports.findById = (req, res) => {
  * @param {*} res 
  */
 exports.findByCategory = (req, res) => {
-    const category_id = req.params.category_id;
-    const offset = req.params.offset ? parseInt(req.params.offset) : null;
-    const limit = req.params.limit ? parseInt(req.params.limit) : null;
+    const category_id = req.query.category_id ? parseInt(req.query.offset) : [1,2,3,4];
+    const offset = req.query.offset ? parseInt(req.query.offset) : null;
+    const limit = req.query.limit ? parseInt(req.query.limit) : null;
 
 
     Product.findAll({ where: { category_id }, offset: offset, limit: limit })
         .then(data => {
             if (data) {
-                console.log(data)
                 res.status(201).json({ message: "Find Product", data })
             } else {
                 res.status(500).send({
@@ -63,7 +68,7 @@ exports.findByCategory = (req, res) => {
         })
         .catch(err => {
             res.status(500).send({
-                message: `Error retrieving Product with  category_id=${category_id}.`
+                message: `Error retrieving Product with category_id=${category_id}.`
             });
         });
 }
