@@ -1,5 +1,4 @@
-import NavBar from '../components/layouts/Navbar.js'
-import Footer from '../components/layouts/Footer.js'
+
 import { useFormik } from 'formik';
 import * as yup from 'yup';
 import TextField from '@mui/material/TextField';
@@ -8,9 +7,9 @@ import { useNavigate } from 'react-router-dom';
 import { useState } from 'react';
 import { Alert } from '@mui/material';
 
-function Login() {
+function Login({ setIsLogged, isLogged }) {
     const navigate = useNavigate();
-    const [isLogged, setIsLogged] = useState(false)
+
     const [color, setColor] = useState()
     const [message, setMessage] = useState()
     const validationSchema = yup.object({
@@ -51,7 +50,7 @@ function Login() {
                         // alert("OK")
                         setColor("success")
                         setIsLogged(true)
-                        //navigate('/')
+                        navigate('/dashbord')
                     }
                     return response.json();
                 })
@@ -75,46 +74,44 @@ function Login() {
 
 
     return (
-        <>
-            <NavBar />
-            <main className="basketPage">
 
-                {isLogged ? <h1>Espace personnel</h1> : <h1>Formulaire</h1>}
+        <main className="productsPage">
 
-                <Alert severity={color}>{message}</Alert>
+            {isLogged ? <h1>Espace personnel</h1> : <h1>Formulaire</h1>}
 
-                <form onSubmit={formik.handleSubmit} className="loginForm">
-                    <TextField
-                        fullWidth
-                        id="email"
-                        name="email"
-                        label="Email"
-                        value={formik.values.email}
-                        onChange={formik.handleChange}
-                        error={formik.touched.email && Boolean(formik.errors.email)}
-                        helperText={formik.touched.email && formik.errors.email}
-                        spacing={5}
-                    />
-                    <TextField
-                        fullWidth
-                        id="password"
-                        name="password"
-                        label="Password"
-                        type="password"
-                        value={formik.values.password}
-                        onChange={formik.handleChange}
-                        error={formik.touched.password && Boolean(formik.errors.password)}
-                        helperText={formik.touched.password && formik.errors.password}
-                    />
-                    <Button color="primary" variant="contained" fullWidth type="submit">
-                        Submit
-                    </Button>
-                </form>
+            {message ? <p><Alert severity={color}>{message}</Alert></p> : ""}
+
+            <form onSubmit={formik.handleSubmit} className="loginForm">
+                <TextField
+                    fullWidth
+                    id="email"
+                    name="email"
+                    label="Email"
+                    value={formik.values.email}
+                    onChange={formik.handleChange}
+                    error={formik.touched.email && Boolean(formik.errors.email)}
+                    helperText={formik.touched.email && formik.errors.email}
+                    spacing={5}
+                />
+                <TextField
+                    fullWidth
+                    id="password"
+                    name="password"
+                    label="Password"
+                    type="password"
+                    value={formik.values.password}
+                    onChange={formik.handleChange}
+                    error={formik.touched.password && Boolean(formik.errors.password)}
+                    helperText={formik.touched.password && formik.errors.password}
+                />
+                <Button color="primary" variant="contained" fullWidth type="submit">
+                    Se connecter
+                </Button>
+            </form>
 
 
-            </main>
-            <Footer />
-        </>
+        </main>
+
     );
 }
 

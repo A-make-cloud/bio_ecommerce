@@ -13,11 +13,7 @@ exports.process = (req, res) => {
     //3-------------verifier le password ==>>OK
     //4--------------generer le JWT  ==>>OK
 
-    // console.log('req.session.user ', req.session.user)
-    // if (req.session.user) {
-    //     //déjà connecté
-    //     return res.status(200);
-    // }
+
     //recuperer email login 
     email = req.body.email;
     password = req.body.password;

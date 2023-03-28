@@ -33,7 +33,7 @@ const Item = styled(Paper)(({ theme }) => ({
 function Home() {
     return (
         <div>
-            <NavBar />
+
 
             <Box sx={{ flexGrow: 1 }}>
                 <Grid spacing={2} columns={16}>
@@ -63,8 +63,8 @@ function Home() {
                 <Phare />
                 <TopCategorie />
             </Container>
-            <Footer />
-        </div >
+
+        </div>
     );
 }
 

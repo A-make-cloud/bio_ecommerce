@@ -30,7 +30,7 @@ import Paper from '@mui/material/Paper';
 
 
 
-export default function NavBar() {
+export default function NavBar({ isLogged }) {
     const { basket } = React.useContext(BasketContext);
     const Item = styled(Paper)(({ theme }) => ({
         backgroundColor: theme.palette.mode === 'dark' ? '#1A2027' : '#346344',
@@ -74,13 +74,29 @@ export default function NavBar() {
                                 <Link to="/" style={{ color: "inherit", textDecoration: "none", marginRight: 5 }} >Accueil</Link>
                                 <Link to="/products" style={{ color: "inherit", textDecoration: "none" }} >Nos Produits</Link>
                             </Typography>
+
+
+                            {!isLogged ?
+                                <Link to="/register" style={{ color: "inherit", textDecoration: "none" }}>
+
+                                    <Button color="inherit">S'inscrire</Button>
+                                </Link> : ""}
+                            {!isLogged ?
+                                <Link to="/login" style={{ color: "inherit", textDecoration: "none" }}>
+                                    <Button color="inherit">Login</Button>
+                                </Link>
+
+                                :
+                                <Link to="/login" style={{ color: "inherit", textDecoration: "none" }}>
+
+                                    <Button color="inherit">Logout</Button>
+                                </Link>
+                            }
                             <Link to="/basket" style={{ color: "inherit", textDecoration: "none" }}>{/*todo: il faudra faire de l'icone du panier un composant à part entiere*/}
                                 <ShoppingBasketIcon />
-                                {basket.items.length > 0 && <span style={{fontSize:'small'}}>{basket.items.length}</span>}
+                                {basket.items.length > 0 && <span style={{ fontSize: 'small' }}>{basket.items.length}</span>}
                             </Link>
-                            <Link to="/login" style={{ color: "inherit", textDecoration: "none" }}>
-                                <Button color="inherit">Login</Button>
-                            </Link>
+
                         </Toolbar>
                     </Container>
                 </AppBar>

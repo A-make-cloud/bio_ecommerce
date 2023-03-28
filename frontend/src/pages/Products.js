@@ -3,8 +3,7 @@ import ProductCard from '../components/products/ProductCard';
 import { useState, useRef, useEffect } from 'react';
 import fakeData from '../components/products/fakeData';
 import fakeCategories from '../components/products/fakeCategories';
-import NavBar from '../components/layouts/Navbar.js'
-import Footer from '../components/layouts/Footer.js'
+
 import TopCategorie from '../components/layouts/TopCategorie.js';
 import SyncIcon from '@mui/icons-material/Sync';
 
@@ -47,7 +46,7 @@ function Products() {
   useEffect(() => {
     //fetchProductBatch avec filtre avec chosenCategories.map(c=>c.id)
     batchOffset = 0
-    productsSaved=[]
+    productsSaved = []
     setProducts([])
   }, [chosenCategories]);
 
@@ -62,7 +61,7 @@ function Products() {
 
   return (
     <>
-      <NavBar />
+
       <main className="productsPage">
         <h1 style={{ textAlign: 'center' }}>Nos produits</h1>
         {/*<TopCategorie sx={{height: 5 }}/>*/}
@@ -70,7 +69,7 @@ function Products() {
 
         {categories.length === chosenCategories.length || chosenCategories.length === 0 ?
           <p>Tout nos produits :</p>
-          : chosenCategories.map((c, i) => ' '+c.title) + ' :'}
+          : chosenCategories.map((c, i) => ' ' + c.title) + ' :'}
 
         <div className="productCards">
           {products}
@@ -81,7 +80,7 @@ function Products() {
           </div>
         }
       </main>
-      <Footer />
+
     </>
   );
 }
