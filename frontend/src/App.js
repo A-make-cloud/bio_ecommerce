@@ -11,6 +11,7 @@ import Dashboard from './pages/private/Dashboard';
 import NavBar from './components/layouts/Navbar';
 import Footer from './components/layouts/Footer';
 import Register from './pages/Register';
+import Addproduct from './pages/private/Addproduct';
 function App() {
   const [isLogged, setIsLogged] = useState(false)
 
@@ -29,7 +30,11 @@ function App() {
         <Route path="/product/:id" element={<Product />} />
 
         {
-          isLogged && <Route path="/dashbord" element={<Dashboard />} />
+          /*isLogged*/true && 
+            <>
+              <Route path="/dashboard" element={<Dashboard />} />
+              <Route path="/dashboard/addproduct" element={<Addproduct />} />
+            </>
         }
 
 

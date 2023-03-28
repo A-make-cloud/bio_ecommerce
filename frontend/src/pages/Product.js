@@ -15,7 +15,7 @@ function Product() {
 
   useEffect(function effectFunction() {
     async function fetchProduct() {
-      const response = await fetch(`/products/find/{prodId}`);
+      const response = await fetch(`/products/find/${prodId}`);
       console.log(response.status)
       //if status 201 ==>OK 
       if (response.status === 201) {
