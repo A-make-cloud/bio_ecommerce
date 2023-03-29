@@ -50,19 +50,18 @@ export default function NavBar() {
                 <AppBar position="static" style={{ background: '#346344' }}>
                     <Container>
                         <Toolbar>
-                            <Tooltip title="Open settings">
-                                <IconButton sx={{ p: 0 }}>
-                                    <Item>
+                            {/*<Tooltip title="Open settings">*/}
+                            <Link to="/" style={{ color: "inherit", textDecoration: "none", marginRight: 5 }} >
+                                    <Item sx={{boxShadow:'none'}}>
                                         <CardMedia
-
                                             component="img"
                                             height="80"
                                             image={logo}
                                             alt="logo"
                                         />
                                     </Item>
-                                </IconButton>
-                            </Tooltip>
+                                </Link>
+                            {/*</Tooltip>*/}
                             <IconButton
                                 size="large"
                                 edge="start"

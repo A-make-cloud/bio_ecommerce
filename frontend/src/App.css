@@ -4,6 +4,10 @@
   margin-right: auto;
 }
 
+/* .homeHeader{
+  background-image:url("./static/head.jpg"), 
+} */
+
 .priceAndAdd{
   display : flex;
   justify-content: space-around;
