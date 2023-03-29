@@ -65,6 +65,7 @@ function AddProduct() {
         onSubmit: (values) => {
             //alert(JSON.stringify(values, null, 2));
             console.log(values)
+            
             fetch('/products/create', {
                 method: 'POST',
                 headers: {
