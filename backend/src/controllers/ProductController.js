@@ -8,6 +8,7 @@ exports.findAll = (req, res) => {
 
     Product.findAll({ offset: offset, limit: limit, include: Image })
         .then(data => {
+
             if (data) {
                 res.status(201).json({ message: "Find Products", data })
             } else {
