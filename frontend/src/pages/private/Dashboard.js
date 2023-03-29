@@ -1,5 +1,12 @@
-function dashboard() {
 
-    return <h1> Dashbord</h1>
+import NavbarAdmin from './NavbarAdmin';
+export default function Dashboard() {
+
+    return (
+        <>
+            <NavbarAdmin />
+            <h1>Mon espace admin </h1>
+        </>)
 }
-export default dashboard
+
+

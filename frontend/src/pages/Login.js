@@ -9,7 +9,7 @@ import { Alert } from '@mui/material';
 
 import { AuthContext } from './../contexts/AuthContext'
 function Login() {
-    const { isLogged, updateIslogged, connectUser } = useContext(AuthContext);
+    const { isLogged, updateIslogged, updateProfil, connectUser } = useContext(AuthContext);
     const navigate = useNavigate();
 
     const [color, setColor] = useState()
@@ -61,15 +61,24 @@ function Login() {
                     setMessage(result.message)
                     if (result.user) {
                         // stocker des parametres de l'utilisateur quelque part ? ---> result.firstname id et lastname
-                        console.log(result.user)
+                        //console.log(result.user)
                         connectUser(result.user) //add user to local storage //AuthContext.js
 
                         //setISlogged and add to local storage // AuthContext.js
                         updateIslogged('true')
 
                         //redirection vers espace admin || client
+                        const profil = result.user.profil
+                        updateProfil(profil)
 
-                        navigate('/dashbord')
+                        // console.log("-------profil", profil)
+
+                        if (profil === "admin")
+                            navigate('/dashboard')
+                        else if (profil === "client")
+                            navigate('/client')
+
+
                     }
 
 

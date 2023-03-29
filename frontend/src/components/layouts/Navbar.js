@@ -23,8 +23,8 @@ import { AuthContext } from '../../contexts/AuthContext';
 
 export default function NavBar() {
     const navigate = useNavigate();
-    const { isLogged, updateIslogged, logoutUser, user } = useContext(AuthContext);
-    console.log(user)
+    const { isLogged, updateIslogged, logoutUser } = useContext(AuthContext);
+
     const { basket } = React.useContext(BasketContext);
     const Item = styled(Paper)(({ theme }) => ({
         backgroundColor: theme.palette.mode === 'dark' ? '#1A2027' : '#346344',
@@ -35,9 +35,7 @@ export default function NavBar() {
 
     }));
     const logout = () => {
-        //avec localStorage ==>>
 
-        updateIslogged('false')
         //deconnect user delete localstorage
         logoutUser()
         //redirection home page

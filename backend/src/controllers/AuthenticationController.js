@@ -21,7 +21,7 @@ exports.process = (req, res) => {
         .then(user => {
             if (user) {
 
-                console.log("data--------->>", user.status)
+                // console.log("data--------->>", user.status)
                 //----------compte actif
                 if (user.status == 3) {
                     res.status(401).send({
@@ -36,7 +36,7 @@ exports.process = (req, res) => {
                             });
                         } else if (result) {
 
-                            console.log('Le mot de passe ok  !');
+                            // console.log('Le mot de passe ok  !');
                             //4--------------generer le JWT  ==>>OK
                             let accessToken = jwt.sign({
                                 id: user.id,
@@ -48,14 +48,11 @@ exports.process = (req, res) => {
                                 process.env.SECRET_JWT, { expiresIn: 604800 }
                             );
                             //----methode 1 Cookie
-                            // new Cookies(req, res).set("access_token", accessToken, {
-                            //     httpOnly: true, //utilisation uniquement via requete http
-                            //     secure: false, //true pour forcer l'utilisation https
-                            // });
+                            const cookie = new Cookies(req, res).set("access_token", accessToken, {
+                                httpOnly: true, //utilisation uniquement via requete http
+                                secure: false, //true pour forcer l'utilisation https
+                            });
 
-                            //-----Methode 2 cookie parser
-
-                            res.cookie('access_token', accessToken, { maxAge: 604800, httpOnly: true });
 
                             res.status(200).send({
                                 message: "connexion ok",
@@ -65,7 +62,8 @@ exports.process = (req, res) => {
                                     lastname: user.lastname,
                                     profil: user.profil,
                                     email: user.email,
-                                }
+                                    accessToken
+                                },
                             });
 
 
