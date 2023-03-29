@@ -4,11 +4,13 @@ import * as yup from 'yup';
 import TextField from '@mui/material/TextField';
 import Button from '@mui/material/Button';
 import { useNavigate } from 'react-router-dom';
-import { useState } from 'react';
+import { useContext, useState } from 'react';
 import { Alert, FormControl, FormControlLabel, FormLabel, Radio, RadioGroup } from '@mui/material';
 import RegisterSchema from '../validations/RegisterSchema';
-console.log(RegisterSchema)
-function Register({ setIsLogged, isLogged }) {
+import { AuthContext } from './../contexts/AuthContext'
+
+function Register() {
+    const { isLogged, setIsLogged } = useContext(AuthContext);
     const navigate = useNavigate();
 
     const [color, setColor] = useState()

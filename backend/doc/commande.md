@@ -94,3 +94,7 @@ npx sequelize-cli seed:generate --name admin-user
 ## 4----seeder les données
 
 npx sequelize-cli db:seed:all
+
+## cookie parser
+
+npm install cookie-parser

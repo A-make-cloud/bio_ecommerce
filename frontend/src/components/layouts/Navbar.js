@@ -1,17 +1,5 @@
-// import { Link } from "react-router-dom";
-
-// function NavBar() {
-//     return (
-//         <nav>
-//             <Link to="/">Accueil</Link>
-//             <Link to="/products">Nos Produits</Link>
-//         </nav>
-//     );
-// }
-
-// export default NavBar;
 import ShoppingBasketIcon from '@mui/icons-material/ShoppingBasket';
-import { Link } from "react-router-dom";
+import { Link, useNavigate } from "react-router-dom";
 import * as React from 'react';
 import AppBar from '@mui/material/AppBar';
 import Box from '@mui/material/Box';
@@ -25,12 +13,18 @@ import { Container } from '@mui/system';
 import logo from '../../static/logoBioShop.png'
 import { styled } from '@mui/material/styles';
 import Paper from '@mui/material/Paper';
+import { useContext, useState } from 'react';
+
+import { AuthContext } from '../../contexts/AuthContext';
 
 
 
 
 
-export default function NavBar({ isLogged }) {
+export default function NavBar() {
+    const navigate = useNavigate();
+    const { isLogged, updateIslogged, logoutUser, user } = useContext(AuthContext);
+    console.log(user)
     const { basket } = React.useContext(BasketContext);
     const Item = styled(Paper)(({ theme }) => ({
         backgroundColor: theme.palette.mode === 'dark' ? '#1A2027' : '#346344',
@@ -40,6 +34,16 @@ export default function NavBar({ isLogged }) {
 
 
     }));
+    const logout = () => {
+        //avec localStorage ==>>
+
+        updateIslogged('false')
+        //deconnect user delete localstorage
+        logoutUser()
+        //redirection home page
+        navigate('/')
+
+    }
     return (
         <div>
             <Box sx={{ flexGrow: 1 }} >
@@ -87,7 +91,7 @@ export default function NavBar({ isLogged }) {
                                 </Link>
 
                                 :
-                                <Link to="/login" style={{ color: "inherit", textDecoration: "none" }}>
+                                <Link onClick={logout} style={{ color: "inherit", textDecoration: "none" }}>
 
                                     <Button color="inherit">Logout</Button>
                                 </Link>

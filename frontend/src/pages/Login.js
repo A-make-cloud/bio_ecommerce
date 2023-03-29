@@ -4,10 +4,12 @@ import * as yup from 'yup';
 import TextField from '@mui/material/TextField';
 import Button from '@mui/material/Button';
 import { useNavigate } from 'react-router-dom';
-import { useState } from 'react';
+import { useContext, useState } from 'react';
 import { Alert } from '@mui/material';
 
-function Login({ setIsLogged, isLogged }) {
+import { AuthContext } from './../contexts/AuthContext'
+function Login() {
+    const { isLogged, updateIslogged, connectUser } = useContext(AuthContext);
     const navigate = useNavigate();
 
     const [color, setColor] = useState()
@@ -25,8 +27,8 @@ function Login({ setIsLogged, isLogged }) {
 
     const formik = useFormik({
         initialValues: {
-            email: 'foobar@example.com',
-            password: 'foobar',
+            email: '',
+            password: '',
         },
         validationSchema: validationSchema,
         onSubmit: (values) => {
@@ -49,17 +51,28 @@ function Login({ setIsLogged, isLogged }) {
                     } else {
                         // alert("OK")
                         setColor("success")
-                        setIsLogged(true)
-                        //tester le role du user pour renvoyer vers dashboard ou accueil
-                        navigate('/dashboard')
+
                     }
                     return response.json();
                 })
                 .then(result => {
 
+
                     setMessage(result.message)
-                    // stocker des parametres de l'utilisateur quelque part ? ---> result.firstname id et lastname
-                    //redirection si succès pour se connecter :
+                    if (result.user) {
+                        // stocker des parametres de l'utilisateur quelque part ? ---> result.firstname id et lastname
+                        console.log(result.user)
+                        connectUser(result.user) //add user to local storage //AuthContext.js
+
+                        //setISlogged and add to local storage // AuthContext.js
+                        updateIslogged('true')
+
+                        //redirection vers espace admin || client
+
+                        navigate('/dashbord')
+                    }
+
+
 
                 })
                 .catch(err => {

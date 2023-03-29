@@ -1,4 +1,4 @@
-import React, { useState } from 'react'
+import React, { useContext, useState } from 'react'
 import './App.css';
 import { Route, Routes } from "react-router-dom";
 import Home from "./pages/Home";
@@ -12,29 +12,33 @@ import NavBar from './components/layouts/Navbar';
 import Footer from './components/layouts/Footer';
 import Register from './pages/Register';
 import AddProduct from './pages/private/AddProduct';
+import { AuthContext } from './contexts/AuthContext';
+
+
 function App() {
-  const [isLogged, setIsLogged] = useState(false)
+  // const [isLogged, setIsLogged] = useState(false)
 
-
+  const { isLogged, setIsLogged } = useContext(AuthContext);
 
   return (
     <div className="App">
-      <NavBar isLogged={isLogged} />
+      <NavBar />
 
       <Routes>
+
         <Route path="/" element={<Home />} />
         <Route path="/products" element={<Products />} />
         <Route path="/basket" element={<Basket />} />
-        <Route path="/register" element={<Register setIsLogged={setIsLogged} isLogged={isLogged} />} />
-        <Route path="/login" element={<Login setIsLogged={setIsLogged} isLogged={isLogged} />} />
+        <Route path="/register" element={<Register />} />
+        <Route path="/login" element={<Login />} />
         <Route path="/product/:id" element={<Product />} />
 
         {
-          /*isLogged*/true && 
-            <>
-              <Route path="/dashboard" element={<Dashboard />} />
-              <Route path="/dashboard/add-product" element={<AddProduct />} />
-            </>
+          /*isLogged*/true &&
+          <>
+            <Route path="/dashboard" element={<Dashboard />} />
+            <Route path="/dashboard/add-product" element={<AddProduct />} />
+          </>
         }
 
 

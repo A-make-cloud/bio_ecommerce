@@ -2,7 +2,6 @@
 const jwt = require('jsonwebtoken');
 const Cookies = require("cookies");
 require('dotenv').config();
-const bcrypt = require('bcrypt');
 //const UserController = require('./UserController');
 const { User } = require('../../models');
 

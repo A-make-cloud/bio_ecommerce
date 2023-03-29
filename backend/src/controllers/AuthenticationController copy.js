@@ -21,7 +21,7 @@ exports.process = (req, res) => {
         .then(user => {
             if (user) {
 
-                console.log("data--------->>", user.status)
+                // console.log("data--------->>", user.status)
                 //----------compte actif
                 if (user.status == 3) {
                     res.status(401).send({
@@ -43,29 +43,16 @@ exports.process = (req, res) => {
                                 firstname: user.firstname,
                                 lastname: user.lastname,
                                 profil: user.profil,
-                                email: user.email,
                             },
                                 process.env.SECRET_JWT, { expiresIn: 604800 }
                             );
-                            //----methode 1 Cookie
-                            // new Cookies(req, res).set("access_token", accessToken, {
-                            //     httpOnly: true, //utilisation uniquement via requete http
-                            //     secure: false, //true pour forcer l'utilisation https
-                            // });
-
-                            //-----Methode 2 cookie parser
-
-                            res.cookie('access_token', accessToken, { maxAge: 604800, httpOnly: true });
+                            new Cookies(req, res).set("access_token", accessToken, {
+                                httpOnly: true, //utilisation uniquement via requete http
+                                secure: false, //true pour forcer l'utilisation https
+                            });
 
                             res.status(200).send({
-                                message: "connexion ok",
-                                user: {
-                                    id: user.id,
-                                    firstname: user.firstname,
-                                    lastname: user.lastname,
-                                    profil: user.profil,
-                                    email: user.email,
-                                }
+                                message: "connexion ok"
                             });
 
 

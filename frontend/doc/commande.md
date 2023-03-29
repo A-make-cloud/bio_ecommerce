@@ -26,6 +26,6 @@ npm i yup
 
 ## https://formik.org/docs/examples/with-material-ui
 
-## material ui styles pour
+## react cookie
 
-npm install @material-ui/styles
+npm i react-cookie
