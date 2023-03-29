@@ -70,7 +70,6 @@ export default function NavBar() {
                             >
 
                             </IconButton>
-
                             <Typography variant="h6" component="div" sx={{ flexGrow: 1 }} >
 
                                 <Link to="/" style={{ color: "inherit", textDecoration: "none", marginRight: 5 }} >Accueil</Link>
