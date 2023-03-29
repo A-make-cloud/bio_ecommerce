@@ -62,6 +62,18 @@ function BasketProvider({ children }) {
         setBasket({ items: [] })
     }
 
+    const getTotalTva = () => {
+        const storedBasket = JSON.parse(localStorage.getItem('basket'))
+        let items =storedBasket.items
+        return items.reduce((a, c)=>{return a + Number(c.price_ht)*c.tva/100}, 0)
+    }
+
+    const getTotalTtc = () => {
+        const storedBasket = JSON.parse(localStorage.getItem('basket'))
+        let items =storedBasket.items
+        return items.reduce((a, c)=>{return a + Number(c.price_ht)*(1 + c.tva/100)}, 0)
+    }
+
     /*async function fetchOneProduct(id) {
         const response = await fetch(`/products/find/${id}`)
         if (response.status !== 500) {
@@ -112,7 +124,7 @@ function BasketProvider({ children }) {
     }
 
     return (
-        <BasketContext.Provider value={{ basket, addOne, getItemsWithDetails, emptyBasket, removeLast, removeOne, removeLine, addOneOfThis }} >
+        <BasketContext.Provider value={{ basket, addOne, getItemsWithDetails, emptyBasket, removeLast, removeOne, removeLine, addOneOfThis, getTotalTva, getTotalTtc }} >
             {children}
         </BasketContext.Provider>
     )

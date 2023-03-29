@@ -4,6 +4,7 @@ import Footer from '../components/layouts/Footer.js'
 import Concept from '../components/layouts/Concept.js';
 import Phare from '../components/layouts/Phare.js';
 import TopCategorie from '../components/layouts/TopCategorie.js';
+import Button from '@mui/material/Button';
 
 // import Card from '@mui/material/Card';
 // import CardContent from '@mui/material/CardContent';
@@ -61,13 +62,13 @@ function Home() {
             <div className='monHeader' style={{width:'61px', height:'61px', backgroundImage:`url(${imageHead})`, 
             backgroundRepeat: 'no-repeat', backgroundPosition: 'center', width:'100%', height:'330px',
             backgroundSize: 'cover', display:'flex', flexDirection:'column',alignItems:'center',justifyContent:'space-around'}}>
-                <div>
-                    <h1 style={{ fontFamily:""}}>Des produits bio de qualité près de chez vous</h1>
-                    <h3 style={{textJustify:'center'}}><Link to='/products'>Déccouvrez tout nos produits ici</Link></h3>
+                <div style={{ display:'flex', flexDirection:'column',alignItems:'center',justifyContent:'space-around'}}>
+                    <h1 style={{ fontFamily:""}}>Des produits bio de qualité livrés chez vous</h1>
+                    <Link to='/products' style={{textDecoration: "none"}}><Button variant="contained" style={{ backgroundColor:"#FFB300", color:'black'}}>Découvrez</Button></Link>
+                    {/*<h3><Link to='/products'>Découvrez tout nos produits ici</Link></h3>*/}
+
                 </div>
             </div>
-
-
 
             <Container>
                 <Concept />
