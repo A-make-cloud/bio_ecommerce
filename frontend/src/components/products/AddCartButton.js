@@ -3,7 +3,7 @@ import Tooltip from '@mui/material/Tooltip';
 import {BasketContext} from '../../contexts/BasketContext'
 import {useContext, useEffect} from 'react'
 
-function AddCartButton({ productId }) {
+function AddCartButton({ product }) {
     //const {basket, setBasket} = useContext(BasketContext)
     const {basket, addOne, getItemsWithDetails} = useContext(BasketContext);
 
@@ -11,7 +11,7 @@ function AddCartButton({ productId }) {
         <div style={{}} className="addButton">
             {basket.total}
             <Tooltip title="Ajouter au panier" placement="right-end">
-                <ControlPointIcon onClick={(e)=>addOne(productId)} />
+                <ControlPointIcon onClick={(e)=>addOne(product)} />
             </Tooltip>
         </div>
     );
