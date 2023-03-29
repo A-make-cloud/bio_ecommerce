@@ -27,7 +27,7 @@ function AddProduct() {
             .min(2, 'Too Short!')
             .max(200, 'Limite 200 charactères')
             .required('Required'),
-        price_HT: yup
+        price_ht: yup
             .number('Entrez un prix en euro')
             .positive('Pas de négatif')
             .max(10000, 'Trop gros !'),
@@ -55,7 +55,7 @@ function AddProduct() {
             title: 'titre',
             category_id: 1,
             description: 'blabla',
-            price_HT: 2,
+            price_ht: 2,
             tva: 5.5,
             quantity: 1,
             status: 1,
@@ -65,32 +65,30 @@ function AddProduct() {
         onSubmit: (values) => {
             //alert(JSON.stringify(values, null, 2));
             console.log(values)
-            
+
             fetch('/products/create', {
                 method: 'POST',
                 headers: {
-                    "content-Type":"application/json"
+                    "content-Type": "application/json"
                 },
                 body: JSON.stringify(values),
                 credentials: 'include',
-
             })
                 .then(response => {
                     // Affiche le statut de la réponse (par exemple, 200 pour OK)
                     //console.log(response.status, response)
-                    if (response.status !== 200) {
+                    if (response.status !== 201) {
                         // alert("error")
                         setColor("error")
                     } else {
                         // alert("OK")
                         setColor("success")
 
-
                     }
                     return response.json();
                 })
                 .then(result => {
-                    console.log(result)
+                    console.log(result.message)
                     setMessage(result.message)
 
                 })
@@ -118,7 +116,7 @@ function AddProduct() {
                     onChange={formik.handleChange}
                     error={formik.touched.title && Boolean(formik.errors.title)}
                     helperText={formik.touched.title && formik.errors.title}
-                    
+
                 />
                 <InputLabel id="category_id">Catégorie</InputLabel>
                 <Select
@@ -149,13 +147,13 @@ function AddProduct() {
                 />
                 <TextField
                     fullWidth
-                    id="price_HT"
-                    name="price_HT"
-                    label="price_HT"
-                    value={formik.values.price_HT}
+                    id="price_ht"
+                    name="price_ht"
+                    label="price_ht"
+                    value={formik.values.price_ht}
                     onChange={formik.handleChange}
-                    error={formik.touched.price_HT && Boolean(formik.errors.price_HT)}
-                    helperText={formik.touched.price_HT && formik.errors.price_HT}
+                    error={formik.touched.price_ht && Boolean(formik.errors.price_ht)}
+                    helperText={formik.touched.price_ht && formik.errors.price_ht}
                     spacing={5}
                 />
                 <TextField

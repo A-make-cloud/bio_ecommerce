@@ -79,23 +79,10 @@ exports.create = (req, res) => {
 
     //const category_id = req.params.category_id;
     //3---------------------Ajouter ==>>OK
-    console.log( 'req.body----------', req.body)
     const newProduct = req.body
-    /*const element = {
-        category_id,
-        title: 'titre img ',
-        description: 'description',
-        price_ht: 10.20,
-        tva: 20.25,
-        quantity: 30,
-
-
-    }*/
     Product.create(newProduct).then((product) => {
-        console.log('----------product--------------',product);
-        res.status(201).json({ message: "Created product", product })
+        res.status(201).json({ message: `Produit "${product.title}" ajouté`, product })
 /*
-        
         const product_id = product.id
         //-------------create image
         // `product_id`, `title`, `url`, `type`,
@@ -109,12 +96,10 @@ exports.create = (req, res) => {
         } catch (err) {
             console.log("----------------------", err)
             res.status(500).json({ error: err.message || "Error Database." })
-
         }*/
 
-
-
     }).catch(err => {
+        console.log(err)
         res.status(500).json({ error: err.message || "Error Database." })
     })
 
