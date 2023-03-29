@@ -1,5 +1,5 @@
 import { useState, createContext, useEffect } from 'react'
-import fakeData from '../components/products/fakeData';
+//import fakeData from '../components/products/fakeData';
 
 const BasketContext = createContext()
 
@@ -8,6 +8,7 @@ function BasketProvider({ children }) {
 
     useEffect(() => {
         const storedBasket = JSON.parse(localStorage.getItem('basket'))
+        //console.log(fetchOneProduct(1))
         setBasket(storedBasket)
     }, [])
 
@@ -17,9 +18,9 @@ function BasketProvider({ children }) {
         //console.log(storedBasket)
     }, [basket])
 
-    const addOne = (productId) => {
+    const addOne = (product) => {
         const storedBasket = JSON.parse(localStorage.getItem('basket'))
-        let items = [...storedBasket.items, productId]
+        let items = [...storedBasket.items, product]
         setBasket({ items })
     }
 
@@ -35,7 +36,7 @@ function BasketProvider({ children }) {
         let indice = -1
         let items =storedBasket.items
         for (let i = items.length-1; i>=0; i--){
-            if (items[i]===id){
+            if (items[i].id===id){
                 indice=i
                 break
             }      
@@ -44,16 +45,16 @@ function BasketProvider({ children }) {
         setBasket({ items })
     }
 
-    const addOneOfThis = (id) => {
+    const addOneOfThis = (item) => {
         const storedBasket = JSON.parse(localStorage.getItem('basket'))
         let items =storedBasket.items
-        items.push(id)
+        items.push(item)
         setBasket({ items })
     }
 
     const removeLine = (id) => {
         const storedBasket = JSON.parse(localStorage.getItem('basket'))
-        const items = storedBasket.items.filter(elem=>elem!==id)
+        const items = storedBasket.items.filter(elem=>elem.id!==id)
         setBasket({ items })
     }
 
@@ -61,19 +62,49 @@ function BasketProvider({ children }) {
         setBasket({ items: [] })
     }
 
-    const getItemsWithDetails = () => {
+    /*async function fetchOneProduct(id) {
+        const response = await fetch(`/products/find/${id}`)
+        if (response.status !== 500) {
+            const json = response.json()
+            console.log(json)
+            return(json.data)
+        } else {
+            return ('probleme récupération des produits')
+        }
+    }*/
+    /*const getItemsWithDetails = () => {
         const storedBasket = JSON.parse(localStorage.getItem('basket'))
-        /*liste des articles du panier rangés par produit avec prix totaux et nb d'articles*/
+        //liste des articles du panier rangés par produit avec prix totaux et nb d'articles
         const fullBasket = []
         if (storedBasket.items.length === 0) return []
         //pour chq elemnt du panier, le mettre avec les bons articles, et à chaque fois, mettre à jour le nb et le prix total
+        
         for (const item of storedBasket.items) {
             const indice = fullBasket.findIndex(article => article.id === item)
-            const ItemType = fakeData.find(data => data.id === item)
+            const ItemType = fakeData.find(data => data.id == item)
             if (indice === -1) {
                 fullBasket.push({ ...ItemType, pickedQuantity: 1, totalPrice_ht: ItemType.price_ht })
             } else {
                 fullBasket[indice].totalPrice_ht = Math.floor((fullBasket[indice].totalPrice_ht + ItemType.price_ht) * 100) / 100
+                fullBasket[indice].pickedQuantity++
+            }
+        }
+        return fullBasket
+    }*/
+
+    const getItemsWithDetails = () => {
+        const storedBasket = JSON.parse(localStorage.getItem('basket'))
+        //liste des articles du panier rangés par produit avec prix totaux et nb d'articles
+        const fullBasket = []
+        if (storedBasket.items.length === 0) return []
+        //pour chq elemnt du panier, le mettre avec les bons articles, et à chaque fois, mettre à jour le nb et le prix total
+        for (const item of storedBasket.items) {
+            const indice = fullBasket.findIndex(article => article.id === item.id)
+            //const ItemType = fakeData.find(data => data.id == item)
+            if (indice === -1) {
+                fullBasket.push({ ...item, pickedQuantity: 1, totalPrice_ht: Number(item.price_ht) })
+            } else {
+                fullBasket[indice].totalPrice_ht = Math.floor((Number(fullBasket[indice].totalPrice_ht) + Number(item.price_ht)) * 100) / 100
                 fullBasket[indice].pickedQuantity++
             }
         }

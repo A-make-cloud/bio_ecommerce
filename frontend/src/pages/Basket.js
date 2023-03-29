@@ -9,6 +9,15 @@ function Basket() {
     const { basket, removeLast, emptyBasket, getItemsWithDetails, removeOne, removeLine, addOneOfThis } = useContext(BasketContext);
     const [basketSummary, setBasketSummary] = useState([]);
 
+
+
+
+
+
+
+
+
+
     useEffect(() => {
         setBasketSummary(getItemsWithDetails)
         //console.log(basket)
@@ -50,7 +59,7 @@ function Basket() {
                                     <div>
                                         <Button variant="contained" color="warning" onClick={e => removeOne(articleType.id)}>En enlever un</Button>
                                         <Button variant="contained" color="error" onClick={e => removeLine(articleType.id)} sx={{ margin: '6px' }}>Tout enlever</Button>
-                                        <Button variant="contained" onClick={e => addOneOfThis(articleType.id)} startIcon={<AddShoppingCartIcon />}>En ajouter un</Button>
+                                        <Button variant="contained" onClick={e => addOneOfThis(articleType)} startIcon={<AddShoppingCartIcon />}>En ajouter un</Button>
                                     </div>
                                 </div>
                             )
