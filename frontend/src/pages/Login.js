@@ -5,11 +5,11 @@ import TextField from '@mui/material/TextField';
 import Button from '@mui/material/Button';
 import { useNavigate } from 'react-router-dom';
 import { useContext, useState } from 'react';
-import { Alert } from '@mui/material';
+import { Alert, Grid, Paper } from '@mui/material';
 
 import { AuthContext } from './../contexts/AuthContext'
 function Login() {
-    const { isLogged, updateIslogged, connectUser } = useContext(AuthContext);
+    const { isLogged, updateIslogged, updateProfil, connectUser } = useContext(AuthContext);
     const navigate = useNavigate();
 
     const [color, setColor] = useState()
@@ -61,15 +61,24 @@ function Login() {
                     setMessage(result.message)
                     if (result.user) {
                         // stocker des parametres de l'utilisateur quelque part ? ---> result.firstname id et lastname
-                        console.log(result.user)
+                        //console.log(result.user)
                         connectUser(result.user) //add user to local storage //AuthContext.js
 
                         //setISlogged and add to local storage // AuthContext.js
                         updateIslogged('true')
 
                         //redirection vers espace admin || client
+                        const profil = result.user.profil
+                        updateProfil(profil)
 
-                        navigate('/dashbord')
+                        // console.log("-------profil", profil)
+
+                        if (profil === "admin")
+                            navigate('/dashboard')
+                        else if (profil === "client")
+                            navigate('/client')
+
+
                     }
 
 
@@ -91,38 +100,54 @@ function Login() {
 
         <main className="productsPage">
 
-            {isLogged ? <h1>Espace personnel</h1> : <h1>Formulaire</h1>}
 
-            {message ? <Alert severity={color}>{message}</Alert> : ""}
+            <Paper
+                sx={{
+                    p: 2,
+                    margin: 'auto',
+                    maxWidth: 700,
+                    flexGrow: 1,
+                    backgroundColor: (theme) =>
+                        theme.palette.mode === 'dark' ? '#1A2027' : '#fff',
+                }}
+            >
 
-            <form onSubmit={formik.handleSubmit} className="loginForm">
-                <TextField
-                    fullWidth
-                    id="email"
-                    name="email"
-                    label="Email"
-                    value={formik.values.email}
-                    onChange={formik.handleChange}
-                    error={formik.touched.email && Boolean(formik.errors.email)}
-                    helperText={formik.touched.email && formik.errors.email}
-                    spacing={5}
-                />
-                <TextField
-                    fullWidth
-                    id="password"
-                    name="password"
-                    label="Password"
-                    type="password"
-                    value={formik.values.password}
-                    onChange={formik.handleChange}
-                    error={formik.touched.password && Boolean(formik.errors.password)}
-                    helperText={formik.touched.password && formik.errors.password}
-                />
-                <Button color="primary" variant="contained" fullWidth type="submit">
-                    Se connecter
-                </Button>
-            </form>
+                <h1 >Fromulaire de connexion</h1>
 
+                {message ? <Alert severity={color}>{message}</Alert> : ""}
+                <Grid container spacing={3}>
+                    <Grid item xs={12} >
+
+                        <form onSubmit={formik.handleSubmit} className="loginForm">
+                            <TextField
+                                fullWidth
+                                id="email"
+                                name="email"
+                                label="Email"
+                                value={formik.values.email}
+                                onChange={formik.handleChange}
+                                error={formik.touched.email && Boolean(formik.errors.email)}
+                                helperText={formik.touched.email && formik.errors.email}
+                                spacing={5}
+                            />
+                            <TextField
+                                fullWidth
+                                id="password"
+                                name="password"
+                                label="Password"
+                                type="password"
+                                value={formik.values.password}
+                                onChange={formik.handleChange}
+                                error={formik.touched.password && Boolean(formik.errors.password)}
+                                helperText={formik.touched.password && formik.errors.password}
+                            />
+                            <Button color="primary" variant="contained" fullWidth type="submit">
+                                Se connecter
+                            </Button>
+                        </form>
+                    </Grid>
+                </Grid>
+            </Paper>
 
         </main>
 

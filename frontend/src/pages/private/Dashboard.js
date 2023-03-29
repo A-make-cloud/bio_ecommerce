@@ -1,3 +1,6 @@
+
+import NavbarAdmin from './NavbarAdmin';
+
 import Button from '@mui/material/Button';
 import { Link } from "react-router-dom";
 import ControlPointIcon from '@mui/icons-material/ControlPoint';
@@ -22,7 +25,7 @@ function Dashboard() {
             }
         }
         fetchCat()
-        
+
     }, []);
 
     // useEffect(() => {
@@ -56,25 +59,23 @@ function Dashboard() {
         //   valueGetter: (params) =>
         //     `${params.row.firstName || ''} ${params.row.lastName || ''}`,
         // },
-      ];
-      
-      
+    ];
+
+
 
     return (
         <main className="">
             <h1> Dashbord</h1>
-            <Link style={{ color: "inherit", textDecoration: "none" }} to="/dashboard/add-product">
-                <Button variant="contained"><ControlPointIcon /> Ajouter un produit</Button>
-            </Link>
+            <NavbarAdmin />
 
             <div style={{ height: 400, width: '100%' }}>
-            <DataGrid
-                rows={rows}
-                columns={columns}
-                pageSize={5}
-                rowsPerPageOptions={[5]}
-                checkboxSelection
-            />
+                <DataGrid
+                    rows={rows}
+                    columns={columns}
+                    pageSize={5}
+                    rowsPerPageOptions={[5]}
+                    checkboxSelection
+                />
             </div>
 
 
