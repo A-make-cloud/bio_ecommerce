@@ -50,7 +50,8 @@ function Login({ setIsLogged, isLogged }) {
                         // alert("OK")
                         setColor("success")
                         setIsLogged(true)
-                        navigate('/dashbord')
+                        //tester le role du user pour renvoyer vers dashboard ou accueil
+                        navigate('/dashboard')
                     }
                     return response.json();
                 })
@@ -79,7 +80,7 @@ function Login({ setIsLogged, isLogged }) {
 
             {isLogged ? <h1>Espace personnel</h1> : <h1>Formulaire</h1>}
 
-            {message ? <p><Alert severity={color}>{message}</Alert></p> : ""}
+            {message ? <Alert severity={color}>{message}</Alert> : ""}
 
             <form onSubmit={formik.handleSubmit} className="loginForm">
                 <TextField

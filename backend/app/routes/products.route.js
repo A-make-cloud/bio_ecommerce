@@ -6,7 +6,7 @@ router.get("/findAll", Controller.findAll);
 //find by categories
 router.get("/findByCategory", Controller.findByCategory);
 //create  form product
-router.get("/create/:category_id", Controller.create);
+router.get("/create", Controller.create);
 //find product by id
 router.get("/find/:id", Controller.findById);
 
