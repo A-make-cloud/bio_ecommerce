@@ -2,7 +2,6 @@ const { BaseError } = require('sequelize');
 const { Product, Image } = require('../../models');
 
 
-
 exports.findAll = (req, res) => {
     const offset = req.query.offset ? parseInt(req.query.offset) : null;
     const limit = req.query.limit ? parseInt(req.query.limit) : null;
@@ -78,21 +77,12 @@ exports.create = (req, res) => {
     //3---------------------Ajouter Product  ==>>OK
     //4---------------------Ajouter images ===>>TODO
 
-    const category_id = req.params.category_id;
+    //const category_id = req.params.category_id;
     //3---------------------Ajouter ==>>OK
-    const element = {
-        category_id,
-        title: 'titre img ',
-        description: 'description',
-        price_ht: 10.20,
-        tva: 20.25,
-        quantity: 30,
-
-
-    }
-    Product.create(element).then((product) => {
-
-        console.log(product.id);
+    const newProduct = req.body
+    Product.create(newProduct).then((product) => {
+        res.status(201).json({ message: `Produit "${product.title}" ajouté`, product })
+/*
         const product_id = product.id
         //-------------create image
         // `product_id`, `title`, `url`, `type`,
@@ -106,12 +96,10 @@ exports.create = (req, res) => {
         } catch (err) {
             console.log("----------------------", err)
             res.status(500).json({ error: err.message || "Error Database." })
-
-        }
-
-
+        }*/
 
     }).catch(err => {
+        console.log(err)
         res.status(500).json({ error: err.message || "Error Database." })
     })
 

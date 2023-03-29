@@ -1,4 +1,4 @@
-.productsPage, .basketPage{
+.productsPage, .basketPage, .marginPage{
   max-width: 1300px;
   margin-left:auto;
   margin-right: auto;
@@ -45,7 +45,7 @@
 }
 
 
-.loginForm>div, .loginForm>button{
+.loginForm>div, .loginForm>button, .addProdForm>div, .addProdForm>button{
   /*margin-top:30px;*/
   margin-bottom:30px;
 }

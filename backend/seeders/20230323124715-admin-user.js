@@ -18,7 +18,20 @@ module.exports = {
       created_at: new Date(),
       confirmed_at: new Date(),
       updated_at: new Date()
-    }], {});
+    },
+    {
+      civility: 'M',
+      firstName: 'Toto',
+      lastName: 'Tata',
+      email: 'foobar@example.com',
+      password: '$2b$10$z1Ioof6a.EoJxBf8bvDnouxj.5WYteV7YEfUOPiIEBKtER0cxmCLi',
+      profil: 'admin',
+      status: '1',
+      created_at: new Date(),
+      confirmed_at: new Date(),
+      updated_at: new Date()
+    }
+  ], {});
 
   },
 

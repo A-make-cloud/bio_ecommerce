@@ -93,7 +93,7 @@ function Login() {
 
             {isLogged ? <h1>Espace personnel</h1> : <h1>Formulaire</h1>}
 
-            {message ? <p><Alert severity={color}>{message}</Alert></p> : ""}
+            {message ? <Alert severity={color}>{message}</Alert> : ""}
 
             <form onSubmit={formik.handleSubmit} className="loginForm">
                 <TextField
