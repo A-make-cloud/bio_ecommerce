@@ -3,6 +3,7 @@ const { Product, Image } = require('../../models');
 
 
 exports.findAll = (req, res) => {
+
     const offset = req.query.offset ? parseInt(req.query.offset) : null;
     const limit = req.query.limit ? parseInt(req.query.limit) : null;
 
