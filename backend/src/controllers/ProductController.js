@@ -3,11 +3,13 @@ const { Product, Image } = require('../../models');
 
 
 exports.findAll = (req, res) => {
+
     const offset = req.query.offset ? parseInt(req.query.offset) : null;
     const limit = req.query.limit ? parseInt(req.query.limit) : null;
 
     Product.findAll({ offset: offset, limit: limit, include: Image })
         .then(data => {
+
             if (data) {
                 res.status(201).json({ message: "Find Products", data })
             } else {

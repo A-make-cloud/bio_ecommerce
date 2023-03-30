@@ -1,8 +1,19 @@
+
+@import url('https://fonts.googleapis.com/css2?family=Grandstander:wght@300;400;500;600&family=Montserrat:wght@300;400;500;600;700;800;900&family=Roboto:wght@500&display=swap');
+
+h1, h2, h3{
+  font-family: Grandstander;
+}
+
 .productsPage, .basketPage, .marginPage{
   max-width: 1300px;
   margin-left:auto;
   margin-right: auto;
 }
+
+/* .homeHeader{
+  background-image:url("./static/head.jpg"), 
+} */
 
 .priceAndAdd{
   display : flex;

@@ -1,6 +1,6 @@
 const fakeData = [
     {
-        id: '1',
+        id: 1,
         category_id: 1,
         title: 'Lorem ipsum dolor',
         description:
@@ -12,7 +12,7 @@ const fakeData = [
         top:1,
     },
     {
-        id: '2',
+        id: 2,
         category_id: 3,
         title: 'Lorem ipsum dolor',
         description:
@@ -24,7 +24,7 @@ const fakeData = [
         top:1,
     },
     {
-        id: '3',
+        id: 3,
         category_id: 2,
         title: 'Lorem ipsum dolor',
         description:
@@ -36,7 +36,7 @@ const fakeData = [
         top:1,
     },
     {
-        id: '4',
+        id: 4,
         category_id: 1,
         title: 'Lorem ipsum dolor',
         description:
@@ -48,7 +48,7 @@ const fakeData = [
         top:1,
     },
     {
-        id: '5',
+        id: 5,
         category_id: 2,
         title: 'Lorem ipsum dolor',
         description:
@@ -60,7 +60,7 @@ const fakeData = [
         top:1,
     },
     {
-        id: '6',
+        id: 6,
         category_id: 4,
         title: 'Lorem ipsum dolor',
         description:
@@ -72,7 +72,7 @@ const fakeData = [
         top:1,
     },
     {
-        id: '7',
+        id: 7,
         category_id: 2,
         title: 'Lorem ipsum dolor',
         description:
@@ -84,7 +84,7 @@ const fakeData = [
         top:1,
     },
     {
-        id: '8',
+        id: 8,
         category_id: 4,
         title: 'Lorem ipsum dolor',
         description:
@@ -96,7 +96,7 @@ const fakeData = [
         top:1,
     },
     {
-        id: '9',
+        id: 9,
         category_id: 1,
         title: 'Lorem ipsum dolor',
         description:
@@ -108,7 +108,7 @@ const fakeData = [
         top:1,
     },
     {
-        id: '10',
+        id: 10,
         category_id: 2,
         title: 'Lorem ipsum dolor',
         description:
@@ -120,7 +120,7 @@ const fakeData = [
         top:1,
     },
     {
-        id: '11',
+        id: 11,
         category_id: 4,
         title: 'Lorem ipsum dolor',
         description:
@@ -132,7 +132,7 @@ const fakeData = [
         top:1,
     },
     {
-        id: '12',
+        id: 12,
         category_id: 3,
         title: 'Lorem ipsum dolor',
         description:
@@ -144,7 +144,7 @@ const fakeData = [
         top:1,
     },
     {
-        id: '13',
+        id: 13,
         category_id: 2,
         title: 'Lorem ipsum dolor',
         description:
@@ -156,7 +156,7 @@ const fakeData = [
         top:1,
     },
     {
-        id: '14',
+        id: 14,
         category_id: 4,
         title: 'Lorem ipsum dolor',
         description:

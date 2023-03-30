@@ -23,8 +23,8 @@ import { AuthContext } from '../../contexts/AuthContext';
 
 export default function NavBar() {
     const navigate = useNavigate();
-    const { isLogged, updateIslogged, logoutUser, user } = useContext(AuthContext);
-    console.log(user)
+    const { isLogged, updateIslogged, logoutUser } = useContext(AuthContext);
+
     const { basket } = React.useContext(BasketContext);
     const Item = styled(Paper)(({ theme }) => ({
         backgroundColor: theme.palette.mode === 'dark' ? '#1A2027' : '#346344',
@@ -35,9 +35,7 @@ export default function NavBar() {
 
     }));
     const logout = () => {
-        //avec localStorage ==>>
 
-        updateIslogged('false')
         //deconnect user delete localstorage
         logoutUser()
         //redirection home page
@@ -50,19 +48,18 @@ export default function NavBar() {
                 <AppBar position="static" style={{ background: '#346344' }}>
                     <Container>
                         <Toolbar>
-                            <Tooltip title="Open settings">
-                                <IconButton sx={{ p: 0 }}>
-                                    <Item>
+                            {/*<Tooltip title="Open settings">*/}
+                            <Link to="/" style={{ color: "inherit", textDecoration: "none", marginRight: 5 }} >
+                                    <Item sx={{boxShadow:'none'}}>
                                         <CardMedia
-
                                             component="img"
                                             height="80"
                                             image={logo}
                                             alt="logo"
                                         />
                                     </Item>
-                                </IconButton>
-                            </Tooltip>
+                                </Link>
+                            {/*</Tooltip>*/}
                             <IconButton
                                 size="large"
                                 edge="start"
@@ -72,7 +69,6 @@ export default function NavBar() {
                             >
 
                             </IconButton>
-
                             <Typography variant="h6" component="div" sx={{ flexGrow: 1 }} >
 
                                 <Link to="/" style={{ color: "inherit", textDecoration: "none", marginRight: 5 }} >Accueil</Link>
