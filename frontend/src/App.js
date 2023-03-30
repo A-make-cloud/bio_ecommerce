@@ -45,8 +45,6 @@ function App() {
         <Route path="/login" element={<Login />} />
         <Route path="/product/:id" element={<Product />} />
 
-
-
         {isLogged && profil === "admin" ?
           <>
             <Route path="/dashboard" element={<Dashboard />} />

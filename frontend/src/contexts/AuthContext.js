@@ -14,13 +14,13 @@ function AuthProvider({ children }) {
 
     useEffect(() => {
         //recuperer le cookie 
-        console.log('document.cookie--->>>', document.cookie);
+        // console.log('document.cookie--->>>', document.cookie);
         // avec localstorage===>>//à supprimer si cookie fonctionne
         const myValue = localStorage.getItem('isLogged');
-        console.log("localstorage", myValue)
+        // console.log("localstorage", myValue)
         if (myValue === 'true') setIsLogged(true)
         else setIsLogged(false)
-        console.log("localStorage.getItem('profil') ", localStorage.getItem('profil'))
+        //  console.log("localStorage.getItem('profil') ", localStorage.getItem('profil'))
         setProfil(localStorage.getItem('profil'))
 
         // //----------------------------- //user localstorage

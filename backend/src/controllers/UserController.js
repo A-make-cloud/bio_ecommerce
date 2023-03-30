@@ -4,85 +4,12 @@ const bcrypt = require('bcrypt');
 const jwt = require('jsonwebtoken');
 const Cookies = require("cookies");
 
-exports.login = async (req, res) => {
 
-    //1------------valider les post  ==>>TODO
-    //2-------------verifier l 'email ==>>OK
-    //3-------------verifier le password ==>>OK
-    //4--------------generer le JWT  ==>>OK
-
-    //recuperer email lpasswordogin 
-    email = req.body.email;
-    password = req.body.password;
-
-
-
-    User.findOne({ where: { email } })
-        .then(user => {
-            if (user) {
-
-                console.log("data--------->>", user)
-                //----------compte actif
-                if (user.status == 3) {
-                    res.status(500).send({
-                        message: "Compte désactivé "
-                    });
-                } else {
-                    //3-------------verifier le password ==>>OK
-                    bcrypt.compare(password, user.password, function (err, result) {
-                        if (err) {
-                            res.status(500).send({
-                                message: err
-                            });
-                        } else if (result) {
-                            console.log('Le mot de passe ok  !');
-                            //4--------------generer le JWT  ==>>OK
-                            let accessToken = jwt.sign({
-                                id: user.id,
-                                firstname: user.firstname,
-                                lastname: user.lastname,
-                                profil: user.profil,
-                            },
-                                process.env.SECRET_JWT, { expiresIn: 604800 }
-                            );
-                            new Cookies(req, res).set("access_token", accessToken, {
-                                httpOnly: true, //utilisation uniquement via requete http
-                                secure: false, //true pour forcer l'utilisation https
-                            });
-
-                            res.status(200).send({
-                                message: "connexion ok"
-                            });
-
-
-                        } else {
-                            res.status(500).send({
-                                message: "Email ou mot de passe invalide"
-                            });
-                        }
-                    });
-                }
-
-
-
-                // return data
-            } else {
-                res.status(500).send({
-                    message: "Email ou mot de passe invalide"
-                });
-            }
-        })
-        .catch(err => {
-            res.status(500).send({
-                message: "Error retrieving User with email=" + email
-            });
-        });
-    //res.status(201).json({ login: req.body.email, password: req.body.password, user: user })
-
-
-}
-
-
+/**
+ * select all user by admin
+ * @param {*} req 
+ * @param {*} res 
+ */
 exports.findAll = (req, res) => {
     User.findAll()
         .then(data => {
@@ -97,6 +24,13 @@ exports.findAll = (req, res) => {
         });
 };
 
+/**
+ * 
+-à modifier si formulaire 
+ * create user by admin 
+ * @param {*} req 
+ * @param {*} res 
+ */
 exports.create = (req, res) => {
     //1---------------recuperer le body ==>>TODO
     //2----------------valider form ==>>TODO
@@ -125,7 +59,11 @@ exports.create = (req, res) => {
 }
 
 
-
+/**find user by id
+ * 
+ * @param {*} req 
+ * @param {*} res 
+ */
 exports.findById = (req, res) => {
     const id = req.params.id;
 
@@ -146,7 +84,11 @@ exports.findById = (req, res) => {
         });
 }
 
-
+/**
+ * find user by email
+ * @param {*} req 
+ * @param {*} res 
+ */
 exports.findByEmail = (req, res) => {
     const email = req.params.email;
 
@@ -166,4 +108,127 @@ exports.findByEmail = (req, res) => {
             });
         });
 }
+
+/**
+ * update form  profil
+ * @param {*} req 
+ * @param {*} res 
+ */
+
+exports.update = (req, res) => {
+
+    //1---------------recuperer le body ==>>TODO
+    //2----------------valider form ==>>TODO
+    //3---------------------Ajouter user  ==>>OK
+    //4------------------Envoyer le mail de validation   ==>>TODO
+
+
+    //------------verification du token dans middelware middelwareAuth.js envoi user dans req.user
+
+    console.log('--------apres middelware', req.user)
+    const userUpdate = req.user
+
+    //2----------------valider form ==>>TODO
+    //*
+    User.findByPk(userUpdate.id)
+        .then(user => {
+            if (user) {
+
+                console.log('user-------->>', user)
+                const firstname = userUpdate.firstname;
+                const lastname = userUpdate.lastname;
+                // const password = userUpdate.password ? userUpdate.password : user.password;
+                const email = user.email;//todo si modif voir s'il existe deja 
+
+                User.update(
+                    { firstname, lastname, email },
+                    { where: { id: user.id } }
+                ).then(() => {
+                    res.status(200).send({
+                        message: " Votre compte a bien été modifié "
+                    });
+
+                }).catch(err => {
+                    res.status(500).send({
+                        message: "Error modification "
+                    });
+                });
+
+            } else {
+                res.status(500).send({
+                    message: `Cannot find user with id=${id}.`
+                });
+            }
+        })
+        .catch(err => {
+            res.status(500).send({
+                message: "Error retrieving User with id=" + id
+            });
+        });
+
+
+
+
+    //*/
+
+
+
+
+
+
+
+    /*
+    
+        User.findOne({ where: { email } })
+            .then(exist => {
+                if (!exist) {
+                    //3---------------------Ajouter ==>>OK
+                    User.create({
+                        civility,
+                        firstname,
+                        lastname,
+                        profil: 'client',
+                        status: 1,
+                        email,
+                        password,
+                        token: '',
+                    }).then((user) => {
+                        //4--------------generer le JWT  ==>>OK
+                        let accessToken = jwt.sign({
+                            id: user.id,
+                            firstname: user.firstname,
+                            lastname: user.lastname,
+                            profil: user.profil,
+                        },
+                            process.env.SECRET_JWT, { expiresIn: 604800 }
+                        );
+                        new Cookies(req, res).set("access_token", accessToken, {
+                            httpOnly: true, //utilisation uniquement via requete http
+                            secure: false, //true pour forcer l'utilisation https
+                        });
+    
+    
+                        res.status(200).json({ message: "Votre compte a bien été enregistré", user })
+                    }).catch(err => {
+                        res.status(500).json({ error: err.message || "Error Database." })
+                    })
+    
+    
+                } else {
+                    res.status(500).send({
+                        message: "Email  existe deja "
+                    });
+                }
+            })
+            .catch(err => {
+                res.status(500).send({
+                    message: "Error retrieving User with email=" + email
+                });
+            });
+    //*/
+
+
+
+}
+
 
