@@ -32,8 +32,8 @@ function TopCategorie() {
             await fetch('/categories/findAll')
                 .then(response => response.json())
                 .then((res) => {
-                    console.log("categorie donnée :", res.data);
-                    setCategories(res.data)
+                    console.log("categorie donnée :");
+                    setCategories(res)
                 })
         }
         fetchCateg()
