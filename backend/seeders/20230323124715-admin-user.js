@@ -2,16 +2,16 @@
 const bcrypt = require('bcrypt');
 //  hacher le mot de passe avant de l'enregistrer
 const salt = bcrypt.genSaltSync(10);
-const hashedPassword = bcrypt.hashSync("password123", salt);
+const hashedPassword = bcrypt.hashSync("12345678", salt);
 
 /** @type {import('sequelize-cli').Migration} */
 module.exports = {
   async up(queryInterface, Sequelize) {
     await queryInterface.bulkInsert('Users', [{
-      civility: 'Mme',
-      firstName: 'Sam',
-      lastName: 'Bela',
-      email: 'lilou2ff008@live.fr',
+      civility: 'M',
+      firstName: 'Toto',
+      lastName: 'titi',
+      email: 'ti@live.fr',
       password: hashedPassword,
       profil: 'admin',
       status: '1',
@@ -21,9 +21,9 @@ module.exports = {
     },
     {
       civility: 'M',
-      firstName: 'Toto',
+      firstName: 'Juju',
       lastName: 'Tata',
-      email: 'foobar@example.com',
+      email: 'a@gmail.com',
       password: '$2b$10$z1Ioof6a.EoJxBf8bvDnouxj.5WYteV7YEfUOPiIEBKtER0cxmCLi',
       profil: 'admin',
       status: '1',
@@ -31,7 +31,7 @@ module.exports = {
       confirmed_at: new Date(),
       updated_at: new Date()
     }
-  ], {});
+    ], {});
 
   },
 

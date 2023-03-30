@@ -1,5 +1,4 @@
-//import css from './css.css';
-//import addButton from '../Product';
+
 import { Box, Card, CardContent, CardMedia, Typography } from '@mui/material';
 import React, { useState, useEffect } from 'react'
 import { useParams } from "react-router-dom";
@@ -12,10 +11,10 @@ import Grid from '@mui/material/Unstable_Grid2';
 
 
 function Product() {
-
+    const [product, setProduct] = useState();
     const params = useParams()
     const productId = params.id;
-    const [product, setProduct] = useState();
+
     // const product = { name: 'toto', description: 'titi', price_ht: 'tutu' } //fetcher le produit avec un await...
     const Item = styled(Paper)(({ theme }) => ({
         backgroundColor: theme.palette.mode === 'dark' ? '#1A2027' : '#fff',
@@ -28,11 +27,15 @@ function Product() {
 
     useEffect(function effectFunction() {
         async function fetchProduct() {
-            const response = await fetch('/products/find/1' + { productId });
+            const response = await fetch('/products/find/' + `${productId}`);
             console.log(response.status)
-            //if status 201 ==>OK 
+
             if (response.status === 201) {
                 const json = await response.json();
+                //affichage de l'image
+                // json.data[0].getImages().then((images) => {
+                //     console.log(images);
+                // });
                 console.log(json)
                 setProduct(json.data)
             } else {
@@ -55,17 +58,16 @@ function Product() {
                                     xs={8}
                                     component="img"
                                     sx={{ width: 900 }}
-                                    image="https://images.unsplash.com/photo-1551963831-b3b1ca40c98e"
-                                    alt="Live from space album cover"
+                                // image={product.images ? product.images[0].url : ''}
+                                // alt={product.images ? product.images[0].title : 'pas d image'}
                                 />
                                 <Box sx={{ display: 'flex', flexDirection: 'column' }}>
                                     <CardContent sx={{ flex: '1 0 auto' }} xs={4}>
                                         <Typography container component="div" variant="h5">
                                             <main>
                                                 <h4>Ajout Panier</h4>
-                                                <p>Nom :{product ? product.name : ''}</p>
-                                                {/* 
-                        <p>{product ? product.description.slice(0, 40) + "..." : ''}</p> */}
+                                                <p>Nom :{product ? product.title : ''}</p>
+
                                                 <p>Prix:{product ? product.price_ht : ''} €</p>
                                             </main>
                                         </Typography>
@@ -82,7 +84,7 @@ function Product() {
             <div>
 
 
-                <h4>Nom :{product ? product.name : ''}</h4>
+                <p>Nom :{product ? product.title : ''}</p>
                 <p>Description :{product ? product.description.slice(0, 40) + "..." : ''}</p>
 
 

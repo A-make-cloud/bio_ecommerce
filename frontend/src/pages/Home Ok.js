@@ -1,10 +1,9 @@
 import NavBar from '../components/layouts/Navbar.js'
-import { Link } from "react-router-dom";
+
 import Footer from '../components/layouts/Footer.js'
 import Concept from '../components/layouts/Concept.js';
 import Phare from '../components/layouts/Phare.js';
 import TopCategorie from '../components/layouts/TopCategorie.js';
-import Button from '@mui/material/Button';
 
 // import Card from '@mui/material/Card';
 // import CardContent from '@mui/material/CardContent';
@@ -20,7 +19,6 @@ import Container from '@mui/material/Container';
 // or
 //import { Container } from '@mui/material';
 import imageHead from '../static/head.jpg';
-
 //import image from '../static/head.jpg';
 
 const Item = styled(Paper)(({ theme }) => ({
@@ -33,17 +31,17 @@ const Item = styled(Paper)(({ theme }) => ({
 
 }));
 function Home() {
-
     return (
         <div>
-            {/* 
+
+
             <Box sx={{ flexGrow: 1 }}>
                 <Grid spacing={2} columns={16}>
                     <Grid item xs={12}>
                         <Item>
                             <div sx={{ maxWidth: 2000 }} cols={2}>
                                 <header>
-                                    
+
                                     <CardMedia
                                         component="img"
                                         height="400"
@@ -51,7 +49,7 @@ function Home() {
                                         alt="image head"
 
                                     />
-                                     
+
                                 </header>
                             </div>
                         </Item>
@@ -60,20 +58,6 @@ function Home() {
 
                 </Grid>
             </Box>
-            */}
-            <div className='monHeader' style={{
-                width: '61px', height: '61px', backgroundImage: `url(${imageHead})`,
-                backgroundRepeat: 'no-repeat', backgroundPosition: 'center', width: '100%', height: '330px',
-                backgroundSize: 'cover', display: 'flex', flexDirection: 'column', alignItems: 'center', justifyContent: 'space-around'
-            }}>
-                <div style={{ display: 'flex', flexDirection: 'column', alignItems: 'center', justifyContent: 'space-around' }}>
-                    <h1 style={{ fontFamily: "" }}>Des produits bio de qualité livrés chez vous</h1>
-                    <Link to='/products' style={{ textDecoration: "none" }}><Button variant="contained" style={{ backgroundColor: "#FFB300", color: 'black' }}>Découvrez</Button></Link>
-                    {/*<h3><Link to='/products'>Découvrez tout nos produits ici</Link></h3>*/}
-
-                </div>
-            </div>
-
             <Container>
                 <Concept />
                 <Phare />
