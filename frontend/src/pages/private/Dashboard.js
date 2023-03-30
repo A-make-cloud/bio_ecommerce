@@ -1,11 +1,11 @@
 
-import NavbarAdmin from './NavbarAdmin';
 
 import Button from '@mui/material/Button';
 import { Link } from "react-router-dom";
 import ControlPointIcon from '@mui/icons-material/ControlPoint';
 import { useState, useEffect } from 'react';
 import { DataGrid } from '@mui/x-data-grid';
+
 
 function Dashboard() {
     const [products, setProducts] = useState([]);
@@ -61,14 +61,12 @@ function Dashboard() {
         // },
     ];
 
-
-
     return (
         <main className="">
+            
+            
             <h1> Dashbord</h1>
-            <NavbarAdmin />
-
-            <div style={{ height: 400, width: '100%' }}>
+            <div style={{ height: 600, width: '100%' }}>
                 <DataGrid
                     rows={rows}
                     columns={columns}

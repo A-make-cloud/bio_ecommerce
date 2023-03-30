@@ -1,6 +1,6 @@
 import React, { useContext, useState } from 'react'
 import './App.css';
-import { Route, Routes } from "react-router-dom";
+import { Route, Routes, useLocation } from "react-router-dom";
 import Home from "./pages/Home";
 import Products from "./pages/Products";
 import Basket from "./pages/Basket";
@@ -14,7 +14,7 @@ import Register from './pages/Register';
 
 import { AuthContext } from './contexts/AuthContext';
 //--------------------Espace admin
-import AddProduct from './pages/private/AddProduct';
+import Addproduct from './pages/private/Addproduct';
 import Dashboard from './pages/private/Dashboard';
 
 //--------------------Espace client
@@ -22,6 +22,7 @@ import Dashboard from './pages/private/Dashboard';
 import HomeClient from './pages/client/HomeClient';
 import Profil from './pages/client/Profil';
 import Commande from './pages/client/Commande';
+import NavbarAdmin from './pages/private/NavbarAdmin';
 
 function App() {
   // const [isLogged, setIsLogged] = useState(false)
@@ -31,11 +32,13 @@ function App() {
   console.log("prfil", profil)
   //profil admin||client 
   //isLogged true||false
+  const location = useLocation();
 
   return (
     <div className="App">
-      <NavBar />
-
+      {isLogged && profil === "admin" && location.pathname.includes('dashboard') ?
+      <NavbarAdmin />
+      : <NavBar />}
       <Routes>
 
         <Route path="/" element={<Home />} />
@@ -47,8 +50,9 @@ function App() {
 
         {isLogged && profil === "admin" ?
           <>
+            
             <Route path="/dashboard" element={<Dashboard />} />
-            <Route path="/dashboard/add-product" element={<AddProduct />} />
+            <Route path="/dashboard/add-product" element={<Addproduct />} />
           </>
           : ""}
 
@@ -63,7 +67,12 @@ function App() {
 
 
       </Routes>
+
+      {isLogged && profil === "admin" && !location.pathname.includes('dashboard') ?
       <Footer />
+      : ''}
+
+
     </div>
   );
 }

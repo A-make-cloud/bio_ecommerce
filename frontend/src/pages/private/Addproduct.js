@@ -9,9 +9,8 @@ import InputLabel from '@mui/material/InputLabel';
 import MenuItem from '@mui/material/MenuItem';
 import Select from '@mui/material/Select';
 
-function AddProduct() {
+function Addproduct() {
     const navigate = useNavigate();
-
     const [color, setColor] = useState()
     const [message, setMessage] = useState()
     const validationSchema = yup.object({
@@ -83,14 +82,12 @@ function AddProduct() {
                     } else {
                         // alert("OK")
                         setColor("success")
-
                     }
                     return response.json();
                 })
                 .then(result => {
                     console.log(result.message)
                     setMessage(result.message)
-
                 })
                 .catch(err => {
                     console.log('y 1 erreur : ', err)
@@ -98,13 +95,11 @@ function AddProduct() {
                         alert('Une erreur est survenue sur le réseau !')
                     //alert('Une erreur est survenue ! ', err);
                 })
-
         },
     });
 
     return (
         <main className="marginPage">
-
             <Paper
                 sx={{
                     p: 2,
@@ -129,7 +124,6 @@ function AddProduct() {
                                 onChange={formik.handleChange}
                                 error={formik.touched.title && Boolean(formik.errors.title)}
                                 helperText={formik.touched.title && formik.errors.title}
-
                             />
                             <InputLabel id="category_id">Catégorie</InputLabel>
                             <Select
@@ -146,7 +140,6 @@ function AddProduct() {
                                 <MenuItem value={3}>3 - cat3</MenuItem>
                                 <MenuItem value={3}>4 - cat4</MenuItem>
                             </Select>
-
                             <TextField
                                 fullWidth
                                 id="description"
@@ -221,15 +214,10 @@ function AddProduct() {
                                 Créer le produit
                             </Button>
                         </form>
-
                     </Grid>
                 </Grid>
-
             </Paper>
         </main>
-
     );
 }
-
-
-export default AddProduct;
+export default Addproduct;
