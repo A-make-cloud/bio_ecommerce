@@ -68,9 +68,9 @@ function App() {
 
       </Routes>
 
-      {isLogged && profil === "admin" && !location.pathname.includes('dashboard') ?
-      <Footer />
-      : ''}
+      {isLogged && profil === "admin" && location.pathname.includes('dashboard') ?
+      ''
+      : <Footer />}
 
 
     </div>
