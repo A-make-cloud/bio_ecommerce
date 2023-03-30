@@ -14,7 +14,7 @@ export default function NavbarAdmin() {
         <div>
         <Link to="/dashboard" style={{ textDecoration: "none", marginRight: 10 }}>Dashboard</Link>
         <Link to="/dashboard/add-product" style={{ textDecoration: "none", marginRight: 10 }}>Catégories</Link>
-        <Link to="/dashboard/add-product" style={{ textDecoration: "none", marginRight: 10 }} >Produits</Link>
+        <Link to="/dashboard/add-product" style={{ textDecoration: "none", marginRight: 10 }} >Ajouter produit</Link>
         <Link to="/dashboard/add-product" style={{ textDecoration: "none", marginRight: 10 }}>Users</Link>
         <Link to="/dashboard/add-product" style={{ textDecoration: "none", marginRight: 10 }}>Commandes</Link>
         </div>
