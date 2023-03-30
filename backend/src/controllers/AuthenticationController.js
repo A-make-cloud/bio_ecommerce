@@ -45,7 +45,7 @@ exports.process = (req, res) => {
                                 profil: user.profil,
                                 email: user.email,
                             },
-                                process.env.SECRET_JWT, { expiresIn: 604800 }
+                                process.env.SECRET_JWT, { expiresIn: 3 * 60 * 60 }
                             );
                             //----methode 1 Cookie
                             const cookie = new Cookies(req, res).set("access_token", accessToken, {

@@ -72,7 +72,7 @@ function Register() {
                     } else {
                         // alert("OK")
                         setColor("success")
-                        setIsLogged(true)
+                        // setIsLogged(true)
                         // navigate('/dashbord')
                     }
                     return response.json();
