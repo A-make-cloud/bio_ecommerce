@@ -34,7 +34,7 @@ function Product() {
             //if status 201 ==>OK 
             if (response.status === 201) {
                 const json = await response.json();
-                console.log(json)
+                //console.log(json)
                 setProduct(json.data)
             } else {
                 console.log("no product")
