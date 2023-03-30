@@ -14,7 +14,7 @@ import logo from '../../static/logoBioShop.png'
 import { styled } from '@mui/material/styles';
 import Paper from '@mui/material/Paper';
 import { useContext, useState } from 'react';
-
+import AdminPanelSettingsIcon from '@mui/icons-material/AdminPanelSettings';
 import { AuthContext } from '../../contexts/AuthContext';
 
 
@@ -22,8 +22,9 @@ import { AuthContext } from '../../contexts/AuthContext';
 
 
 export default function NavBar() {
+    const user = localStorage.getItem('user') ? JSON.parse(localStorage.getItem('user')) : null
     const navigate = useNavigate();
-    const { isLogged, updateIslogged, logoutUser } = useContext(AuthContext);
+    const { isLogged, updateIslogged, logoutUser, profil } = useContext(AuthContext);
 
     const { basket } = React.useContext(BasketContext);
     const Item = styled(Paper)(({ theme }) => ({
@@ -35,13 +36,12 @@ export default function NavBar() {
 
     }));
     const logout = () => {
-
         //deconnect user delete localstorage
         logoutUser()
         //redirection home page
         navigate('/')
-
     }
+
     return (
         <div>
             <Box sx={{ flexGrow: 1 }} >
@@ -74,6 +74,16 @@ export default function NavBar() {
                                 <Link to="/" style={{ color: "inherit", textDecoration: "none", marginRight: 5 }} >Accueil</Link>
                                 <Link to="/products" style={{ color: "inherit", textDecoration: "none" }} >Nos Produits</Link>
                             </Typography>
+
+                            {isLogged &&
+                                <p style={{marginRight:'21px'}}>Bonjour {user ? user.firstname : ""} {user ? user.lastname : ""} </p>}
+
+                            {isLogged && profil=== 'admin'? 
+                            <Link to="/dashboard" style={{ color: "inherit", textDecoration: "none" }}>
+                                <AdminPanelSettingsIcon/>
+                            </Link>
+                            : ''}
+
 
 
                             {!isLogged ?
