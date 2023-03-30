@@ -14,7 +14,7 @@ import Register from './pages/Register';
 
 import { AuthContext } from './contexts/AuthContext';
 //--------------------Espace admin
-import AddProduct from './pages/private/AddProduct';
+import Addproduct from './pages/private/Addproduct';
 import Dashboard from './pages/private/Dashboard';
 
 //--------------------Espace client
@@ -50,7 +50,7 @@ function App() {
         {isLogged && profil === "admin" ?
           <>
             <Route path="/dashboard" element={<Dashboard />} />
-            <Route path="/dashboard/add-product" element={<AddProduct />} />
+            <Route path="/dashboard/add-product" element={<Addproduct />} />
           </>
           : ""}
 
