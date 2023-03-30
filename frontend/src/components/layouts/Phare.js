@@ -140,7 +140,7 @@ export default class Phare extends Component {
 
                     </Slider>
                 </div>
-            </div >
+            </div>
         );
     }
 }

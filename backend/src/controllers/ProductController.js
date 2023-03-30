@@ -7,14 +7,20 @@ exports.findAll = (req, res) => {
     const offset = req.query.offset ? parseInt(req.query.offset) : null;
     const limit = req.query.limit ? parseInt(req.query.limit) : null;
 
-    Product.findAll({ offset: offset, limit: limit, include: Image })
-        .then(data => {
 
+    Product.findAll({ offset: offset, limit: limit, include: Image })
+        .then(async data => {
             if (data) {
-                res.status(201).json({ message: "Find Products", data })
+
+                await Promise.allSettled(data.map(async (product) => {
+                    const images = await product.getImages();
+                    product.dataValues.listeImage = images;
+                }));
+
+                res.status(201).json({ data });
             } else {
                 res.status(500).send({
-                    message: `Cannot find Products .`
+                    message: `Cannot find Products.`
                 });
             }
         })
@@ -23,6 +29,31 @@ exports.findAll = (req, res) => {
                 message: `Error retrieving Products.`
             });
         });
+    // Product.findAll({ offset: offset, limit: limit, include: Image })
+    //     .then(async data => {
+
+    //         if (data) {
+    //             const array = data.forEach(product => {
+    //                 product.getImages().then((images) => {
+    //                     product.listeImage = images
+    //                     console.log("-------------image product " + product.id, images);
+    //                 });
+    //             });
+
+
+
+    //             res.status(201).json({ message: "Find Products", data })
+    //         } else {
+    //             res.status(500).send({
+    //                 message: `Cannot find Products .`
+    //             });
+    //         }
+    //     })
+    //     .catch(err => {
+    //         res.status(500).send({
+    //             message: `Error retrieving Products.`
+    //         });
+    //     });
 };
 
 exports.findById = (req, res) => {

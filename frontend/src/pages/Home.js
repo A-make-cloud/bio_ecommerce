@@ -59,12 +59,14 @@ function Home() {
                 </Grid>
             </Box>
             */}
-            <div className='monHeader' style={{width:'61px', height:'61px', backgroundImage:`url(${imageHead})`, 
-            backgroundRepeat: 'no-repeat', backgroundPosition: 'center', width:'100%', height:'330px',
-            backgroundSize: 'cover', display:'flex', flexDirection:'column',alignItems:'center',justifyContent:'space-around'}}>
-                <div style={{ display:'flex', flexDirection:'column',alignItems:'center',justifyContent:'space-around'}}>
-                    <h1 style={{ fontFamily:""}}>Des produits bio de qualité livrés chez vous</h1>
-                    <Link to='/products' style={{textDecoration: "none"}}><Button variant="contained" style={{ backgroundColor:"#FFB300", color:'black'}}>Découvrez</Button></Link>
+            <div className='monHeader' style={{
+                width: '61px', height: '61px', backgroundImage: `url(${imageHead})`,
+                backgroundRepeat: 'no-repeat', backgroundPosition: 'center', width: '100%', height: '330px',
+                backgroundSize: 'cover', display: 'flex', flexDirection: 'column', alignItems: 'center', justifyContent: 'space-around'
+            }}>
+                <div style={{ display: 'flex', flexDirection: 'column', alignItems: 'center', justifyContent: 'space-around' }}>
+                    <h1 style={{ fontFamily: "" }}>Des produits bio de qualité livrés chez vous</h1>
+                    <Link to='/products' style={{ textDecoration: "none" }}><Button variant="contained" style={{ backgroundColor: "#FFB300", color: 'black' }}>Découvrez</Button></Link>
                     {/*<h3><Link to='/products'>Découvrez tout nos produits ici</Link></h3>*/}
 
                 </div>
