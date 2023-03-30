@@ -7,6 +7,7 @@ import ControlPointIcon from '@mui/icons-material/ControlPoint';
 import { useState, useEffect } from 'react';
 import { DataGrid } from '@mui/x-data-grid';
 
+
 function Dashboard() {
     const [products, setProducts] = useState([]);
     let rows = products

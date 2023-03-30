@@ -33,9 +33,9 @@ function Product() {
             if (response.status === 201) {
                 const json = await response.json();
                 //affichage de l'image
-                // json.data[0].getImages().then((images) => {
-                //     console.log(images);
-                // });
+                json.data[0].getImages().then((images) => {
+                    console.log(images);
+                });
                 console.log(json)
                 setProduct(json.data)
             } else {
@@ -58,8 +58,9 @@ function Product() {
                                     xs={8}
                                     component="img"
                                     sx={{ width: 900 }}
-                                // image={product.images ? product.images[0].url : ''}
-                                // alt={product.images ? product.images[0].title : 'pas d image'}
+                                    // image={Image}
+                                    image={product.images ? product.images[0].url : ''}
+                                    alt={product.images ? product.images[0].title : 'pas d image'}
                                 />
                                 <Box sx={{ display: 'flex', flexDirection: 'column' }}>
                                     <CardContent sx={{ flex: '1 0 auto' }} xs={4}>

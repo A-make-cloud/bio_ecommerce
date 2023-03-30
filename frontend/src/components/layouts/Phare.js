@@ -11,27 +11,20 @@ function Phare() {
     const productId = params.id;
     const [product, setProduct] = useState([]);
 
-    const [limit, setLimit] = useState(5);
-
-
-
     //  const [prodBdd, setProdBdd] = useState(product.map(prod => prod.id));
 
 
 
     useEffect(function effectFunction() {
         async function fetchProduct() {
-            const response = await fetch('/products/findAll');
+            const response = await fetch('/products/find-top?limit=5');
+
             console.log(response.status)
 
             if (response.status === 201) {
                 const json = await response.json();
 
-                // json.data[0].getImages().then((images) => {
-                //     console.log(images);
-                // });
-
-                console.log(json)
+                console.log("phare données :", json)
                 setProduct(json.data)
             } else {
                 console.log("no product")
@@ -65,18 +58,14 @@ function Phare() {
             <div style={div1Style}>
                 <Slider {...settings} style={div2Style}>
                     <>
-
-
-                        {/* product.slice(0, limit ? limit : product.length).map(item =>) */}
-
                         {product && product.map((prod, index) => (
                             <Card key={prod.id} sx={{ maxWidth: 345 }} cols={2}>
                                 <CardActionArea>
                                     <CardMedia sx={{ maxWidth: 80 }}
                                         component="img"
                                         height="80"
-                                        image={prod.images ? prod.images[0].url : 'https://images.unsplash.com/photo-1551963831-b3b1ca40c98e'}
-                                        alt={prod.images ? prod.images[0].title : 'fake image'}
+                                        image={prod.listeImage && prod.listeImage.length > 0 ? prod.listeImage[0].url : 'https://images.unsplash.com/photo-1551963831-b3b1ca40c98e'}
+                                        alt={prod.listeImage && prod.listeImage.length > 0 ? prod.listeImage[0].title : 'fake image'}
 
                                     />
                                     <CardContent>
