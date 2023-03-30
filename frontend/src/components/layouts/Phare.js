@@ -128,7 +128,7 @@ function Phare() {
 
                 </Slider>
             </div>
-        </div >
+        </div>
     );
 }
 

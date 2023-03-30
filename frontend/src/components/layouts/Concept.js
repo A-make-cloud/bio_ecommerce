@@ -27,14 +27,15 @@ export default function Concept() {
     return (
         <section style={{
             boxShadow: '0px 2px 4px -1px rgba(0,0,0,0.2), 0px 4px 5px 0px rgba(0,0,0,0.14), 0px 1px 10px 0px rgba(0,0,0,0.12)',
-            margin:'29px', paddingTop:'9px', borderRadius:'20px', paddingBottom:'10px'}}>
+            margin: '29px', paddingTop: '9px', borderRadius: '20px', paddingBottom: '10px'
+        }}>
             <center><h2>3 bonnes raisons de commander nos paniers</h2></center>
             <Box sx={{ flexGrow: 1 }}>
                 <Grid container spacing={2} columns={12}>
                     <Grid item xs={4}>
-                        <Item sx={{ boxShadow:'none' }}>
+                        <Item sx={{ boxShadow: 'none' }}>
                             <center>
-                                <Card sx={{ maxWidth: 345, boxShadow:'none' }} cols={2}>
+                                <Card sx={{ maxWidth: 345, boxShadow: 'none' }} cols={2}>
                                     <CardActionArea>
                                         <CardMedia sx={{ maxWidth: 100 }}
                                             component="img"
@@ -55,9 +56,9 @@ export default function Concept() {
                         </Item>
                     </Grid>
                     <Grid item xs={4}>
-                        <Item sx={{ boxShadow:'none'}}>
+                        <Item sx={{ boxShadow: 'none' }}>
                             <center>
-                                <Card sx={{ maxWidth: 345, boxShadow:'none' }}>
+                                <Card sx={{ maxWidth: 345, boxShadow: 'none' }}>
                                     <CardActionArea>
                                         <CardMedia sx={{ maxWidth: 100 }}
                                             component="img"
@@ -78,9 +79,9 @@ export default function Concept() {
                         </Item>
                     </Grid>
                     <Grid item xs={4}>
-                        <Item sx={{ boxShadow:'none'}}>
+                        <Item sx={{ boxShadow: 'none' }}>
                             <center>
-                                <Card sx={{ maxWidth: 345, boxShadow:'none' }}>
+                                <Card sx={{ maxWidth: 345, boxShadow: 'none' }}>
                                     <CardActionArea>
                                         <CardMedia sx={{ maxWidth: 100 }}
                                             component="img"
