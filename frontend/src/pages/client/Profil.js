@@ -29,7 +29,6 @@ export default function Profil() {
             await fetch(`/users/find/${localUser.id}`)
                 .then(response => response.json())
                 .then((res) => {
-                    console.log(res.data)
                     setUser(res.data)
                 })
         }
@@ -59,10 +58,7 @@ export default function Profil() {
                 .email("Veuillez saisir une adresse email valide.")
                 .required("Email est obligatoire."),
 
-            password: yup
-                .string()
-                .min(8, "Le mot de passe doit contenir au moins 8 caractères.")
-                .required("Le mot de passe est obligatoire"),
+
 
 
         }
@@ -75,21 +71,23 @@ export default function Profil() {
             firstname: user?.firstname,
             lastname: user?.lastname,
             email: user?.email,
-            password: '',
+
 
 
         },
         validationSchema: validationSchema,
         onSubmit: (values) => {
 
-            // alert(JSON.stringify(values, null, 2));
+            //alert(JSON.stringify(values, null, 2));
+
             fetch('/users/update', {
                 method: 'PUT',
                 headers: {
-                    "Content-Type": "application/json"
+                    'Authorization': `Bearer ${accessToken}`,
+                    'Content-Type': 'application/json'
                 },
-                body: { ...JSON.stringify(values, null, 2), accessToken },
-
+                body: JSON.stringify(values, null, 2),
+                credentials: 'include'
             })
                 .then(response => {
                     // Affiche le statut de la réponse (par exemple, 200 pour OK)
@@ -194,20 +192,9 @@ export default function Profil() {
                                     helperText={formik.touched.email && formik.errors.email}
                                     spacing={5}
                                 />
-                                <TextField
-                                    fullWidth
-                                    id="password"
-                                    name="password"
-                                    label="Password"
-                                    type="password"
-                                    value={formik.values.password}
-                                    onChange={formik.handleChange}
-                                    error={formik.touched.password && Boolean(formik.errors.password)}
-                                    helperText={formik.touched.password && formik.errors.password}
-                                />
 
                                 <Button color="primary" variant="contained" fullWidth type="submit">
-                                    S'inscrire
+                                    Modifier
                                 </Button>
                             </form>
                         </Grid>
