@@ -47,9 +47,9 @@ function Products() {
     //RECUPERATION des catégories dans BDD
     async function fetchCat() {
       const response = await fetch('/categories/findAll')
-      if (response.status !== 500) {
+      if (response.status === 201) {
         const json = await response.json()
-        setCategories(json)
+        setCategories(json.data)
       } else {
         console.log('pas de catégories')
       }
@@ -61,10 +61,10 @@ function Products() {
     setProducts([...products])
   }, [chosenCategories]);
 
-  useEffect(() => {
+  /*useEffect(() => {
     //observer.observe(spinnerRef.current);
     console.log(products.length)
-  });
+  });*/
 
 
   return (
