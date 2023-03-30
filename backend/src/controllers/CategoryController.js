@@ -3,7 +3,7 @@ const { Category } = require('../../models');
 exports.findAll = (req, res) => {
     Category.findAll()
         .then(data => {
-            res.send(data);
+            res.sataus(201).send({data});
         })
         .catch(err => {
             res.status(500).send({
