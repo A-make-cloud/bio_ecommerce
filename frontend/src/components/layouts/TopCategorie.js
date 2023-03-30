@@ -33,7 +33,7 @@ function TopCategorie() {
                 .then(response => response.json())
                 .then((res) => {
                     console.log("categorie donnée :");
-                    setCategories(res)
+                    setCategories(res.data)
                 })
         }
         fetchCateg()
