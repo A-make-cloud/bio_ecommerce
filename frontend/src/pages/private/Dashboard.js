@@ -1,5 +1,4 @@
 
-import NavbarAdmin from './NavbarAdmin';
 
 import Button from '@mui/material/Button';
 import { Link } from "react-router-dom";
@@ -65,9 +64,9 @@ function Dashboard() {
 
     return (
         <main className="">
+            
+            
             <h1> Dashbord</h1>
-            <NavbarAdmin />
-
             <div style={{ height: 400, width: '100%' }}>
                 <DataGrid
                     rows={rows}
