@@ -56,9 +56,33 @@ exports.findAll = (req, res) => {
     //     });
 };
 
+exports.findTop = (req, res) => {
+    const limit = req.query.limit ? parseInt(req.query.limit) : null;
+    Product.findAll({ order: [['top', 'DESC'], ['quantity', 'DESC']], limit: limit, include: Image })
+        .then(async data => {
+            if (data) {
+
+                await Promise.allSettled(data.map(async (product) => {
+                    const images = await product.getImages();
+                    product.dataValues.listeImage = images;
+                }));
+
+                res.status(201).json({ data });
+            } else {
+                res.status(500).send({
+                    message: `Cannot find Products.`
+                });
+            }
+        })
+        .catch(err => {
+            res.status(500).send({
+                message: `Error retrieving Products.`
+            });
+        });
+}
+
 exports.findById = (req, res) => {
     const id = req.params.id;
-
     Product.findByPk(id)
         .then(data => {
             if (data) {
