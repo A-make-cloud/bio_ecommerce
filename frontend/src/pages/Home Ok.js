@@ -1,3 +1,6 @@
+import NavBar from '../components/layouts/Navbar.js'
+
+import Footer from '../components/layouts/Footer.js'
 import Concept from '../components/layouts/Concept.js';
 import Phare from '../components/layouts/Phare.js';
 import TopCategorie from '../components/layouts/TopCategorie.js';
@@ -16,7 +19,6 @@ import Container from '@mui/material/Container';
 // or
 //import { Container } from '@mui/material';
 import imageHead from '../static/head.jpg';
-
 //import image from '../static/head.jpg';
 
 const Item = styled(Paper)(({ theme }) => ({
@@ -29,7 +31,6 @@ const Item = styled(Paper)(({ theme }) => ({
 
 }));
 function Home() {
-
     return (
         <div>
 

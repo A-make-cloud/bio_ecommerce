@@ -6,7 +6,7 @@ exports.findAll = (req, res) => {
     const offset = req.query.offset ? parseInt(req.query.offset) : null;
     const limit = req.query.limit ? parseInt(req.query.limit) : null;
 
-    Product.findAll({ offset: offset, limit: limit })
+    Product.findAll({ offset: offset, limit: limit, include: Image })
         .then(data => {
             if (data) {
                 res.status(201).json({ message: "Find Products", data })
@@ -50,7 +50,7 @@ exports.findById = (req, res) => {
  * @param {*} res 
  */
 exports.findByCategory = (req, res) => {
-    const category_id = req.query.category_id ? parseInt(req.query.offset) : [1,2,3,4];
+    const category_id = req.query.category_id ? parseInt(req.query.offset) : [1, 2, 3, 4];
     const offset = req.query.offset ? parseInt(req.query.offset) : null;
     const limit = req.query.limit ? parseInt(req.query.limit) : null;
 
@@ -82,21 +82,21 @@ exports.create = (req, res) => {
     const newProduct = req.body
     Product.create(newProduct).then((product) => {
         res.status(201).json({ message: `Produit "${product.title}" ajouté`, product })
-/*
-        const product_id = product.id
-        //-------------create image
-        // `product_id`, `title`, `url`, `type`,
-        try {
-            console.log(Image.create({ product_id, title: 'title img 1', url: 'url img 1' }))
-            Image.create({ product_id, title: 'title img 2', url: 'url img 2' })
-            Image.create({ product_id, title: 'title img 3', url: 'url img 3' })
-
-            res.status(201).json({ message: "Created product", product })
-
-        } catch (err) {
-            console.log("----------------------", err)
-            res.status(500).json({ error: err.message || "Error Database." })
-        }*/
+        /*
+                const product_id = product.id
+                //-------------create image
+                // `product_id`, `title`, `url`, `type`,
+                try {
+                    console.log(Image.create({ product_id, title: 'title img 1', url: 'url img 1' }))
+                    Image.create({ product_id, title: 'title img 2', url: 'url img 2' })
+                    Image.create({ product_id, title: 'title img 3', url: 'url img 3' })
+        
+                    res.status(201).json({ message: "Created product", product })
+        
+                } catch (err) {
+                    console.log("----------------------", err)
+                    res.status(500).json({ error: err.message || "Error Database." })
+                }*/
 
     }).catch(err => {
         console.log(err)
