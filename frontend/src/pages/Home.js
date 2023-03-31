@@ -76,7 +76,7 @@ function Home() {
 
             <Container>
                 <Concept />
-                <Phare />
+                {/* <Phare /> */}
                 <TopCategorie />
             </Container>
 
