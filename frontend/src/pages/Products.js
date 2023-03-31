@@ -1,9 +1,6 @@
 import Categories from '../components/products/Categories';
 import ProductCard from '../components/products/ProductCard';
 import { useState, useRef, useEffect } from 'react';
-//import fakeData from '../components/products/fakeData';
-//import fakeCategories from '../components/products/fakeCategories';
-
 import SyncIcon from '@mui/icons-material/Sync';
 import { Link } from "react-router-dom";
 
@@ -11,7 +8,6 @@ function Products() {
   const batchSize = 10
   let batchOffset = 0
   let productsSaved = []
-  //const categories = fakeCategories //todo: remplacer par un fetch
   const [isLoading, setIsLoading] = useState(true);
   const [products, setProducts] = useState([]);
   const [categories, setCategories] = useState([]);
@@ -20,6 +16,7 @@ function Products() {
 
   const observer = new IntersectionObserver(([elem]) => {
     if (elem.isIntersecting) {
+      //récupérer dans la BDD un nouveau batch de produit
       fetch(`/products/findAll?offset=${batchOffset}&limit=${batchSize}`)
         .then(response => response.json())
         .then((res) => {
@@ -31,9 +28,9 @@ function Products() {
           batchOffset += batchSize
         })
     }
-    //observer.observe(elem.target);
   })
 
+  //Ajouter le nouveau batch à la liste des produits à afficher
   function addNewBatch(newProducts) {
     const newProductsCards = newProducts.map((p, i) => <ProductCard key={'prod' + p.id} product={p} />)
     productsSaved = [...productsSaved, ...newProductsCards]
@@ -44,38 +41,30 @@ function Products() {
     if (spinnerRef.current) {
       observer.observe(spinnerRef.current);
     }
-    //RECUPERATION des catégories dans BDD
+    //Récupération des catégories dans BDD quand on arrive sur la page
     async function fetchCat() {
       const response = await fetch('/categories/findAll')
       if (response.status === 201) {
         const json = await response.json()
         setCategories(json.data)
       } else {
-        console.log('pas de catégories')
+        setCategories([{ id: 1, title: 'Un probleme est survenu, veuillez réessayer', img: "https://placehold.co/600x400" }])
       }
     }
     fetchCat()
   }, []);
 
+  //Modification de l'affichage des produits quand une catégorie est selectionné
   useEffect(() => {
     setProducts([...products])
   }, [chosenCategories]);
 
-  /*useEffect(() => {
-    //observer.observe(spinnerRef.current);
-    console.log(products.length)
-  });*/
-
-
   return (
     <>
-
       <main className="productsPage">
         <h1 style={{ textAlign: 'center' }}>Nos produits</h1>
         <Categories categories={categories} chosenCategories={chosenCategories} setChosenCategories={setChosenCategories} />
-
         {categories.length === chosenCategories.length || chosenCategories.length === 0 ?
-
           <p>Tout nos produits :</p>
           :
           <div style={{ display: 'flex', justifyContent: 'space-between' }}>
@@ -90,15 +79,13 @@ function Products() {
             else
               return true
           })}
-
-        </div>
+        </div>{/*spinner ciblé par l'intersection observer */}
         {isLoading &&
           <div ref={spinnerRef} className="LoadingSpinner" >
             <SyncIcon />
           </div>
         }
       </main>
-
     </>
   );
 }

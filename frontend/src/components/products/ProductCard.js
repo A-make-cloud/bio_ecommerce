@@ -1,5 +1,4 @@
 import AddCartButton from './AddCartButton';
-import {useEffect} from 'react';
 import Card from '@mui/material/Card';
 import CardActions from '@mui/material/CardActions';
 import CardContent from '@mui/material/CardContent';
@@ -21,7 +20,7 @@ function ProductCard({ product }) {
         />
       </Link>
       <CardContent>
-        <h4>{product.title + ' '/* + product.id*/}</h4>
+        <h4>{product.title + ' '}</h4>
         <p>{product.description.slice(0, 50) + "..."}</p>
       </CardContent>
       <CardActions className="priceAndAdd">
