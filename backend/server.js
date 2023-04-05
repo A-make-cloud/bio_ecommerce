@@ -9,16 +9,7 @@ require("dotenv").config();
 // parse requests of content-type - application/json
 app.use(express.json());
 
-// const session = require('express-session');
-//----------------------ajout de express session (dj)
-// app.use(session({
-//     //todo: utiliser un process.env.APP_KEY à la place de 'e8dec954ad98d87d249b22268df6109469417ddd'
-//     secret: process.env.APP_KEY, resave: false, saveUninitialized: false,
-//     cookie: { maxAge: 3600000 }
-// }));
 
-//---------------cookie parser 29/03
-app.use(cookieParser());
 
 //------------------lancer le serveur sur le port 
 app.listen(PORT, () => {
@@ -52,3 +43,16 @@ app.use("/users", usersRoutes);
 const commandesRoutes = require('./app/routes/commandes.route.js')
 app.use("/commandes", commandesRoutes);
 //*/
+
+// Serve frontend
+if (process.env.NODE_ENV === "production") {
+    app.use(express.static(path.join(__dirname, "../frontend/build")));
+
+    app.get("*", (req, res) =>
+        res.sendFile(
+            path.resolve(__dirname, "../", "frontend", "build", "index.html")
+        )
+    );
+} else {
+    app.get("/", (req, res) => res.send("Please set to production"));
+}

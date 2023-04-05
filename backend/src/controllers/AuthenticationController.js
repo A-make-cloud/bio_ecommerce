@@ -21,7 +21,6 @@ exports.process = (req, res) => {
         .then(user => {
             if (user) {
 
-                // console.log("data--------->>", user.status)
                 //----------compte actif
                 if (user.status == 3) {
                     res.status(401).send({
@@ -36,7 +35,6 @@ exports.process = (req, res) => {
                             });
                         } else if (result) {
 
-                            // console.log('Le mot de passe ok  !');
                             //4--------------generer le JWT  ==>>OK
                             let accessToken = jwt.sign({
                                 id: user.id,
@@ -52,7 +50,6 @@ exports.process = (req, res) => {
                                 httpOnly: true, //utilisation uniquement via requete http
                                 secure: false, //true pour forcer l'utilisation https
                             });
-
 
                             res.status(200).send({
                                 message: "connexion ok",

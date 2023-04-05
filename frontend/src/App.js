@@ -36,9 +36,10 @@ function App() {
 
   return (
     <div className="App">
+      <NavBar />
       {isLogged && profil === "admin" && location.pathname.includes('dashboard') ?
-      <NavbarAdmin />
-      : <NavBar />}
+        <NavbarAdmin />
+        : ""}
       <Routes>
 
         <Route path="/" element={<Home />} />
@@ -50,7 +51,7 @@ function App() {
 
         {isLogged && profil === "admin" ?
           <>
-            
+
             <Route path="/dashboard" element={<Dashboard />} />
             <Route path="/dashboard/add-product" element={<Addproduct />} />
           </>
@@ -68,9 +69,9 @@ function App() {
 
       </Routes>
 
-      {isLogged && profil === "admin" && location.pathname.includes('dashboard') ?
-      ''
-      : <Footer />}
+      {isLogged && profil === "admin" && !location.pathname.includes('dashboard') ?
+        <Footer />
+        : ''}
 
 
     </div>

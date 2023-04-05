@@ -50,15 +50,15 @@ export default function NavBar() {
                         <Toolbar>
                             {/*<Tooltip title="Open settings">*/}
                             <Link to="/" style={{ color: "inherit", textDecoration: "none", marginRight: 5 }} >
-                                    <Item sx={{boxShadow:'none'}}>
-                                        <CardMedia
-                                            component="img"
-                                            height="80"
-                                            image={logo}
-                                            alt="logo"
-                                        />
-                                    </Item>
-                                </Link>
+                                <Item sx={{ boxShadow: 'none' }}>
+                                    <CardMedia
+                                        component="img"
+                                        height="80"
+                                        image={logo}
+                                        alt="logo"
+                                    />
+                                </Item>
+                            </Link>
                             {/*</Tooltip>*/}
                             <IconButton
                                 size="large"
@@ -76,13 +76,13 @@ export default function NavBar() {
                             </Typography>
 
                             {isLogged &&
-                                <p style={{marginRight:'21px'}}>Bonjour {user ? user.firstname : ""} {user ? user.lastname : ""} </p>}
+                                <p style={{ marginRight: '21px' }}>Bonjour {user ? user.firstname : ""} {user ? user.lastname : ""} </p>}
 
-                            {isLogged && profil=== 'admin'? 
-                            <Link to="/dashboard" style={{ color: "inherit", textDecoration: "none" }}>
-                                <AdminPanelSettingsIcon/>
-                            </Link>
-                            : ''}
+                            {isLogged && profil === 'admin' ?
+                                <Link to="/dashboard" style={{ color: "inherit", textDecoration: "none" }}>
+                                    <AdminPanelSettingsIcon />
+                                </Link>
+                                : ''}
 
 
 
