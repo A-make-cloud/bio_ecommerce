@@ -1,7 +1,6 @@
 
 //import {useEffect} from 'react';
 //import {CatCartouche} from './Categories';
-
 function CategorieTop({ categories }) {
     const cartoucheStyle = {
         display: 'flex', listStyle: 'none', width: '400px', borderRadius: '5px',
