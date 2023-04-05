@@ -1,7 +1,7 @@
 const express = require('express')
 const app = express()
 const PORT = process.env.APP_ENV || 9000
-
+const path = require("path");
 const cookieParser = require('cookie-parser');
 //variable d'environnement
 require("dotenv").config();
@@ -43,7 +43,7 @@ app.use("/users", usersRoutes);
 const commandesRoutes = require('./app/routes/commandes.route.js')
 app.use("/commandes", commandesRoutes);
 //*/
-
+console.log('----------prod-----', process.env.NODE_ENV)
 // Serve frontend
 if (process.env.NODE_ENV === "production") {
     app.use(express.static(path.join(__dirname, "../frontend/build")));
