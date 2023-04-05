@@ -19,7 +19,7 @@ exports.findById = (req, res) => {
     Category.findByPk(id)
         .then(data => {
             if (data) {
-                console.log(data)
+                // console.log(data)
                 res.status(201).json({ message: "Find Category", data })
             } else {
                 res.status(500).send({

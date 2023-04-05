@@ -11,9 +11,9 @@ function Basket() {
 
     useEffect(() => {
         setBasketSummary(getItemsWithDetails)
-        //console.log(basket)
     }, [])
 
+    //mettre à jour l'affichage des détails à la modification du panier
     useEffect(() => {
         setBasketSummary(getItemsWithDetails)
     }, [basket])
@@ -25,9 +25,8 @@ function Basket() {
                 {basketSummary.length > 0 ?
                     <>
                         <Button onClick={emptyBasket} variant="contained" color="warning" startIcon={<RemoveShoppingCartIcon />} >Vider le panier</Button>
-                        <Button onClick={removeLast} variant="contained" sx={{ margin: '6px' }} style={{backgroundColor:"#FFB300", color:'black'}}>Enlever le dernier article ajouté</Button>
+                        <Button onClick={removeLast} variant="contained" sx={{ margin: '6px' }} style={{ backgroundColor: "#FFB300", color: 'black' }}>Enlever le dernier article ajouté</Button>
                         <h2>Produits dans votre panier : </h2>
-
                         {basketSummary.map((articleType, i) => {
                             return (
                                 <div key={'article_' + i} style={{
@@ -44,30 +43,25 @@ function Basket() {
                                         <h3>{articleType.title} {articleType.id}</h3>
                                         <p>{articleType.pickedQuantity} unité{articleType.pickedQuantity > 1 && 's'}</p>
                                     </div>
-                                    <p>{/*articleType.totalPrice_ht*/
-                                        Math.round( (articleType.totalPrice_ht * (1 + articleType.tva / 100))*100 )/100} €</p>
+                                    <p>{
+                                        Math.round((articleType.totalPrice_ht * (1 + articleType.tva / 100)) * 100) / 100} €</p>
                                     <div>
-                                        <Button variant="contained" style={{backgroundColor:"#FFB300", color:'black'}} onClick={e => removeOne(articleType.id)}>En enlever un</Button>
+                                        <Button variant="contained" style={{ backgroundColor: "#FFB300", color: 'black' }} onClick={e => removeOne(articleType.id)}>En enlever un</Button>
                                         <Button variant="contained" color="warning" onClick={e => removeLine(articleType.id)} sx={{ margin: '6px' }}>Tout enlever</Button>
                                         <Button variant="contained" onClick={e => addOneOfThis(articleType)} startIcon={<AddShoppingCartIcon />}>En ajouter un</Button>
                                     </div>
                                 </div>
                             )
                         })}
-
                         <h2>résumé du panier :</h2>
-
                         <p>Total HT : {Math.floor((basketSummary.reduce((s, pr) => pr.totalPrice_ht + s, 0)) * 100) / 100} €</p>
                         <p>TVA : {Math.floor((getTotalTva()) * 100) / 100} €</p>
                         <p>Total TTC : {Math.floor((getTotalTtc()) * 100) / 100} €</p>
-
                         <Button variant="contained" sx={{ width: '100%' }}>Passer à la caisse</Button>
                         <p style={{ textAlign: 'center' }}>ou <Link to="/products">continuer à magasiner</Link></p>
-
                     </>
                     : <p>panier vide</p>}
             </main>
-
         </>
     );
 }

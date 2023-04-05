@@ -44,24 +44,18 @@ function Login() {
             })
                 .then(response => {
                     // Affiche le statut de la réponse (par exemple, 200 pour OK)
-                    console.log(response.status)
+
                     if (response.status !== 200) {
-                        // alert("error")
                         setColor("error")
                     } else {
-                        // alert("OK")
                         setColor("success")
-
                     }
                     return response.json();
                 })
                 .then(result => {
-
-
                     setMessage(result.message)
                     if (result.user) {
                         // stocker des parametres de l'utilisateur quelque part ? ---> result.firstname id et lastname
-                        //console.log(result.user)
                         connectUser(result.user) //add user to local storage //AuthContext.js
 
                         //setISlogged and add to local storage // AuthContext.js
@@ -71,16 +65,12 @@ function Login() {
                         const profil = result.user.profil
                         updateProfil(profil)
 
-                        // console.log("-------profil", profil)
-
                         if (profil === "admin")
                             navigate('/dashboard')
                         else if (profil === "client")
                             navigate('/client')
 
-
                     }
-
 
 
                 })

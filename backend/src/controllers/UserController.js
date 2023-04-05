@@ -125,7 +125,6 @@ exports.update = (req, res) => {
 
     //------------verification du token dans middelware middelwareAuth.js envoi user dans req.user
 
-    console.log('--------apres middelware', req.user)
     const userUpdate = req.user
 
     //2----------------valider form ==>>TODO
@@ -134,7 +133,7 @@ exports.update = (req, res) => {
         .then(user => {
             if (user) {
 
-                console.log('user-------->>', user)
+                // console.log('user-------->>', user)
                 const firstname = userUpdate.firstname;
                 const lastname = userUpdate.lastname;
                 // const password = userUpdate.password ? userUpdate.password : user.password;

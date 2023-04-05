@@ -130,8 +130,6 @@ export default function Profil() {
                 <NavbarClient />
 
 
-
-
                 <Paper
                     sx={{
                         p: 2,
