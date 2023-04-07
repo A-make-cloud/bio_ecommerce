@@ -24,8 +24,8 @@ function Basket() {
                 <h1>Votre panier</h1>
                 {basketSummary.length > 0 ?
                     <>
-                        <Button onClick={emptyBasket} variant="contained" color="warning" startIcon={<RemoveShoppingCartIcon />} >Vider le panier</Button>
-                        <Button onClick={removeLast} variant="contained" sx={{ margin: '6px' }} style={{ backgroundColor: "#FFB300", color: 'black' }}>Enlever le dernier article ajouté</Button>
+                        {/* <Button onClick={emptyBasket} variant="contained" color="warning" startIcon={<RemoveShoppingCartIcon />} >Vider le panier</Button> */}
+                        {/* <Button onClick={removeLast} variant="contained" sx={{ margin: '6px' }} style={{ backgroundColor: "#FFB300", color: 'black' }}>Enlever le dernier article ajouté</Button> */}
                         <h2>Produits dans votre panier : </h2>
                         {basketSummary.map((articleType, i) => {
                             return (
@@ -57,8 +57,8 @@ function Basket() {
                         <p>Total HT : {Math.floor((basketSummary.reduce((s, pr) => pr.totalPrice_ht + s, 0)) * 100) / 100} €</p>
                         <p>TVA : {Math.floor((getTotalTva()) * 100) / 100} €</p>
                         <p>Total TTC : {Math.floor((getTotalTtc()) * 100) / 100} €</p>
-                        <Button variant="contained" sx={{ width: '100%' }}>Passer à la caisse</Button>
-                        <p style={{ textAlign: 'center' }}>ou <Link to="/products">continuer à magasiner</Link></p>
+                        <Button variant="contained" sx={{ width: '100%' }}>Valider le panier</Button>
+                        <p style={{ textAlign: 'center' }}>ou <Link to="/products">continuer vos achats</Link></p>
                     </>
                     : <p>panier vide</p>}
             </main>

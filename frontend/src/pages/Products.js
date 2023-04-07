@@ -14,19 +14,28 @@ function Products() {
   const [chosenCategories, setChosenCategories] = useState(categories.map(c => c.id));
   const spinnerRef = useRef();
 
+  function getBatch(){
+    fetch(`/products/findAll?offset=${batchOffset}&limit=${batchSize}`)
+    .then(response => response.json())
+    .then((res) => {
+      const products = res.data
+      if (products.length > 0)
+        addNewBatch(products)
+      if (products.length < batchSize)
+        setIsLoading(false)
+      console.log('batchOffset ', batchOffset)
+      batchOffset += batchSize
+      //reverifier si le spinner est encore à l'écran
+      observer.observe(spinnerRef.current)
+    })
+  }
+
   const observer = new IntersectionObserver(([elem]) => {
     if (elem.isIntersecting) {
       //récupérer dans la BDD un nouveau batch de produit
-      fetch(`/products/findAll?offset=${batchOffset}&limit=${batchSize}`)
-        .then(response => response.json())
-        .then((res) => {
-          const products = res.data
-          if (products.length > 0)
-            addNewBatch(products)
-          if (products.length < batchSize)
-            setIsLoading(false)
-          batchOffset += batchSize
-        })
+      getBatch()
+      //unobserver pour pouvoir relancer l'observe après
+      observer.unobserve(elem.target)
     }
   })
 

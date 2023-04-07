@@ -11,7 +11,7 @@ function ProductCard({ product }) {
   const priceTTC= Math.round( (product.price_ht * (1 + product.tva / 100))*100 )/100
 
   return (
-    <Card sx={{ maxWidth: 359, margin: 3 }}>
+    <Card className='productCard'>
       <Link to={`/product/${product.id}`} style={{ color: "inherit", textDecoration: "none" }}>
         <CardMedia
           sx={{ height: 160 }}
