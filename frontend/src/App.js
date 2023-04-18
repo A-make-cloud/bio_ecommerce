@@ -27,9 +27,9 @@ import NavbarAdmin from './pages/private/NavbarAdmin';
 function App() {
   // const [isLogged, setIsLogged] = useState(false)
 
-  const { isLogged, profil } = useContext(AuthContext);
-  console.log("isLogged", isLogged)
-  console.log("prfil", profil)
+  const { isLogged, profil, user } = useContext(AuthContext);
+  //console.log("isLogged", isLogged)
+  //console.log("type de profil:", profil, " / user:", user, '/ isLogged:', isLogged)
   //profil admin||client 
   //isLogged true||false
   const location = useLocation();

@@ -18,16 +18,14 @@ function Phare() {
     useEffect(function effectFunction() {
         async function fetchProduct() {
             const response = await fetch('/products/find-top?limit=5');
-
-            console.log(response.status)
-
+            //console.log(response.status)
             if (response.status === 201) {
                 const json = await response.json();
 
-                console.log("phare données :", json)
+                //console.log("phare données :", json)
                 setProduct(json.data)
             } else {
-                console.log("no product")
+                //console.log("no product")
             }
         }
         fetchProduct();
@@ -45,8 +43,7 @@ function Phare() {
     };
 
     const div1Style = {
-
-        marginTop: "100px",
+        marginTop: "50px",
     };
     const div2Style = {
 

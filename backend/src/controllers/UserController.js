@@ -1,9 +1,7 @@
-
 const { User } = require('../../models');
 const bcrypt = require('bcrypt');
 const jwt = require('jsonwebtoken');
 const Cookies = require("cookies");
-
 
 /**
  * select all user by admin
@@ -54,8 +52,6 @@ exports.create = (req, res) => {
     }).catch(err => {
         res.status(500).json({ error: err.message || "Error Database." })
     })
-
-
 }
 
 
@@ -82,6 +78,27 @@ exports.findById = (req, res) => {
                 message: "Error retrieving User with id=" + id
             });
         });
+}
+/**find user details by himself with the JWT
+ * 
+ * @param {*} req 
+ * @param {*} res 
+ */
+exports.findSelf = (req, res) => {
+    const id = req.user.id// coming from auth middleware checking the JWT
+    User.findByPk(id)
+        .then(data => {
+            if (data){
+                const user = {id:data.id, civility:data.civility, firstname:data.firstname, 
+                    lastname:data.lastname, email:data.email, profil:data.profil, status:data.status}
+                res.status(200).json({ message: "Found user", user })
+            } else 
+                res.status(500).send({ message: `Cannot find user with id=${id}.` })
+        })
+        .catch(err => {
+            res.status(500).send({ message: "Error retrieving User with id=" + id })
+        }
+    )
 }
 
 /**
@@ -116,16 +133,14 @@ exports.findByEmail = (req, res) => {
  */
 
 exports.update = (req, res) => {
-
     //1---------------recuperer le body ==>>TODO
     //2----------------valider form ==>>TODO
     //3---------------------Ajouter user  ==>>OK
     //4------------------Envoyer le mail de validation   ==>>TODO
 
-
-    //------------verification du token dans middelware middelwareAuth.js envoi user dans req.user
-
-    const userUpdate = req.user
+    //-----------token vérifié dans middelware middelwareAuth.js qui envoi ancien détails du user dans req.user
+    //-----------mais ici on a les nouveaux détails dans req.body !
+    const userUpdate = {id:req.user.id, ...req.body}
 
     //2----------------valider form ==>>TODO
     //*
@@ -138,9 +153,9 @@ exports.update = (req, res) => {
                 const lastname = userUpdate.lastname;
                 // const password = userUpdate.password ? userUpdate.password : user.password;
                 const email = user.email;//todo si modif voir s'il existe deja 
-
+                const civility = userUpdate.civility;
                 User.update(
-                    { firstname, lastname, email },
+                    { civility, firstname, lastname, email },
                     { where: { id: user.id } }
                 ).then(() => {
                     res.status(200).send({
@@ -165,15 +180,7 @@ exports.update = (req, res) => {
             });
         });
 
-
-
-
     //*/
-
-
-
-
-
 
 
     /*

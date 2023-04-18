@@ -4,8 +4,8 @@ import { Link } from 'react-router-dom';
 import { AuthContext } from '../../contexts/AuthContext';
 export default function NavbarClient() {
 
-    const user = localStorage.getItem('user') ? JSON.parse(localStorage.getItem('user')) : null
-
+    //const user = localStorage.getItem('user') ? JSON.parse(localStorage.getItem('user')) : null /!\ No localStorage for user details
+    const { user } = useContext(AuthContext);
 
     return (<div style={{ display: 'flex', justifyContent: 'space-around', alignContent: 'center', backgroundColor: '#C8E6C9' }}>
 

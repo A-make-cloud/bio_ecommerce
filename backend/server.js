@@ -6,6 +6,8 @@ const cookieParser = require('cookie-parser');
 //variable d'environnement
 require("dotenv").config();
 
+app.use(cookieParser());
+
 // parse requests of content-type - application/json
 app.use(express.json());
 

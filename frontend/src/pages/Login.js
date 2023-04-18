@@ -54,10 +54,12 @@ function Login() {
                 })
                 .then(result => {
                     setMessage(result.message)
+                    //console.log('ici', result)
                     if (result.user) {
+                        //console.log('l 58',result.user)
                         // stocker des parametres de l'utilisateur quelque part ? ---> result.firstname id et lastname
                         connectUser(result.user) //add user to local storage //AuthContext.js
-
+                        //console.log('parametre de connectUser()', result.user)
                         //setISlogged and add to local storage // AuthContext.js
                         updateIslogged('true')
 
@@ -119,6 +121,7 @@ function Login() {
                                 error={formik.touched.email && Boolean(formik.errors.email)}
                                 helperText={formik.touched.email && formik.errors.email}
                                 spacing={5}
+                                autoComplete="email"
                             />
                             <TextField
                                 fullWidth
@@ -130,6 +133,7 @@ function Login() {
                                 onChange={formik.handleChange}
                                 error={formik.touched.password && Boolean(formik.errors.password)}
                                 helperText={formik.touched.password && formik.errors.password}
+                                autoComplete="current-password"
                             />
                             <Button color="primary" variant="contained" fullWidth type="submit">
                                 Se connecter

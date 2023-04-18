@@ -1,46 +1,26 @@
 import { useContext, useEffect, useState } from 'react';
 import NavbarClient from './NavbarClient';
-
-
-
 import { useFormik } from 'formik';
 import * as yup from 'yup';
 import TextField from '@mui/material/TextField';
 import Button from '@mui/material/Button';
-import { useNavigate } from 'react-router-dom';
-
+//import { useNavigate } from 'react-router-dom';
 import { Alert, FormControl, FormControlLabel, FormLabel, Grid, Paper, Radio, RadioGroup } from '@mui/material';
-
+import { AuthContext } from '../../contexts/AuthContext'
 export default function Profil() {
-
-    const navigate = useNavigate();
-
-
-    const [user, setUser] = useState();
-    const localUser = localStorage.getItem('user') ? JSON.parse(localStorage.getItem('user')) : null
-
-    const accessToken = localUser.accessToken
-
-
+    const { updateProfil, connectUser } = useContext(AuthContext);
+    const localUser = useContext(AuthContext).user;
+    //const navigate = useNavigate();
+    const [user, setUser] = useState({...localUser, civility:localUser.civility??'Mme'});
+    //const accessToken = localUser.accessToken
     useEffect(() => {
-
-        async function getUserDb() {
-            //recuperer les info de la base de donnée 
-            await fetch(`/users/find/${localUser.id}`)
-                .then(response => response.json())
-                .then((res) => {
-                    setUser(res.data)
-                })
-        }
-        getUserDb()
-
+        //recuperer les info de la base de donnée 
+        fetch(`/users/find-self`)
+        .then(response => response.json())
+        .then((res) => {
+            setUser(res.user)
+        })
     }, []);
-
-
-
-
-
-
     const [color, setColor] = useState()
     const [message, setMessage] = useState()
     const validationSchema = yup.object(
@@ -57,13 +37,9 @@ export default function Profil() {
                 .string()
                 .email("Veuillez saisir une adresse email valide.")
                 .required("Email est obligatoire."),
-
-
-
-
         }
     );
-
+//console.log(user)
     const formik = useFormik({
         enableReinitialize: true,
         initialValues: {
@@ -71,42 +47,37 @@ export default function Profil() {
             firstname: user?.firstname,
             lastname: user?.lastname,
             email: user?.email,
-
-
-
         },
         validationSchema: validationSchema,
         onSubmit: (values) => {
-
             //alert(JSON.stringify(values, null, 2));
-
             fetch('/users/update', {
                 method: 'PUT',
                 headers: {
-                    'Authorization': `Bearer ${accessToken}`,
                     'Content-Type': 'application/json'
                 },
                 body: JSON.stringify(values, null, 2),
-                credentials: 'include'
+                credentials: 'include' // inclure les cookies dans la requête
             })
                 .then(response => {
                     // Affiche le statut de la réponse (par exemple, 200 pour OK)
-
                     if (response.status !== 200) {
                         // alert("error")
                         setColor("error")
                     } else {
                         // alert("OK")
                         setColor("success")
-
                         // navigate('/dashbord')
                     }
                     return response.json();
                 })
                 .then(result => {
                     setMessage(result.message)
-                    //redirection si succès pour se connecter :
+                    //updateProfil(values)
+                    connectUser({profil:localUser.profil, id:localUser.id, ...values})
 
+
+                    //pas de redirection si succès pour se connecter, car on est déja connecté
                 })
                 .catch(err => {
                     console.log('y 1 erreur : ', err)
@@ -114,22 +85,12 @@ export default function Profil() {
                         alert('Une erreur est survenue sur le réseau !')
                     //alert('Une erreur est survenue ! ', err);
                 })
-
-
         },
     });
-
-
     if (user) {
-
         return (
-
-
-
             <main className="productsPage">
                 <NavbarClient />
-
-
                 <Paper
                     sx={{
                         p: 2,
@@ -140,8 +101,8 @@ export default function Profil() {
                             theme.palette.mode === 'dark' ? '#1A2027' : '#fff',
                     }}
                 >
-                    <h1>Mon profil  {user ? user.firstname : localUser.firstname} </h1>
-                    {message ? <p><Alert severity={color}>{message}</Alert></p> : ""}
+                    <h1>Mon profil  {localUser ? localUser.firstname : user.firstname } </h1>
+                    {message ? <Alert severity={color}>{message}</Alert> : ""}
                     <Grid container spacing={3}>
                         <Grid item xs={12}>
                             <form onSubmit={formik.handleSubmit} className="loginForm">
@@ -151,10 +112,11 @@ export default function Profil() {
                                         row
                                         aria-labelledby="demo-row-radio-buttons-group-label"
                                         name="civility"
+                                        value={formik.values.civility}
+                                        onChange={formik.handleChange}
                                     >
                                         <FormControlLabel value="M" control={<Radio />} label="M" />
                                         <FormControlLabel value="Mme" control={<Radio />} label="Mme" />
-
                                     </RadioGroup>
                                 </FormControl>
                                 <TextField
@@ -190,14 +152,12 @@ export default function Profil() {
                                     helperText={formik.touched.email && formik.errors.email}
                                     spacing={5}
                                 />
-
                                 <Button color="primary" variant="contained" fullWidth type="submit">
                                     Modifier
                                 </Button>
                             </form>
                         </Grid>
                     </Grid>
-
                 </Paper>
             </main>
         );

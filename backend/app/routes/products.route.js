@@ -1,12 +1,13 @@
 const express = require('express')
 const router = express.Router();
 const Controller = require('../../src/controllers/ProductController.js')
+const middelwareAuth = require('../../src/middelwares/middelwareAuth.js')
 //find all products
 router.get("/findAll", Controller.findAll);
 //find by categories
 router.get("/findByCategory", Controller.findByCategory);
 //create  form product
-router.post("/create", Controller.create);
+router.post("/create", middelwareAuth.adminVerif, Controller.create);
 //find product by id
 router.get("/find/:id", Controller.findById);
 //find top products with limit in querry string : ...path?limit=10

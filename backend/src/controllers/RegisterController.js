@@ -44,11 +44,11 @@ exports.process = (req, res) => {
                     },
                         process.env.SECRET_JWT, { expiresIn: 604800 }
                     );
-                    new Cookies(req, res).set("access_token", accessToken, {
+                    /*new Cookies(req, res).set("access_token", accessToken, {
                         httpOnly: true, //utilisation uniquement via requete http
                         secure: false, //true pour forcer l'utilisation https
-                    });
-
+                    });*/
+                    res.cookie("access_token", accessToken, { maxAge: 3 * 60 * 60 * 1000, httpOnly: true, secure: false });
 
                     res.status(200).json({ message: "Votre compte a bien été enregistré", user })
                 }).catch(err => {
@@ -58,7 +58,7 @@ exports.process = (req, res) => {
 
             } else {
                 res.status(500).send({
-                    message: "Email  existe deja "
+                    message: "Email existe dejà"
                 });
             }
         })

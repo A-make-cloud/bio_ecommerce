@@ -4,9 +4,8 @@ import { Link } from 'react-router-dom';
 import { AuthContext } from '../../contexts/AuthContext';
 
 export default function NavbarAdmin() {
-
-    const user = localStorage.getItem('user') ? JSON.parse(localStorage.getItem('user')) : null
-
+    const { user } = useContext(AuthContext);
+    //const user = localStorage.getItem('user') ? JSON.parse(localStorage.getItem('user')) : null
 
     return (<div style={{display:'flex', justifyContent:'space-around', alignContent:'center', backgroundColor:'#C8E6C9'}}>
         <h1>Bio Shop - Espace Admin</h1>

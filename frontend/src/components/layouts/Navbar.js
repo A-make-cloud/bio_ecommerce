@@ -1,5 +1,5 @@
 import ShoppingBasketIcon from '@mui/icons-material/ShoppingBasket';
-import { Link, useNavigate } from "react-router-dom";
+import { Link } from "react-router-dom";
 import * as React from 'react';
 import AppBar from '@mui/material/AppBar';
 import Box from '@mui/material/Box';
@@ -17,31 +17,22 @@ import { useContext, useState } from 'react';
 import AdminPanelSettingsIcon from '@mui/icons-material/AdminPanelSettings';
 import { AuthContext } from '../../contexts/AuthContext';
 
-
-
-
-
 export default function NavBar() {
-    const user = localStorage.getItem('user') ? JSON.parse(localStorage.getItem('user')) : null
-    const navigate = useNavigate();
-    const { isLogged, updateIslogged, logoutUser, profil } = useContext(AuthContext);
-
+    const { isLogged, updateIslogged, logoutUser, profil, user } = useContext(AuthContext);
     const { basket } = React.useContext(BasketContext);
     const Item = styled(Paper)(({ theme }) => ({
         backgroundColor: theme.palette.mode === 'dark' ? '#1A2027' : '#346344',
         ...theme.typography.body2,
         padding: theme.spacing(1),
         color: theme.palette.text.secondary,
-
-
     }));
     const logout = () => {
-        //deconnect user delete localstorage
+        //deconnect user delete details
         logoutUser()
         //redirection home page
-        navigate('/')
+        window.location.href = '/'
+        //navigate('/products') ne marche pas car ce n'est pas un contenu géré par le router
     }
-
     return (
         <div>
             <Box sx={{ flexGrow: 1 }} >
@@ -67,7 +58,6 @@ export default function NavBar() {
                                 aria-label="menu"
                                 sx={{ mr: 2 }}
                             >
-
                             </IconButton>
                             <Typography variant="h6" component="div" sx={{ flexGrow: 1 }} >
 
@@ -83,9 +73,6 @@ export default function NavBar() {
                                     <AdminPanelSettingsIcon />
                                 </Link>
                                 : ''}
-
-
-
                             {!isLogged ?
                                 <Link to="/register" style={{ color: "inherit", textDecoration: "none" }}>
 
@@ -112,6 +99,5 @@ export default function NavBar() {
                 </AppBar>
             </Box>
         </div>
-
     );
 }

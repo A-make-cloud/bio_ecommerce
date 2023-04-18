@@ -1,6 +1,6 @@
 //const UserRepo = require('../repository/UsersRepository.js');
 const jwt = require('jsonwebtoken');
-const Cookies = require("cookies");
+//const Cookies = require("cookies");
 require('dotenv').config();
 const bcrypt = require('bcrypt');
 const { User } = require('../../models');
@@ -46,11 +46,12 @@ exports.process = (req, res) => {
                                 process.env.SECRET_JWT, { expiresIn: 3 * 60 * 60 }
                             );
                             //----methode 1 Cookie
-                            const cookie = new Cookies(req, res).set("access_token", accessToken, {
+                            /*const cookie = new Cookies(req, res).set("access_token", accessToken, {
                                 httpOnly: true, //utilisation uniquement via requete http
                                 secure: false, //true pour forcer l'utilisation https
-                            });
-
+                            });*/
+                            res.cookie("access_token", accessToken, { maxAge: 3 * 60 * 60 * 1000, httpOnly: true, secure: false });
+                                //console.log('accessToken',accessToken)
                             res.status(200).send({
                                 message: "connexion ok",
                                 user: {
@@ -59,7 +60,7 @@ exports.process = (req, res) => {
                                     lastname: user.lastname,
                                     profil: user.profil,
                                     email: user.email,
-                                    accessToken
+                                    //accessToken
                                 },
                             });
 
@@ -86,8 +87,15 @@ exports.process = (req, res) => {
         });
 }
 
-exports.disconnect = (req, res) => {
-    delete req.session.user;
-    res.status(200).json({ message: "user logged out", id: user.id })
+exports.deletecookie = (req, res) => {
+    res.cookie('access_token', '', { 
+        expires: new Date(0),
+        httpOnly: true,
+        secure: true,
+        sameSite: 'strict', // si le cookie a l'attribut SameSite à 'strict'
+    });
+    res.send({ message:'Vous êtes maintenant déconnecté' });
+    //delete req.session.user;
+    //res.status(200).json({ message: "user logged out", id: user.id })
     //renvoyer une réponse ?
 }

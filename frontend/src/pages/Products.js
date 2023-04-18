@@ -23,7 +23,7 @@ function Products() {
         addNewBatch(products)
       if (products.length < batchSize)
         setIsLoading(false)
-      console.log('batchOffset ', batchOffset)
+      //console.log('batchOffset ', batchOffset)
       batchOffset += batchSize
       //reverifier si le spinner est encore à l'écran
       observer.observe(spinnerRef.current)
