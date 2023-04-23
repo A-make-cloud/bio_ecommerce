@@ -25,6 +25,7 @@ const Item = styled(Paper)(({ theme }) => ({
 const div1Style = {
 
     marginTop: "100px",
+    marginBottom: "30px",
 };
 
 

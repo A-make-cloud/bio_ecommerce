@@ -66,13 +66,18 @@ export default function NavBar() {
                             </Typography>
 
                             {isLogged &&
-                                <p style={{ marginRight: '21px' }}>Bonjour {user ? user.firstname : ""} {user ? user.lastname : ""} </p>}
-
-                            {isLogged && profil === 'admin' ?
-                                <Link to="/dashboard" style={{ color: "inherit", textDecoration: "none" }}>
-                                    <AdminPanelSettingsIcon />
-                                </Link>
+                                <>
+                                <p style={{ marginRight: '21px' }}>Bonjour {user ? user.firstname : ""} {user ? user.lastname : ""} </p>
+                                {profil === 'admin' ?
+                                    <Link to="/dashboard" style={{ color: "inherit", textDecoration: "none" }}>
+                                        <AdminPanelSettingsIcon />
+                                    </Link>
                                 : ''}
+                                <Link to="/client" style={{ color: "inherit", textDecoration: "none" }}>
+                                    <Button color="inherit">Mon compte</Button>
+                                </Link>
+                                </>}
+
                             {!isLogged ?
                                 <Link to="/register" style={{ color: "inherit", textDecoration: "none" }}>
 

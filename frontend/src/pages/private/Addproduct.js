@@ -8,7 +8,7 @@ import { Alert, Grid, Paper } from '@mui/material';
 import InputLabel from '@mui/material/InputLabel';
 import MenuItem from '@mui/material/MenuItem';
 import Select from '@mui/material/Select';
-
+import NavbarAdmin from './NavbarAdmin';
 function Addproduct() {
     const navigate = useNavigate();
     const [color, setColor] = useState()
@@ -99,125 +99,128 @@ function Addproduct() {
     });
 
     return (
-        <main className="marginPage">
-            <Paper
-                sx={{
-                    p: 2,
-                    margin: 'auto',
-                    maxWidth: 700,
-                    flexGrow: 1,
-                    backgroundColor: (theme) =>
-                        theme.palette.mode === 'dark' ? '#1A2027' : '#fff',
-                }}
-            >
-                <h1>Ajouter un produit</h1>
-                {message ? <Alert severity={color}>{message}</Alert> : ""}
-                <Grid container spacing={3}>
-                    <Grid item xs={12}>
-                        <form onSubmit={formik.handleSubmit} className="addProdForm">
-                            <TextField
-                                fullWidth
-                                id="title"
-                                name="title"
-                                label="title"
-                                value={formik.values.title}
-                                onChange={formik.handleChange}
-                                error={formik.touched.title && Boolean(formik.errors.title)}
-                                helperText={formik.touched.title && formik.errors.title}
-                            />
-                            <InputLabel id="category_id">Catégorie</InputLabel>
-                            <Select
-                                fullWidth
-                                labelId="category_id"
-                                id="category_id"
-                                name="category_id"
-                                value={formik.values.category_id}
-                                label="category_id"
-                                onChange={formik.handleChange}
-                            >
-                                <MenuItem value={1}>1 - cat1</MenuItem>
-                                <MenuItem value={2}>2 - cat2</MenuItem>
-                                <MenuItem value={3}>3 - cat3</MenuItem>
-                                <MenuItem value={3}>4 - cat4</MenuItem>
-                            </Select>
-                            <TextField
-                                fullWidth
-                                id="description"
-                                name="description"
-                                label="description"
-                                value={formik.values.description}
-                                onChange={formik.handleChange}
-                                error={formik.touched.description && Boolean(formik.errors.description)}
-                                helperText={formik.touched.description && formik.errors.description}
-                                spacing={5}
-                            />
-                            <TextField
-                                fullWidth
-                                id="price_ht"
-                                name="price_ht"
-                                label="price_ht"
-                                value={formik.values.price_ht}
-                                onChange={formik.handleChange}
-                                error={formik.touched.price_ht && Boolean(formik.errors.price_ht)}
-                                helperText={formik.touched.price_ht && formik.errors.price_ht}
-                                spacing={5}
-                            />
-                            <TextField
-                                fullWidth
-                                id="tva"
-                                name="tva"
-                                label="tva"
-                                value={formik.values.tva}
-                                onChange={formik.handleChange}
-                                error={formik.touched.tva && Boolean(formik.errors.tva)}
-                                helperText={formik.touched.tva && formik.errors.tva}
-                                spacing={5}
-                            />
-                            <TextField
-                                fullWidth
-                                id="quantity"
-                                name="quantity"
-                                label="quantity"
-                                value={formik.values.quantity}
-                                onChange={formik.handleChange}
-                                error={formik.touched.quantity && Boolean(formik.errors.quantity)}
-                                helperText={formik.touched.quantity && formik.errors.quantity}
-                                spacing={5}
-                            />
-                            <InputLabel id="status">Status</InputLabel>
-                            <Select
-                                fullWidth
-                                spacing={5}
-                                labelId="status"
-                                id="status"
-                                value={formik.values.status}
-                                label="status"
-                                onChange={formik.handleChange}
-                                name="status"
-                            >
-                                <MenuItem value={1}>1 - En ligne</MenuItem>
-                                <MenuItem value={2}>2 - Hors ligne</MenuItem>
-                            </Select>
-                            <TextField
-                                fullWidth
-                                spacing={5}
-                                id="top"
-                                name="top"
-                                label="top"
-                                type="top"
-                                value={formik.values.top}
-                                onChange={formik.handleChange}
-                                error={formik.touched.top && Boolean(formik.errors.top)}
-                                helperText={formik.touched.top && formik.errors.top}
-                            />
-                            <Button color="primary" variant="contained" fullWidth type="submit">
-                                Créer le produit
-                            </Button>
-                        </form>
+        <div className="adminBody">
+            <NavbarAdmin />
+            <main className="marginPage">
+                <Paper
+                    sx={{
+                        p: 2,
+                        margin: 'auto',
+                        maxWidth: 700,
+                        flexGrow: 1,
+                        backgroundColor: (theme) =>
+                            theme.palette.mode === 'dark' ? '#1A2027' : '#fff',
+                    }}
+                >
+                    <h1>Ajouter un produit</h1>
+                    {message ? <Alert severity={color}>{message}</Alert> : ""}
+                    <Grid container spacing={3}>
+                        <Grid item xs={12}>
+                            <form onSubmit={formik.handleSubmit} className="addProdForm">
+                                <TextField
+                                    fullWidth
+                                    id="title"
+                                    name="title"
+                                    label="title"
+                                    value={formik.values.title}
+                                    onChange={formik.handleChange}
+                                    error={formik.touched.title && Boolean(formik.errors.title)}
+                                    helperText={formik.touched.title && formik.errors.title}
+                                />
+                                <InputLabel id="category_id">Catégorie</InputLabel>
+                                <Select
+                                    fullWidth
+                                    labelId="category_id"
+                                    id="category_id"
+                                    name="category_id"
+                                    value={formik.values.category_id}
+                                    label="category_id"
+                                    onChange={formik.handleChange}
+                                >
+                                    <MenuItem value={1}>1 - cat1</MenuItem>
+                                    <MenuItem value={2}>2 - cat2</MenuItem>
+                                    <MenuItem value={3}>3 - cat3</MenuItem>
+                                    <MenuItem value={3}>4 - cat4</MenuItem>
+                                </Select>
+                                <TextField
+                                    fullWidth
+                                    id="description"
+                                    name="description"
+                                    label="description"
+                                    value={formik.values.description}
+                                    onChange={formik.handleChange}
+                                    error={formik.touched.description && Boolean(formik.errors.description)}
+                                    helperText={formik.touched.description && formik.errors.description}
+                                    spacing={5}
+                                />
+                                <TextField
+                                    fullWidth
+                                    id="price_ht"
+                                    name="price_ht"
+                                    label="price_ht"
+                                    value={formik.values.price_ht}
+                                    onChange={formik.handleChange}
+                                    error={formik.touched.price_ht && Boolean(formik.errors.price_ht)}
+                                    helperText={formik.touched.price_ht && formik.errors.price_ht}
+                                    spacing={5}
+                                />
+                                <TextField
+                                    fullWidth
+                                    id="tva"
+                                    name="tva"
+                                    label="tva"
+                                    value={formik.values.tva}
+                                    onChange={formik.handleChange}
+                                    error={formik.touched.tva && Boolean(formik.errors.tva)}
+                                    helperText={formik.touched.tva && formik.errors.tva}
+                                    spacing={5}
+                                />
+                                <TextField
+                                    fullWidth
+                                    id="quantity"
+                                    name="quantity"
+                                    label="quantity"
+                                    value={formik.values.quantity}
+                                    onChange={formik.handleChange}
+                                    error={formik.touched.quantity && Boolean(formik.errors.quantity)}
+                                    helperText={formik.touched.quantity && formik.errors.quantity}
+                                    spacing={5}
+                                />
+                                <InputLabel id="status">Status</InputLabel>
+                                <Select
+                                    fullWidth
+                                    spacing={5}
+                                    labelId="status"
+                                    id="status"
+                                    value={formik.values.status}
+                                    label="status"
+                                    onChange={formik.handleChange}
+                                    name="status"
+                                >
+                                    <MenuItem value={1}>1 - En ligne</MenuItem>
+                                    <MenuItem value={2}>2 - Hors ligne</MenuItem>
+                                </Select>
+                                <TextField
+                                    fullWidth
+                                    spacing={5}
+                                    id="top"
+                                    name="top"
+                                    label="top"
+                                    type="top"
+                                    value={formik.values.top}
+                                    onChange={formik.handleChange}
+                                    error={formik.touched.top && Boolean(formik.errors.top)}
+                                    helperText={formik.touched.top && formik.errors.top}
+                                />
+                                <Button color="primary" variant="contained" fullWidth type="submit">
+                                    Créer le produit
+                                </Button>
+                            </form>
+                        </Grid>
                     </Grid>
-                </Grid>
-            </Paper>
-        </main>
+                </Paper>
+            </main>
+        </div>
     );
 }
 export default Addproduct;

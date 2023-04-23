@@ -33,6 +33,7 @@ function Register() {
             password: yup
                 .string()
                 .min(8, "Le mot de passe doit contenir au moins 8 caractères.")
+                .matches(/^(?=.*[A-Za-z])(?=.*\d)[A-Za-z\d]{8,}$/, 'Le mot de passe doit contenir au moins un chiffre et une lettre')
                 .required("Le mot de passe est obligatoire"),
             confirmPassword: yup
                 .string()
@@ -78,23 +79,19 @@ function Register() {
                     return response.json();
                 })
                 .then(result => {
-
                     setMessage(result.message)
                     // stocker des parametres de l'utilisateur quelque part ? ---> result.firstname id et lastname
                     //redirection si succès pour se connecter :
-
+                    //navigate('/login') /!\ gérer message d'erreur
                 })
                 .catch(err => {
                     console.log('y 1 erreur : ', err)
                     if (err.message === 'Failed to fetch')
                         alert('Une erreur est survenue sur le réseau !')
-                    //alert('Une erreur est survenue ! ', err);
+                    else alert('Une erreur est survenue ! ');
                 })
-
-
         },
     });
-
 
     return (
 
@@ -113,7 +110,7 @@ function Register() {
                 }}
             >
                 <h1 >Fromulaire d'inscription </h1>
-                {message ? <p><Alert severity={color}>{message}</Alert></p> : ""}
+                {message ? <Alert severity={color}>{message}</Alert> : ""}
                 <Grid container spacing={3}>
                     <Grid item xs={12} >
                         <form onSubmit={formik.handleSubmit} className="loginForm">

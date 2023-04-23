@@ -14,7 +14,7 @@ function AuthProvider({ children }) {
 /*
         const myValue = JSON.parse(localStorage.getItem('isLogged'));
         setIsLogged(myValue)*/
-        //Attention, le localStorage est peu sécurisé, et même moins qu'un contexte React ! à supprimer donc.
+        //Attention, le localStorage est peu sécurisé, et même moins qu'un contexte React ! à ne pas utiliser donc.
         //On passe ici seulement au début. Donc on vérifier le Jwt avec le serveur et on obtient les détails à jour du user de la bdd. 
         //le point de terminaison /users/find-self est dédié à cela.
 

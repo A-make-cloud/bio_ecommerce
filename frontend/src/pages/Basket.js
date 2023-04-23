@@ -53,10 +53,12 @@ function Basket() {
                                 </div>
                             )
                         })}
-                        <h2>résumé du panier :</h2>
-                        <p>Total HT : {Math.floor((basketSummary.reduce((s, pr) => pr.totalPrice_ht + s, 0)) * 100) / 100} €</p>
+                        <h2>Total panier :</h2>
+                        <p>Sous-total HT : {Math.floor((basketSummary.reduce((s, pr) => pr.totalPrice_ht + s, 0)) * 100) / 100} €</p>
                         <p>TVA : {Math.floor((getTotalTva()) * 100) / 100} €</p>
-                        <p>Total TTC : {Math.floor((getTotalTtc()) * 100) / 100} €</p>
+                        <p>Sous-total TTC : {Math.floor((getTotalTtc()) * 100) / 100} €</p>
+                        <p>Expedition : Les frais de livraison sont calculés lors du paiement.</p>
+                        <p><b>Total : {Math.floor((getTotalTtc()) * 100) / 100} €</b></p>
                         <Button variant="contained" sx={{ width: '100%' }}>Valider le panier</Button>
                         <p style={{ textAlign: 'center' }}>ou <Link to="/products">continuer vos achats</Link></p>
                     </>

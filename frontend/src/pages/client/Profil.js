@@ -89,8 +89,9 @@ export default function Profil() {
     });
     if (user) {
         return (
-            <main className="productsPage">
+            <main className="clientBody">
                 <NavbarClient />
+                <div className="clientContent">
                 <Paper
                     sx={{
                         p: 2,
@@ -159,6 +160,7 @@ export default function Profil() {
                         </Grid>
                     </Grid>
                 </Paper>
+                </div>
             </main>
         );
     }

@@ -1,4 +1,3 @@
-
 import { useFormik } from 'formik';
 import * as yup from 'yup';
 import TextField from '@mui/material/TextField';
@@ -11,7 +10,6 @@ import { AuthContext } from './../contexts/AuthContext'
 function Login() {
     const { isLogged, updateIslogged, updateProfil, connectUser } = useContext(AuthContext);
     const navigate = useNavigate();
-
     const [color, setColor] = useState()
     const [message, setMessage] = useState()
     const validationSchema = yup.object({
@@ -37,14 +35,12 @@ function Login() {
                 method: 'POST',
                 headers: {
                     "Content-Type": "application/json"
-
                 },
                 body: JSON.stringify(values, null, 2),
                 credentials: 'include'
             })
                 .then(response => {
                     // Affiche le statut de la réponse (par exemple, 200 pour OK)
-
                     if (response.status !== 200) {
                         setColor("error")
                     } else {
@@ -71,10 +67,7 @@ function Login() {
                             navigate('/dashboard')
                         else if (profil === "client")
                             navigate('/client')
-
                     }
-
-
                 })
                 .catch(err => {
                     console.log('y 1 erreur : ', err)
@@ -82,30 +75,23 @@ function Login() {
                         alert('Une erreur est survenue sur le réseau !')
                     //alert('Une erreur est survenue ! ', err);
                 })
-
-
         },
     });
 
-
     return (
-
         <main className="productsPage">
-
-
             <Paper
                 sx={{
                     p: 2,
-                    margin: 'auto',
+                    m: 'auto',
+                    my: 3, 
                     maxWidth: 700,
                     flexGrow: 1,
                     backgroundColor: (theme) =>
                         theme.palette.mode === 'dark' ? '#1A2027' : '#fff',
                 }}
             >
-
                 <h1 >Fromulaire de connexion</h1>
-
                 {message ? <Alert severity={color}>{message}</Alert> : ""}
                 <Grid container spacing={3}>
                     <Grid item xs={12} >
@@ -142,10 +128,7 @@ function Login() {
                     </Grid>
                 </Grid>
             </Paper>
-
         </main>
-
     );
 }
-
 export default Login;

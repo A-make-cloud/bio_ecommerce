@@ -32,7 +32,7 @@ const div1Style = {
     width: "100vw",
     height: `${footerHeight + footerEltMarginTop}px`,
     backgroundColor: "#346344",
-    marginTop: "30px",
+    marginTop: "0px",
     // position: "absolute",
 };
 
@@ -54,7 +54,7 @@ function Footer() {
                         justifyContent: 'space-around',
                         alignItems: 'center',
                         p: 1,
-                        m: 1,
+                        m: 0,
                         bgcolor: "#346344",
                         color: '#ffff',
                         borderRadius: 1,

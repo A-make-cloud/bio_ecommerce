@@ -1,6 +1,12 @@
 
 @import url('https://fonts.googleapis.com/css2?family=Grandstander:wght@300;400;500;600&family=Montserrat:wght@300;400;500;600;700;800;900&family=Roboto:wght@500&display=swap');
 
+:root {
+  --darkGreen: #346344;
+  --lightGreen: #C8E6C9;
+  --ocher:#FFB300;
+}
+
 h1, h2, h3{
   font-family: Grandstander;
 }
@@ -12,8 +18,6 @@ h1, h2, h3{
   border-radius:20px;
   padding:20px;
 }
-
-
 
 /*---------products---------*/
 .productsPage, .basketPage, .marginPage{
@@ -77,7 +81,6 @@ h1, h2, h3{
   from {
     transform: rotate(0deg);
   }
-
   to {
     transform: rotate(-360deg);
   }
@@ -102,5 +105,61 @@ h1, h2, h3{
 .loginForm>div, .loginForm>button, .addProdForm>div, .addProdForm>button{
   /*margin-top:30px;*/
   margin-bottom:30px;
+}
+/*espace client avec la sidebar + espace admin : */
+.clientBody, .adminBody{
+  display: flex;
+  flex-wrap: wrap;
+  justify-content: flex-start;
+}
+.clientSidebar, .adminSidebar{
+  padding-top:12px;
+  padding-left:6px;
+  width : 210px;
+  align-items: stretch;
+  background-color: var(--lightGreen);
+  margin: 0 8px 0 0;
+  font-weight: bold;
+  flex-shrink: 0;
+}
+  /*Ajouter éventuelement des list-style-image:url("") sur les li*/
+.clientSidebar a, .adminSidebar a{
+  text-decoration: none;
+}
+.clientSidebar a :first-child, .adminSidebar a :first-child{
+  position:relative;
+  top:5px;
+  margin-right:5px;
+}
+.adminSidebar{
+  background-color: rgb(196, 196, 196);
+}
+.clientSidebar{
+  list-style-type: none;
+  padding-left:6px;
+}
+.adminSidebar ul{ 
+  list-style-type: none;
+  padding-left:0; 
+}
+/*La page admin des products est particulière à cause de l'élément MUI DataGrid*/
+/*le responsive est adapté pour pouvoir consulter le tableau aisement*/
+.adminProductsBody{
+  display: flex;
+  flex-wrap: nowrap; 
+  justify-content: flex-start;
+}
+.adminProductsMain{
+  max-width: calc(100% - 235px); 
+  margin:'auto';
+  height: 600px
+}
+@media (max-width: 1000px) {
+  .adminProductsBody{
+    flex-wrap: wrap; 
+  }
+  .adminProductsMain{
+    max-width: 100%; 
+  }
 }
 

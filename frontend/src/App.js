@@ -16,30 +16,24 @@ import { AuthContext } from './contexts/AuthContext';
 //--------------------Espace admin
 import Addproduct from './pages/private/Addproduct';
 import Dashboard from './pages/private/Dashboard';
-
+//import NavbarAdmin from './pages/private/NavbarAdmin';
 //--------------------Espace client
-
 import HomeClient from './pages/client/HomeClient';
 import Profil from './pages/client/Profil';
 import Commande from './pages/client/Commande';
-import NavbarAdmin from './pages/private/NavbarAdmin';
+
 
 function App() {
-  // const [isLogged, setIsLogged] = useState(false)
 
   const { isLogged, profil, user } = useContext(AuthContext);
-  //console.log("isLogged", isLogged)
-  //console.log("type de profil:", profil, " / user:", user, '/ isLogged:', isLogged)
-  //profil admin||client 
-  //isLogged true||false
   const location = useLocation();
 
   return (
     <div className="App">
       <NavBar />
-      {isLogged && profil === "admin" && location.pathname.includes('dashboard') ?
+      {/*isLogged && profil === "admin" && location.pathname.includes('dashboard') ?
         <NavbarAdmin />
-        : ""}
+  : ""*/}
       <Routes>
 
         <Route path="/" element={<Home />} />
@@ -51,28 +45,25 @@ function App() {
 
         {isLogged && profil === "admin" ?
           <>
-
             <Route path="/dashboard" element={<Dashboard />} />
             <Route path="/dashboard/add-product" element={<Addproduct />} />
+            {/*ajouter page users, commandes, categories, */}
+
           </>
           : ""}
 
-        {isLogged && profil === "client" ?
+        {isLogged && ( profil === "client" || profil === "admin" ) ?
           <>
             <Route path="/client" element={<HomeClient />} />
             <Route path="/client/profil" element={<Profil />} />
             <Route path="/client/commandes" element={<Commande />} />
-
+            {/*ajouter page adresses*/}
           </> : ""}
-
-
-
+          <Route path='*' element={<div style={{margin:'16px'}}><h1>Erreur 404</h1><p>Page inexistente ou inaccessible.</p></div>} />
       </Routes>
 
-      {isLogged && profil === "admin" && !location.pathname.includes('dashboard') ?
+      {/* {isLogged && profil === "admin" && !location.pathname.includes('dashboard') ?'': } */}
         <Footer />
-        : ''}
-
 
     </div>
   );
