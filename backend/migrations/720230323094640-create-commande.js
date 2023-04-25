@@ -56,7 +56,12 @@ module.exports = {
       updated_at: {
         allowNull: false,
         type: Sequelize.DATE
-      }
+      },
+      state: {
+        type: Sequelize.ENUM('new', 'process', 'expedited', 'canceled'),
+        defaultValue: "new",
+        allowNull: false,
+      },
     });
   },
   async down(queryInterface, Sequelize) {

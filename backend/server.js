@@ -44,6 +44,11 @@ app.use("/users", usersRoutes);
 //----------------routes commandes
 const commandesRoutes = require('./app/routes/commandes.route.js')
 app.use("/commandes", commandesRoutes);
+
+//----------------routes autres pour admin
+const adminRoutes = require('./app/routes/admin.route.js')
+app.use("/admin", adminRoutes);
+
 //*/
 console.log('----------prod-----', process.env.NODE_ENV)
 // Serve frontend

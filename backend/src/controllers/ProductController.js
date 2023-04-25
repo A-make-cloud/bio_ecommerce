@@ -1,12 +1,36 @@
-const { BaseError } = require('sequelize');
+const { BaseError, fn, col, Op} = require('sequelize');
+const sequelize = require('sequelize');
 const { Product, Image } = require('../../models');
 
+exports.findAllActive = (req, res) => {
+    const offset = req.query.offset ? parseInt(req.query.offset) : null;
+    const limit = req.query.limit ? parseInt(req.query.limit) : null;
+
+    Product.findAll({ where: { status: '1' }, offset: offset, limit: limit, include: Image })
+    .then(async data => {
+        if (data) {
+            await Promise.allSettled(data.map(async (product) => {
+                const images = await product.getImages();
+                product.dataValues.listeImage = images;
+            }));
+            res.status(200).json({ data });
+        } else {
+            res.status(500).send({
+                message: `Cannot find Products.`
+            });
+        }
+    })
+    .catch(err => {
+        res.status(500).send({
+            message: `Error retrieving Products.`
+        });
+    });
+};
 
 exports.findAll = (req, res) => {
 
     const offset = req.query.offset ? parseInt(req.query.offset) : null;
     const limit = req.query.limit ? parseInt(req.query.limit) : null;
-
 
     Product.findAll({ offset: offset, limit: limit, include: Image })
         .then(async data => {
@@ -17,7 +41,7 @@ exports.findAll = (req, res) => {
                     product.dataValues.listeImage = images;
                 }));
 
-                res.status(201).json({ data });
+                res.status(200).json({ data });
             } else {
                 res.status(500).send({
                     message: `Cannot find Products.`
@@ -42,7 +66,7 @@ exports.findAll = (req, res) => {
 
 
 
-    //             res.status(201).json({ message: "Find Products", data })
+    //             res.status(200).json({ message: "Find Products", data })
     //         } else {
     //             res.status(500).send({
     //                 message: `Cannot find Products .`
@@ -67,7 +91,7 @@ exports.findTop = (req, res) => {
                     product.dataValues.listeImage = images;
                 }));
 
-                res.status(201).json({ data });
+                res.status(200).json({ data });
             } else {
                 res.status(500).send({
                     message: `Cannot find Products.`
@@ -86,7 +110,7 @@ exports.findById = (req, res) => {
     Product.findByPk(id)
         .then(data => {
             if (data) {
-                res.status(201).json({ data })
+                res.status(200).json({ data })
             } else {
                 res.status(500).send({
                     message: `Cannot find user with id=${id}.`
@@ -115,7 +139,7 @@ exports.findByCategory = (req, res) => {
     Product.findAll({ where: { category_id }, offset: offset, limit: limit })
         .then(data => {
             if (data) {
-                res.status(201).json({ message: "Find Product", data })
+                res.status(200).json({ message: "Find Product", data })
             } else {
                 res.status(401).send({
                     message: `Cannot find Product with category_id=${category_id}.`
@@ -159,6 +183,4 @@ exports.create = (req, res) => {
         console.log(err)
         res.status(500).json({ error: err.message || "Error Database." })
     })
-
-
 }

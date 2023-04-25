@@ -41,7 +41,7 @@ function TopCategorie() {
     //         const response = await fetch('/categories/findAll');
     //         console.log(response.status)
 
-    //         if (response.status === 201) {
+    //         if (response.status === 200) {
     //             const json = await response.json();
 
     //             console.log(json)

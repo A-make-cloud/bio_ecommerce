@@ -15,7 +15,7 @@ function Products() {
   const spinnerRef = useRef();
 
   function getBatch(){
-    fetch(`/products/findAll?offset=${batchOffset}&limit=${batchSize}`)
+    fetch(`/products/find-all?offset=${batchOffset}&limit=${batchSize}`)
     .then(response => response.json())
     .then((res) => {
       const products = res.data
@@ -53,7 +53,7 @@ function Products() {
     //Récupération des catégories dans BDD quand on arrive sur la page
     async function fetchCat() {
       const response = await fetch('/categories/findAll')
-      if (response.status === 201) {
+      if (response.status === 200) {
         const json = await response.json()
         setCategories(json.data)
       } else {

@@ -19,7 +19,7 @@ function Phare() {
         async function fetchProduct() {
             const response = await fetch('/products/find-top?limit=5');
             //console.log(response.status)
-            if (response.status === 201) {
+            if (response.status === 200) {
                 const json = await response.json();
 
                 //console.log("phare données :", json)

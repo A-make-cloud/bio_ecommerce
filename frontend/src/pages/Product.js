@@ -31,8 +31,8 @@ function Product() {
             const response = await fetch('/products/find/' + `${productId}`);
 
             console.log(response.status)
-            //if status 201 ==>OK 
-            if (response.status === 201) {
+            //if status 200 ==>OK 
+            if (response.status === 200) {
                 const json = await response.json();
                 //console.log(json)
                 setProduct(json.data)

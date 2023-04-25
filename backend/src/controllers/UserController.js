@@ -12,7 +12,7 @@ exports.findAll = (req, res) => {
     User.findAll()
         .then(data => {
             console.log(data)
-            res.status(201).json({ message: "Find user", data })
+            res.status(200).json({ message: "Find user", data })
         })
         .catch(err => {
             res.status(500).send({
@@ -66,7 +66,7 @@ exports.findById = (req, res) => {
     User.findByPk(id)
         .then(data => {
             if (data) {
-                res.status(201).json({ message: "Find user", data })
+                res.status(200).json({ message: "Find user", data })
             } else {
                 res.status(500).send({
                     message: `Cannot find user with id=${id}.`
@@ -112,7 +112,7 @@ exports.findByEmail = (req, res) => {
     User.findOne({ where: { email } })
         .then(data => {
             if (data) {
-                res.status(201).json({ message: "Find user by email", data })
+                res.status(200).json({ message: "Find user by email", data })
             } else {
                 res.status(500).send({
                     message: `Cannot find user with email=${email}.`

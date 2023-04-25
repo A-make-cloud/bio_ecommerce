@@ -3,7 +3,7 @@ const { Category } = require('../../models');
 exports.findAll = (req, res) => {
     Category.findAll()
         .then(data => {
-            res.status(201).json({ data })
+            res.status(200).json({ data })
         })
         .catch(err => {
             res.status(500).send({
@@ -20,7 +20,7 @@ exports.findById = (req, res) => {
         .then(data => {
             if (data) {
                 // console.log(data)
-                res.status(201).json({ message: "Find Category", data })
+                res.status(200).json({ message: "Find Category", data })
             } else {
                 res.status(500).send({
                     message: `Cannot find category with id=${id}.`

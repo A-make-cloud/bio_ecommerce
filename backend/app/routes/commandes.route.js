@@ -12,7 +12,9 @@ router.post("/create", (req, res) => {
 router.get("/find/:id", (req, res) => {
 
 });
+router.get("/new", (req, res) => {
 
+});
 
 
 module.exports = router;

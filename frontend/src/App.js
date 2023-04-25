@@ -16,6 +16,7 @@ import { AuthContext } from './contexts/AuthContext';
 //--------------------Espace admin
 import Addproduct from './pages/private/Addproduct';
 import Dashboard from './pages/private/Dashboard';
+import AdminProducts from './pages/private/Products';
 //import NavbarAdmin from './pages/private/NavbarAdmin';
 //--------------------Espace client
 import HomeClient from './pages/client/HomeClient';
@@ -47,6 +48,7 @@ function App() {
           <>
             <Route path="/dashboard" element={<Dashboard />} />
             <Route path="/dashboard/add-product" element={<Addproduct />} />
+            <Route path="/dashboard/products" element={<AdminProducts />} />
             {/*ajouter page users, commandes, categories, */}
 
           </>

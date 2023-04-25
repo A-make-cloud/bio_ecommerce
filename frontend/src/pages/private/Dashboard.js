@@ -1,77 +1,45 @@
-import Button from '@mui/material/Button';
-import { Link } from "react-router-dom";
-import ControlPointIcon from '@mui/icons-material/ControlPoint';
 import { useState, useEffect } from 'react';
-import { DataGrid } from '@mui/x-data-grid';
 import NavbarAdmin from './NavbarAdmin';
 
 function Dashboard() {
     const [products, setProducts] = useState([]);
-    let rows = products
-    useEffect(() => {
+    const [adminSummary, setAdminSummary] = useState({});
 
-        //RECUPERATION des produits dans BDD
-        async function fetchCat() {
-            const response = await fetch(`/products/findAll?offset=0&limit=1000`)
-            if (response.status !== 500) {
-                const json = await response.json()
-                rows = json.data
-                //console.log(json.data)
-                setProducts(json.data)
-            } else {
-                console.log('probleme récupération des produits')
-            }
-        }
-        fetchCat()
+    useEffect(() => {
+        /*Promise.allSettled([
+            fetch("/admin/summary").then((res) => res.json()),
+            fetch("/products/out-of-stockk").then((res) => res.json()),
+          ])
+            .then(([summary, outOfStock]) => {
+                setAdminSummary({
+                    totalProd:summary.value.data[0].total + summary.value.data[1].total, 
+                    activProd:summary.value.data[0].total ,
+                    outOfStock:outOfStock.value.results[0].total,
+                    lowStock:outOfStock.value.results[1].total,
+                })
+            })
+            .catch((err) => console.error(err));*/
+        fetch("/admin/summary").then((res) => res.json())
+          .then((data) => {
+              setAdminSummary(data.result)
+          })
+          .catch((err) => console.error(err));
+
 
     }, []);
 
-    // useEffect(() => {
-    //     rows = products
-    // }, [products]);
-
-    const columns = [
-        { field: 'id', headerName: 'ID', flex:1 },
-        { field: 'category_id', headerName: 'Catégory', flex:1 },
-        { field: 'title', headerName: 'Titre produit', width: 130 },
-        // {
-        //   field: 'age',
-        //   headerName: 'Age',
-        //   type: 'number',
-        //   width: 90,
-        // },
-        { field: 'description', headerName: 'Description', width: 180 },
-        { field: 'price_ht', headerName: 'Prix HT', width: 90},
-        { field: 'tva', headerName: 'TVA', flex:1 },
-        { field: 'quantity', headerName: 'Quantité', flex:1 },
-        { field: 'status', headerName: 'Status', flex:1 },
-        { field: 'top', headerName: 'Top', flex:1 },
-        { field: 'createdAt', headerName: 'Créé le', width: 160 },
-        { field: 'updatedAt', headerName: 'mis à jour le', width: 160 },
-        // {
-        //   field: 'fullName',
-        //   headerName: 'Full name',
-        //   description: 'This column has a value getter and is not sortable.',
-        //   sortable: false,
-        //   width: 160,
-        //   valueGetter: (params) =>
-        //     `${params.row.firstName || ''} ${params.row.lastName || ''}`,
-        // },
-    ];
-
     return (
-        <div className="adminProductsBody">
+        <div className="adminBody">
             <NavbarAdmin />
-            <main className="adminProductsMain">
-                {/* {<h1> Dashbord</h1>} */}
-
-                <DataGrid
-                    rows={rows}
-                    columns={columns}
-                    pageSize={5}
-                    rowsPerPageOptions={[5]}
-                    checkboxSelection
-                />
+            <main>
+                <h1>Espace d'administration</h1>
+                <h2>Résumé des informations :</h2>
+                {console.log()}
+                <p>Il y a <b>{adminSummary[0]?.data}</b> produits enregistrés, dont <b>{adminSummary[1]?.data}</b> proposés à la vente.</p>
+                <p>Il y a <b>{adminSummary[2]?.data}</b> produits en rupture de stock, et <b>{adminSummary[3]?.data}</b> produits en faible quantité.</p>
+                <p>Les produits sont répartis en <b>{adminSummary[4]?.data}</b> categories.</p>
+                <p>Il y a <b>{adminSummary[5]?.data}</b> commandes qui attendent d'être traités, et <b>{adminSummary[6]?.data}</b> commandes en cours de traitement</p>
+                <p>Il y a <b>{adminSummary[7]?.data}</b> utilisateurs dont <b>{adminSummary[8]?.data}</b> nouveaux cette semaine</p>
             </main>
         </div>
     )

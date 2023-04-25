@@ -101,7 +101,6 @@ h1, h2, h3{
   width: 100%;
 }
 
-
 .loginForm>div, .loginForm>button, .addProdForm>div, .addProdForm>button{
   /*margin-top:30px;*/
   margin-bottom:30px;
@@ -109,57 +108,87 @@ h1, h2, h3{
 /*espace client avec la sidebar + espace admin : */
 .clientBody, .adminBody{
   display: flex;
-  flex-wrap: wrap;
+  /* flex-wrap: wrap; */
   justify-content: flex-start;
 }
-.clientSidebar, .adminSidebar{
+.sidebar{
   padding-top:12px;
-  padding-left:6px;
+  /* padding-left:10px; */
   width : 210px;
   align-items: stretch;
   background-color: var(--lightGreen);
   margin: 0 8px 0 0;
   font-weight: bold;
   flex-shrink: 0;
+   padding-bottom:1px; 
 }
-  /*Ajouter éventuelement des list-style-image:url("") sur les li*/
-.clientSidebar a, .adminSidebar a{
+.sidebar h2, .sidebar li{
+   padding-left:10px;
+}
+.sidebar a{
   text-decoration: none;
 }
-.clientSidebar a :first-child, .adminSidebar a :first-child{
+.sidebar a :first-child, #burger{
   position:relative;
   top:5px;
-  margin-right:5px;
+  margin-right:15px;
 }
+#burger{margin-right:5px;}
 .adminSidebar{
   background-color: rgb(196, 196, 196);
 }
-.clientSidebar{
-  list-style-type: none;
-  padding-left:6px;
-}
-.adminSidebar ul{ 
+.sidebar ul{ 
   list-style-type: none;
   padding-left:0; 
 }
 /*La page admin des products est particulière à cause de l'élément MUI DataGrid*/
-/*le responsive est adapté pour pouvoir consulter le tableau aisement*/
-.adminProductsBody{
+ .adminProductsBody{
   display: flex;
-  flex-wrap: nowrap; 
   justify-content: flex-start;
 }
 .adminProductsMain{
   max-width: calc(100% - 235px); 
   margin:'auto';
   height: 600px
+} 
+#sidebarBtn{
+  display:none !important;
 }
-@media (max-width: 1000px) {
+#burger{
+  display:none;
+}
+@media (max-width: 767px) {
   .adminProductsBody{
     flex-wrap: wrap; 
   }
   .adminProductsMain{
     max-width: 100%; 
   }
+  .sidebar ul{
+    display:none;
+  }
+  #burger{
+    display:inline;
+  }
+  #burger:hover{
+    cursor:pointer;
+  }
+  #sidebar ul{
+    display:none;
+  }
+  #sidebarBtn:checked ~ul{
+    display:block !important;
+    position :absolute;
+    z-index: 1501;
+    margin:0;
+    padding-bottom:20px;
+    width:210px;
+    background-color: var(--lightGreen);    
+  }
+  .adminSidebar #sidebarBtn:checked ~ul{
+    background-color: rgb(196, 196, 196);
+  }  
+  .clientBody, .adminBody{
+    display:block;
+  }
 }
-
