@@ -18,8 +18,8 @@ import AdminPanelSettingsIcon from '@mui/icons-material/AdminPanelSettings';
 import { AuthContext } from '../../contexts/AuthContext';
 
 export default function NavBar() {
-    const { isLogged, updateIslogged, logoutUser, profil, user } = useContext(AuthContext);
-    const { basket } = React.useContext(BasketContext);
+    const { isLogged, logoutUser, profil, user } = useContext(AuthContext);
+    const { basket } = useContext(BasketContext);
     const Item = styled(Paper)(({ theme }) => ({
         backgroundColor: theme.palette.mode === 'dark' ? '#1A2027' : '#346344',
         ...theme.typography.body2,

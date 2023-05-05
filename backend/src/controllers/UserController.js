@@ -11,8 +11,10 @@ const Cookies = require("cookies");
 exports.findAll = (req, res) => {
     User.findAll()
         .then(data => {
-            console.log(data)
-            res.status(200).json({ message: "Find user", data })
+            if(data.length===0)
+                res.status(204).send({ message: "No user found" })
+            else
+                res.status(200).json({ message: "found user", data })
         })
         .catch(err => {
             res.status(500).send({
@@ -139,7 +141,7 @@ exports.update = (req, res) => {
     //4------------------Envoyer le mail de validation   ==>>TODO
 
     //-----------token vérifié dans middelware middelwareAuth.js qui envoi ancien détails du user dans req.user
-    //-----------mais ici on a les nouveaux détails dans req.body !
+    //-----------et ici on a les nouveaux détails dans req.body
     const userUpdate = {id:req.user.id, ...req.body}
 
     //2----------------valider form ==>>TODO
@@ -147,7 +149,6 @@ exports.update = (req, res) => {
     User.findByPk(userUpdate.id)
         .then(user => {
             if (user) {
-
                 // console.log('user-------->>', user)
                 const firstname = userUpdate.firstname;
                 const lastname = userUpdate.lastname;
@@ -161,13 +162,11 @@ exports.update = (req, res) => {
                     res.status(200).send({
                         message: " Votre compte a bien été modifié "
                     });
-
                 }).catch(err => {
                     res.status(500).send({
                         message: "Error modification "
                     });
                 });
-
             } else {
                 res.status(500).send({
                     message: `Cannot find user with id=${id}.`
@@ -182,9 +181,7 @@ exports.update = (req, res) => {
 
     //*/
 
-
     /*
-    
         User.findOne({ where: { email } })
             .then(exist => {
                 if (!exist) {
@@ -233,8 +230,15 @@ exports.update = (req, res) => {
             });
     //*/
 
-
-
 }
 
-
+exports.delete = (req, res) => {
+    const id = req.params.id;
+    User.destroy(
+        { where:{id} }
+    ).then((data) => {
+        res.status(204).send({ message: `User #${id} supprimée`});
+    }).catch(err => {
+        res.status(500).send({ message: "Erreur lors de la suppression de l'utilisateur" });
+    });
+}

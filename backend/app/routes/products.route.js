@@ -9,9 +9,11 @@ router.get("/admin-find-all", middelwareAuth.adminVerif, Controller.findAll);
 //find by categories
 router.get("/findByCategory", Controller.findByCategory);
 //create  form product
-router.post("/create",  Controller.create);
+router.post("/create", middelwareAuth.adminVerif, Controller.create);
 //find product by id
 router.get("/find/:id", Controller.findById);
 //find top products with limit in querry string : ...path?limit=10
 router.get("/find-top", Controller.findTop);
+//update a product as an admin
+router.put("/update/:id", /*middelwareAuth.adminVerif,*/ Controller.update);
 module.exports = router;

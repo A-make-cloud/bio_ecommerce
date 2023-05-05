@@ -38,7 +38,7 @@ function TopCategorie() {
 
     // useEffect(function effectFunction() {
     //     async function fetchCateg() {
-    //         const response = await fetch('/categories/findAll');
+    //         const response = await fetch('/categories/find-all');
     //         console.log(response.status)
 
     //         if (response.status === 200) {
@@ -57,7 +57,7 @@ function TopCategorie() {
 
         async function fetchCateg() {
             //recuperer les info de la base de donnée 
-            await fetch('/categories/findAll')
+            await fetch('/categories/find-all')
                 .then(response => response.json())
                 .then((res) => {
                     setCategories(res.data)

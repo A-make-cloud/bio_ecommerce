@@ -112,16 +112,11 @@ exports.findById = (req, res) => {
             if (data) {
                 res.status(200).json({ data })
             } else {
-                res.status(500).send({
-                    message: `Cannot find user with id=${id}.`
-                });
+                res.status(204).send({ message: `Cannot find product with id=${id}.` });
             }
         })
         .catch(err => {
-            console.log(err)
-            res.status(500).send({
-                message: "Error retrieving product with id=" + id
-            });
+            res.status(500).send({ message: "Error retrieving product with id=" + id });
         });
 }
 
@@ -183,4 +178,17 @@ exports.create = (req, res) => {
         console.log(err)
         res.status(500).json({ error: err.message || "Error Database." })
     })
+}
+
+exports.update = (req, res) => {
+    const id = req.params.id;
+    const {category_id, title, description, price_ht, tva, quantity, status, top}=req.body
+    Product.update(
+        { category_id, title, description, price_ht, tva, quantity, status, top },
+        { where: { id } }
+    ).then(() => {
+        res.status(200).send({ message: `Produit mis à jour` });
+    }).catch(err => {
+        res.status(500).send({ message: "Erreur modification" });
+    });
 }

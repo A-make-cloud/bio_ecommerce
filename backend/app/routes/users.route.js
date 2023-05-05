@@ -11,7 +11,7 @@ router.delete("/delete-cookie", authController.deletecookie);
 //--------------register new user 
 router.post("/register", registerController.process);
 //find all user
-router.get("/findAll", middelwareAuth.adminVerif, Controller.findAll);
+router.get("/find-all", middelwareAuth.adminVerif, Controller.findAll);
 //create  form user by admin
 router.get("/create", middelwareAuth.adminVerif, Controller.create);
 //find user itself via token
@@ -20,6 +20,9 @@ router.get("/find-self", middelwareAuth.tokenVerif, Controller.findSelf);
 router.get("/find/:id", middelwareAuth.adminVerif, Controller.findById);
 //find user by email
 router.get("/findByEmail/:email", middelwareAuth.adminVerif, Controller.findByEmail);
-//update user. route pas encore utilisé coté front, comme beaucoup des précedentes
+//update user
 router.put("/update", middelwareAuth.tokenVerif, Controller.update);
+//delete user by admin
+router.get("/delete/:id", middelwareAuth.adminVerif, Controller.delete);
+
 module.exports = router;

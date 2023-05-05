@@ -124,6 +124,7 @@ h1, h2, h3{
 }
 .sidebar h2, .sidebar li{
    padding-left:10px;
+   padding-bottom:6px;
 }
 .sidebar a{
   text-decoration: none;
@@ -157,7 +158,16 @@ h1, h2, h3{
 #burger{
   display:none;
 }
+.adminSidebar .selected{
+  background-color: rgb(176, 176, 176);
+}
+.clientSidebar .selected{
+  background-color: #abcfad;
+}
 @media (max-width: 767px) {
+  .sidebar{
+    border-bottom-right-radius:12px;
+  }
   .adminProductsBody{
     flex-wrap: wrap; 
   }
@@ -191,4 +201,15 @@ h1, h2, h3{
   .clientBody, .adminBody{
     display:block;
   }
+}
+.progressForm>div{
+  margin-bottom:20px;
+}
+.progressForm .MuiFormControlLabel-root{
+  padding-right: 5px;
+  border-radius: 7px;
+  margin-left :0px;
+}
+.progressForm{
+  margin-bottom:20px;
 }

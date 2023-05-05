@@ -40,10 +40,10 @@ module.exports = {
         }
       },
 
-      payement_card: {
+      /*payement_card: {
         allowNull: true,
         type: Sequelize.STRING
-      },
+      },*/
       payement_ref: {
         type: Sequelize.STRING,
         allowNull: true,

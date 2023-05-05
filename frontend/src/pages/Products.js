@@ -52,7 +52,7 @@ function Products() {
     }
     //Récupération des catégories dans BDD quand on arrive sur la page
     async function fetchCat() {
-      const response = await fetch('/categories/findAll')
+      const response = await fetch('/categories/find-all')
       if (response.status === 200) {
         const json = await response.json()
         setCategories(json.data)

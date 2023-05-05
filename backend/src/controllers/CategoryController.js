@@ -1,4 +1,5 @@
-const { Category } = require('../../models');
+const { Category, Product } = require('../../models');
+const { fn, col, literal } = require('sequelize')
 
 exports.findAll = (req, res) => {
     Category.findAll()
@@ -35,26 +36,57 @@ exports.findById = (req, res) => {
 }
 
 exports.create = (req, res) => {
-    //1---------------recuperer le body ==>>TODO
-    //2----------------valider form ==>>TODO
-    //3---------------------Ajouter category  ==>>OK
-
-
-
-    //3---------------------Ajouter ==>>OK
-    const element = {
-        title: 'titre',
-        description: 'description',
-        img: 'image url',
-        background: "red",
-        top: 1,
-
-    }
-    Category.create(element).then((category) => {
-        res.status(201).json({ message: "Created Category", category })
+    const { title, description, img,  background, top, status } = req.body
+    Category.create(
+        { title, description, img, background, top, status }
+    ).then((data) => {
+        res.status(201).json({ message: `Catégorie créée`, data:data.dataValues });
     }).catch(err => {
-        res.status(500).json({ error: err.message || "Error Database." })
-    })
-
-
+        res.status(500).send({ message: "Erreur lors de la création de la catégorie" });
+    });
 }
+
+exports.delete = (req, res) => {
+    const id = req.params.id;
+    Category.destroy(
+        { where:{id} }
+    ).then((data) => {
+        res.status(204).send({ message: `Catégorie #${id} supprimée`});
+    }).catch(err => {
+        res.status(500).send({ message: "Erreur lors de la suppression de la catégorie" });
+    });
+}
+
+exports.update = (req, res) => {
+    const id = req.params.id;
+    const { title, description, img, background, top, status } = req.body
+    Category.update(
+        { title, description, img, background, top, status },
+        { where: { id } }
+    ).then(() => {
+        res.status(200).send({ message: `Produit mis à jour` });
+    }).catch(err => {
+        res.status(500).send({ message: "Erreur modification" });
+    });
+}
+
+exports.findAllDetails = (req, res) => {
+    /*SELECT * FROM categories c JOIN (SELECT COUNT(*) AS 'nb_products', category_id FROM products GROUP BY category_id) n ON n.category_id=c.id*/
+    Category.findAll({
+        attributes: { include: [[literal(`(SELECT COUNT(*) FROM products WHERE products.category_id = Category.id)`), "nb_products"]] },
+        })
+        .then(data => {
+            if(data.length===0)
+                res.status(204).send('no data')
+            else
+                res.status(200).json({ data })
+        })
+        .catch(err => {
+            res.status(500).send({
+                message:
+                    err.message || "Error Database."
+            });
+        });
+};
+
+

@@ -6,7 +6,7 @@ const { Product } = require('../../models');
 exports.summary = (req, res) => {
     db.sequelize.query(
         `SELECT 'totalProd' AS 'dataType', COUNT(*) AS 'data' FROM products UNION 
-        SELECT 'activProd', COUNT(*) AS 'data' FROM products WHERE status='1' UNION
+        SELECT 'activProd', COUNT(*) FROM products WHERE status='1' UNION
         SELECT 'outOfStock', COUNT(*) FROM products WHERE quantity=0 UNION
         SELECT 'lowStock', COUNT(*) FROM products WHERE quantity>0 AND quantity<3 UNION
         SELECT 'totalCateg', COUNT(*) FROM categories UNION
@@ -15,9 +15,12 @@ exports.summary = (req, res) => {
         SELECT 'totalUsers', COUNT(*) FROM users UNION
         SELECT 'newUsers', COUNT(*) FROM users WHERE created_at >= DATE_SUB(NOW(), INTERVAL 1 WEEK)`
         , {
-        type: Sequelize.QueryTypes.SELECT
+            type: Sequelize.QueryTypes.SELECT
         }
     ).then(result=>{
-        res.status(200).json({ result })
+        const overview = Object.fromEntries(result.map(val=>[val.dataType, val.data]))
+        res.status(200).json({ overview })
+    }).catch(er=>{
+        res.status(500).send({ message: `Error retrieving datas` });
     })
 }

@@ -1,14 +1,39 @@
+import { useState, useEffect } from 'react';
+import { Link, useParams, useNavigate } from "react-router-dom";
 import { useFormik } from 'formik';
 import * as yup from 'yup';
-import { useNavigate } from 'react-router-dom';
-import { useState } from 'react';
-import { TextField, Button, Alert, Grid, Paper, Select, MenuItem, InputLabel } from '@mui/material';
+import { TextField, Button, Alert, Grid, Paper, InputLabel, MenuItem, Select } from '@mui/material';
 import NavbarAdmin from './NavbarAdmin';
 
-function Addproduct() {
-    const navigate = useNavigate();
-    const [color, setColor] = useState()
-    const [message, setMessage] = useState()
+function UpdateProduct() {
+    const params = useParams()
+    const id = params.id;
+    const [product, setProduct] = useState({});
+    const [color, setColor] = useState('info')
+    const [message, setMessage] = useState('Chargement en cours...')
+
+    useEffect(() => {
+        fetch("/products/find/"+id)
+        .then((res) => { 
+            if(res.status === 204){
+                setColor("error")
+                setMessage(`Le produit #${id} n'a pas été trouvé !`)
+                throw new Error()
+            }else if(res.status !== 200) {
+                setColor("error")
+                setMessage("Une erreur est survenue")
+                throw new Error()
+            }
+            return res.json()
+        })
+        .then((result) => {
+            setColor("")
+            setMessage("")
+            setProduct(result.data)
+        })
+        .catch((err) => { })
+    }, []);
+
     const validationSchema = yup.object({
         title: yup
             .string('Entrez le titre du produit')
@@ -47,49 +72,39 @@ function Addproduct() {
 
     const formik = useFormik({
         initialValues: {
-            title: 'titre',
-            category_id: 1,
-            description: 'blabla',
-            price_ht: 2,
-            tva: 5.5,
-            quantity: 1,
-            status: 1,
-            top: 10,
+            title: product?.title ?? '',
+            category_id: product?.category_id ?? '',
+            description: product?.description ?? '',
+            price_ht: product?.price_ht ?? '',
+            tva: product?.tva ?? '',
+            quantity: product?.quantity ?? '',
+            status: product?.status ?? '',
+            top: product?.top ?? '',
         },
+        enableReinitialize: true,
         validationSchema: validationSchema,
         onSubmit: (values) => {
-            //alert(JSON.stringify(values, null, 2));
-            console.log(values)
-
-            fetch('/products/create', {
-                method: 'POST',
+            fetch(`/products/update/${id}`, {
+                method: 'PUT',
                 headers: {
                     "content-Type": "application/json"
                 },
-                body: JSON.stringify(values),
-                credentials: 'include',
+                body: JSON.stringify(values, null, 2),
+                credentials: 'include'
             })
                 .then(response => {
-                    // Affiche le statut de la réponse (par exemple, 200 pour OK)
-                    //console.log(response.status, response)
-                    if (response.status !== 201) {
-                        // alert("error")
-                        setColor("error")
-                    } else {
-                        // alert("OK")
+                    if (response.status === 200) {
                         setColor("success")
+                        setMessage(`Votre produit #${id} a bien été mise à jour.`)
                     }
-                    return response.json();
+                    else {
+                        setColor("error")
+                        setMessage('Une erreur est survenue lors de la modification de votre produit !')
+                    }
                 })
-                .then(result => {
-                    console.log(result.message)
-                    setMessage(result.message)
-                })
-                .catch(err => {
-                    console.log('y 1 erreur : ', err)
-                    if (err.message === 'Failed to fetch')
-                        alert('Une erreur est survenue sur le réseau !')
-                    //alert('Une erreur est survenue ! ', err);
+                .catch(err => { 
+                    setColor("error")
+                    setMessage('Une erreur est survenue sur le réseau !')
                 })
         },
     });
@@ -108,8 +123,10 @@ function Addproduct() {
                             theme.palette.mode === 'dark' ? '#1A2027' : '#fff',
                     }}
                 >
-                    <h1>Ajouter un produit</h1>
+                    <h1>Modifier un produit</h1>
                     {message ? <Alert severity={color}>{message}</Alert> : ""}
+                    {Object.keys(product).length !== 0 &&
+
                     <Grid container spacing={3}>
                         <Grid item xs={12}>
                             <form onSubmit={formik.handleSubmit} className="addProdForm">
@@ -117,7 +134,7 @@ function Addproduct() {
                                     fullWidth
                                     id="title"
                                     name="title"
-                                    label="title"
+                                    label="Titre du produit"
                                     value={formik.values.title}
                                     onChange={formik.handleChange}
                                     error={formik.touched.title && Boolean(formik.errors.title)}
@@ -136,13 +153,13 @@ function Addproduct() {
                                     <MenuItem value={1}>1 - cat1</MenuItem>
                                     <MenuItem value={2}>2 - cat2</MenuItem>
                                     <MenuItem value={3}>3 - cat3</MenuItem>
-                                    <MenuItem value={3}>4 - cat4</MenuItem>
+                                    <MenuItem value={4}>4 - cat4</MenuItem>
                                 </Select>
                                 <TextField
                                     fullWidth
                                     id="description"
                                     name="description"
-                                    label="description"
+                                    label="Description"
                                     value={formik.values.description}
                                     onChange={formik.handleChange}
                                     error={formik.touched.description && Boolean(formik.errors.description)}
@@ -153,7 +170,7 @@ function Addproduct() {
                                     fullWidth
                                     id="price_ht"
                                     name="price_ht"
-                                    label="price_ht"
+                                    label="Prix HT"
                                     value={formik.values.price_ht}
                                     onChange={formik.handleChange}
                                     error={formik.touched.price_ht && Boolean(formik.errors.price_ht)}
@@ -164,7 +181,7 @@ function Addproduct() {
                                     fullWidth
                                     id="tva"
                                     name="tva"
-                                    label="tva"
+                                    label="TVA"
                                     value={formik.values.tva}
                                     onChange={formik.handleChange}
                                     error={formik.touched.tva && Boolean(formik.errors.tva)}
@@ -175,7 +192,7 @@ function Addproduct() {
                                     fullWidth
                                     id="quantity"
                                     name="quantity"
-                                    label="quantity"
+                                    label="Quantité"
                                     value={formik.values.quantity}
                                     onChange={formik.handleChange}
                                     error={formik.touched.quantity && Boolean(formik.errors.quantity)}
@@ -189,7 +206,7 @@ function Addproduct() {
                                     labelId="status"
                                     id="status"
                                     value={formik.values.status}
-                                    label="status"
+                                    label="Status"
                                     onChange={formik.handleChange}
                                     name="status"
                                 >
@@ -201,7 +218,7 @@ function Addproduct() {
                                     spacing={5}
                                     id="top"
                                     name="top"
-                                    label="top"
+                                    label="Top"
                                     type="top"
                                     value={formik.values.top}
                                     onChange={formik.handleChange}
@@ -209,14 +226,16 @@ function Addproduct() {
                                     helperText={formik.touched.top && formik.errors.top}
                                 />
                                 <Button color="primary" variant="contained" fullWidth type="submit">
-                                    Créer le produit
+                                    Mettre à jour le produit
                                 </Button>
                             </form>
                         </Grid>
                     </Grid>
+                    }
                 </Paper>
             </main>
         </div>
-    );
+    )
 }
-export default Addproduct;
+
+export default UpdateProduct

@@ -6,35 +6,26 @@ const bcrypt = require('bcrypt');
 const { User } = require('../../models');
 
 exports.process = (req, res) => {
-
     //1------------valider les post  ==>>TODO
     //2-------------verifier l 'email ==>>OK
     //3-------------verifier le password ==>>OK
     //4--------------generer le JWT  ==>>OK
 
-
     //recuperer email login 
     email = req.body.email;
     password = req.body.password;
-
     User.findOne({ where: { email } })
         .then(user => {
             if (user) {
-
                 //----------compte actif
                 if (user.status == 3) {
-                    res.status(401).send({
-                        message: "Compte désactivé "
-                    });
+                    res.status(401).send({ message: "Compte désactivé" });
                 } else {
                     //3-------------verifier le password ==>>OK
                     bcrypt.compare(password, user.password, function (err, result) {
                         if (err) {
-                            res.status(401).send({
-                                message: err
-                            });
+                            res.status(401).send({ message: err });
                         } else if (result) {
-
                             //4--------------generer le JWT  ==>>OK
                             let accessToken = jwt.sign({
                                 id: user.id,
@@ -60,30 +51,20 @@ exports.process = (req, res) => {
                                     lastname: user.lastname,
                                     profil: user.profil,
                                     email: user.email,
-                                    //accessToken
+                                    //accessToken, surtout pas
                                 },
                             });
-
-
                         } else {
-                            res.status(401).send({
-                                message: "Login ou mot de passe invalide"
-                            });
+                            res.status(401).send({ message: "Login ou mot de passe invalide" });
                         }
                     });
                 }
-
-                // return data
             } else {
-                res.status(500).send({
-                    message: "Login ou mot de passe invalide"
-                });
+                res.status(500).send({ message: "Login ou mot de passe invalide" });
             }
         })
         .catch(err => {
-            res.status(500).send({
-                message: "Error retrieving User with email=" + email
-            });
+            res.status(500).send({ message: "Error retrieving User with email=" + email });
         });
 }
 

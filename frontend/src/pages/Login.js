@@ -10,8 +10,8 @@ import { AuthContext } from './../contexts/AuthContext'
 function Login() {
     const { isLogged, updateIslogged, updateProfil, connectUser } = useContext(AuthContext);
     const navigate = useNavigate();
-    const [color, setColor] = useState()
-    const [message, setMessage] = useState()
+    const [color, setColor] = useState('')
+    const [message, setMessage] = useState('')
     const validationSchema = yup.object({
         email: yup
             .string('Entrez votre email')
@@ -50,13 +50,9 @@ function Login() {
                 })
                 .then(result => {
                     setMessage(result.message)
-                    //console.log('ici', result)
                     if (result.user) {
-                        //console.log('l 58',result.user)
                         // stocker des parametres de l'utilisateur quelque part ? ---> result.firstname id et lastname
-                        connectUser(result.user) //add user to local storage //AuthContext.js
-                        //console.log('parametre de connectUser()', result.user)
-                        //setISlogged and add to local storage // AuthContext.js
+                        connectUser(result.user) //add user to local storage //AuthContext.js /!\ Non, pas besoin, on l'ajoute au contexte
                         updateIslogged('true')
 
                         //redirection vers espace admin || client
@@ -70,10 +66,13 @@ function Login() {
                     }
                 })
                 .catch(err => {
-                    console.log('y 1 erreur : ', err)
-                    if (err.message === 'Failed to fetch')
-                        alert('Une erreur est survenue sur le réseau !')
-                    //alert('Une erreur est survenue ! ', err);
+                    //console.log('y 1 erreur : ', err)
+                    if (err.message === 'Failed to fetch'){
+                        setMessage('Une erreur est survenue sur le réseau !')
+                    }
+                    else {
+                        setMessage('Le serveur a rencontré un problème. Si le problème persiste, veuillez réesseyer plus tard.')
+                    }
                 })
         },
     });
