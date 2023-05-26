@@ -1,5 +1,6 @@
 const { Category, Product } = require('../../models');
 const { fn, col, literal } = require('sequelize')
+const { validationResult, matchedData } = require('express-validator');
 
 exports.findAll = (req, res) => {
     Category.findAll()
@@ -15,8 +16,12 @@ exports.findAll = (req, res) => {
 };
 
 exports.findById = (req, res) => {
+    const errors = validationResult(req);
+    if (!errors.isEmpty()) {
+        const msg = errors.array().map(e=>e.msg).join(' - ')
+        return res.status(400).json({ error: msg });
+    }
     const id = req.params.id;
-
     Category.findByPk(id)
         .then(data => {
             if (data) {
@@ -36,7 +41,15 @@ exports.findById = (req, res) => {
 }
 
 exports.create = (req, res) => {
-    const { title, description, img,  background, top, status } = req.body
+    //valider formulaire
+    const errors = validationResult(req);
+    if (!errors.isEmpty()) {
+        const msg = errors.array().map(e=>e.msg).join(' - ')
+        return res.status(400).json({ error: msg });
+    }
+    //recuperer le body nettoyé par express validator
+    const cleanedBody = matchedData(req);
+    const { title, description, img,  background, top, status } = cleanedBody
     Category.create(
         { title, description, img, background, top, status }
     ).then((data) => {
@@ -47,6 +60,11 @@ exports.create = (req, res) => {
 }
 
 exports.delete = (req, res) => {
+    const errors = validationResult(req);
+    if (!errors.isEmpty()) {
+        const msg = errors.array().map(e=>e.msg).join(' - ')
+        return res.status(400).json({ error: msg });
+    }
     const id = req.params.id;
     Category.destroy(
         { where:{id} }
@@ -58,8 +76,17 @@ exports.delete = (req, res) => {
 }
 
 exports.update = (req, res) => {
+    //valider formulaire
+    const errors = validationResult(req);
+    if (!errors.isEmpty()) {
+        const msg = errors.array().map(e=>e.msg).join(' - ')
+        return res.status(400).json({ error: msg });
+    }
+    //recuperer le body nettoyé par express validator
+    const cleanedBody = matchedData(req);
+    const { title, description, img,  background, top, status } = cleanedBody
     const id = req.params.id;
-    const { title, description, img, background, top, status } = req.body
+
     Category.update(
         { title, description, img, background, top, status },
         { where: { id } }

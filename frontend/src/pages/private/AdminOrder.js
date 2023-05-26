@@ -29,6 +29,7 @@ export default function AdminOrder() {
         .then(result => {
             setColor("")
             setMessage("")
+            console.log(result)
             setOrder(result.data ?? {})
         })
         .catch(err => { 
@@ -71,7 +72,7 @@ export default function AdminOrder() {
         enableReinitialize: true,
         initialValues: {
             state: order?.state??'process',
-            notes: order?.notes??''
+            notes: order?.notes ?? ''
         },
         validationSchema: validationSchema,
         onSubmit: (values) => {
@@ -88,9 +89,11 @@ export default function AdminOrder() {
                 if (response.status === 200) {
                     setColor("success")
                     setMessage("Commande mise à jour")
-                } else if(response.status === 500){
+                } else if(response.status === 500 || response.status === 400 ){
                     setColor("error")
-                    setMessage("Un problème est survenu !")
+                    response.json().then(result=>{
+                        setMessage(result.error)
+                    })
                 }
                 else{ throw new Error() }
             })
@@ -139,11 +142,11 @@ export default function AdminOrder() {
                 </div>
                 <h2>Payement</h2>
                 <p>Référence du payement : {order?.payement_ref}</p>
-                <p>Total HT : 
-                    {Math.floor((order?.Commande_lines?.reduce((sum, cur) => Number(cur.price_ht) + sum, 0) * 100)) / 100} €
+                <p>Total HT : {Math.floor((order?.Commande_lines?.reduce((sum, cur) => Number(cur.price_ht) + sum, 0) * 100)) / 100} €
+                    
                 </p>
-                <p>Total taxes : 
-                    {Math.floor((order?.Commande_lines?.reduce((sum, cur) => (Number(cur.price_ht) * Number(cur.tva) / 100) + sum, 0) * 100)) / 100}
+                <p>Total taxes : {Math.floor((order?.Commande_lines?.reduce((sum, cur) => (Number(cur.price_ht) * Number(cur.tva) / 100) + sum, 0) * 100)) / 100}
+                    
                  €</p>
                 <p>Total TTC : <b>
                     {Math.floor((order?.Commande_lines?.reduce((sum, cur) => (Number(cur.price_ht) * (Number(cur.tva) + 100) / 100) + sum, 0) * 100)) / 100} €

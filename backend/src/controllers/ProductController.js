@@ -1,6 +1,7 @@
 const { BaseError, fn, col, Op} = require('sequelize');
 const sequelize = require('sequelize');
 const { Product, Image } = require('../../models');
+const { validationResult, matchedData } = require('express-validator');
 
 exports.findAllActive = (req, res) => {
     const offset = req.query.offset ? parseInt(req.query.offset) : null;
@@ -148,14 +149,16 @@ exports.findByCategory = (req, res) => {
         });
 }
 exports.create = (req, res) => {
-    //1---------------recuperer le body ==>>TODO
-    //2----------------valider form ==>>TODO
-    //3---------------------Ajouter Product  ==>>OK
-    //4---------------------Ajouter images ===>>TODO
 
-    //const category_id = req.params.category_id;
-    //3---------------------Ajouter ==>>OK
-    const newProduct = req.body
+    //valider ou non le formulaire
+    const errors = validationResult(req);
+    if (!errors.isEmpty()) {
+        const msg = errors.array().map(e=>e.msg).join(' - ')
+        return res.status(400).json({ error: msg });
+    }
+    //recuperer le body nettoyé
+    const newProduct = matchedData(req);
+
     Product.create(newProduct).then((product) => {
         res.status(201).json({ message: `Produit "${product.title}" ajouté`, product })
         /*
@@ -176,19 +179,26 @@ exports.create = (req, res) => {
 
     }).catch(err => {
         console.log(err)
-        res.status(500).json({ error: err.message || "Error Database." })
+        res.status(500).json({ error: err.message || "Erreur base de données." })
     })
 }
 
 exports.update = (req, res) => {
+    //valider ou non le formulaire
+    const errors = validationResult(req);
+    if (!errors.isEmpty()) {
+        const msg = errors.array().map(e=>e.msg).join(' - ')
+        return res.status(400).json({ error: msg });
+    }
     const id = req.params.id;
-    const {category_id, title, description, price_ht, tva, quantity, status, top}=req.body
+    //body nettoyé
+    const {category_id, title, description, price_ht, tva, quantity, status, top}=matchedData(req)
     Product.update(
         { category_id, title, description, price_ht, tva, quantity, status, top },
         { where: { id } }
     ).then(() => {
-        res.status(200).send({ message: `Produit mis à jour` });
+        res.status(200).send({ message: `Produit ${title} mis à jour` });
     }).catch(err => {
-        res.status(500).send({ message: "Erreur modification" });
+        res.status(500).send({ message: `Erreur modification du produit ${title}` });
     });
 }

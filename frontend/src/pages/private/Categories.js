@@ -37,19 +37,19 @@ function CategoriesComponent() {
     function deleteRow(id){
         const confirmDelete = window.confirm(`Voulez vous vraiment supprimer la catégorie #${id} ?`)
         if(!confirmDelete) return
-        fetch(`/categories/delete/${id}`)
+        fetch(`/categories/delete/${id}`, {
+            method: 'DELETE',
+            credentials: 'include',
+        })
         .then(res => {
-            if (res.status === 204)
-                return
-            else {
+            if (res.status === 204){
+                setColor("success")
+                setMessage(`Categorie #${id} supprimée`)
+                setCategories(categories.filter(cat => cat.id !== id))
+            }else {
                 setColor("error")
                 setMessage("La catégorie n'a pas pu être supprimée")
             }
-        })
-        .then(result => {
-            setColor("success")
-            setMessage(`Categorie #${id} supprimée`)
-            setCategories(categories.filter(cat => cat.id !== id))
         })
         .catch(err => {                
             setColor("error")

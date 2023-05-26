@@ -1,6 +1,8 @@
 const sequelize = require('sequelize');
 const db = require('../../models/index')
 const { Commande, Commande_line, User, Address, Product } = require('../../models');
+const { validationResult, matchedData } = require('express-validator');
+const { unescape, unescapeAll, unescapeThose } = require('../middelwares/unescapeJson')
 
 // module.exports = class CommandeController {}
 exports.myOrders = (req, res) => {
@@ -65,75 +67,8 @@ exports.lineDetails = (req, res) => {
     });
 }
 
-exports.getAddresses = (req, res) => {
-    const user_id = req.user?.id ?? ''
-    //const user_id = 5
-    Address.findAll({ where: { user_id } })
-        .then(data => {
-            if (data.length) {
-                res.status(200).json({ message: "Found addresses", data })
-            } else {
-                res.status(204).send({ message: `No addresses with user_id=${user_id}.` });
-            }
-        })
-        .catch(err => {
-            //pas de commandes en bdd, on arrive ici /?\
-            console.log(err)
-            res.status(500).send({ message: `Error retrieving addresses with user_id=${user_id}.` });
-        });
-}
-
-exports.updateAddress = (req, res) => {
-    // on vérifie d'abors que l'adresse à être modifiée existe et appartient bien à l'utilisateur identifié
-    const user_auth_id = req.user.id
-    const { id, type, street, complement, city, zipcode, information } = req.body
-    Address.findAll({ where: { id, type } })
-    .then(data => {
-        if (data[0].dataValues.user_id===user_auth_id) {
-            Address.update(
-                { street, complement, city, zipcode, information },
-                { where: { id, type } }
-            ).then(() => {
-                res.status(200).send({ message: `Addresse de ${type} mise à jour` });
-            }).catch(err => {
-                res.status(500).send({ message: "Erreur modification" });
-            });
-        } else {
-            res.status(403).send({ message: `This update is forbidden` });
-        }
-    })
-    .catch(err => {
-        res.status(500).send({ message: `Error retrieving address` });
-    });
-}
-
-exports.createAddress = (req, res) => {
-    // on vérifie d'abors que le type d'adresse à être créé n'existe déja pas pour l'utilisateur identifié
-    const user_id = req.user.id
-    const { type, street, complement, city, zipcode, information } = req.body
-    //const user_id=5; const type='livraison'
-    /*SELECT COUNT(*) FROM addresses WHERE user_id=5 AND type='livraison'*/
-    Address.count({ where: { user_id, type } })
-    .then(dataExists => {
-        //console.log(dataExists===1)
-        if (dataExists===0) {
-            Address.create({ user_id, type, street, complement, city, zipcode, information }
-            ).then((data) => {
-                res.status(201).json({ message: `Addresse de ${type} créée`, data:data.dataValues });
-            }).catch(err => {
-                res.status(500).send({ message: "Erreur lors de la création d'adresse" });
-            });
-        } else {
-            res.status(403).send({ message: `This creation is not possible as an address already exists` });
-        }
-    })
-    .catch(err => {
-        res.status(500).send({ message: `Error creating addresse` });
-    });
-}
-
 exports.adminOrders = (req, res) => {
-    /*Commande.findAll({        
+    /*Commande.findAll({  //Quand ça ne marche pas comme on veut, écrire la requete en MySQL brut avec .query() !!!
         include: [
         {
             model: Address,
@@ -219,25 +154,121 @@ exports.adminOrderDetails = (req, res) => {
     ]})
     .then(data => {
         if (data) {
-            res.status(200).json({data})
+            //escape some values
+            data.dataValues?.notes ? data.dataValues.notes=unescape(data.dataValues.notes) : '';
+            data.dataValues?.deliveryAddress?.street ? data.dataValues.deliveryAddress.street=unescape(data.dataValues.deliveryAddress.street) : '';
+            data.dataValues?.billingAddress?.street ? data.dataValues.billingAddress.street=unescape(data.dataValues.billingAddress.street) : '';          
+            // on ne peut pas utiliser de fonction récursive car sequelize nous renvoie des objets avec des références circulaires
+            //const dataNeeded= unescapeAll(data.dataValues)
+            res.status(200).json({data:data.dataValues})
         } else {
             res.status(204).send({ message: `no orders` });
         }
     })
     .catch(err => {
+        console.log(err)
         res.status(500).send({ message: `Error retrieving orders`, err:err });
     });
 }
 
 exports.adminOrderProgress = (req, res) => {
     const id = req.params.id;
-    const { state, notes } = req.body
+    //valider ou non le formulaire
+    const errors = validationResult(req);
+    if (!errors.isEmpty()) {
+        const msg = errors.array().map(e=>e.msg).join(' - ')
+        return res.status(400).json({ error: msg });
+    }
+    //recuperer le body nettoyé
+    const { state, notes } = matchedData(req);
     Commande.update(
         { state, notes },
         { where: { id } }
     ).then(() => {
         res.status(200).send({ message: `Commande mise à jour` });
     }).catch(err => {
-        res.status(500).send({ message: "Erreur modification" });
+        res.status(500).send({ error: "Erreur modification" });
     });
+}
+
+exports.placeOrder = (req, res) => {
+    //récupération de l'utilisateur grace à son authentification
+    const user_id = req.user.id
+    //récupération des erreurs de validation/nettoyage des données
+    const errors = validationResult(req);
+    if (!errors.isEmpty()) {
+        const msg = errors.array().map(e=>e.msg).join(' - ')
+        return res.status(400).json({ error: msg });
+    }
+    //recuperer le body nettoyé par express validator récupérable avec matchedData()
+    const cleanedBody = matchedData(req);
+    const { type, name, number, expiration, crypto, code, lines, amount } = req.body//cleanedBody
+
+    //vérifier disponibilité des produits - TODO
+
+
+
+
+    //récupérer les addresses du client
+    db.sequelize.query(
+        `SELECT id FROM addresses WHERE user_id = :user_id AND type='livraison'
+        UNION 
+        SELECT id FROM addresses WHERE user_id = :user_id AND type='facturation' 
+            AND created_at = (
+                SELECT MAX(created_at) FROM addresses 
+                    WHERE user_id = :user_id AND type='facturation'
+            );`
+        , { replacements: { user_id },
+        type: sequelize.QueryTypes.SELECT 
+    }).then(data=>{
+        const delivery_address=data[0].id
+        const billing_address=data[1].id
+        //continuer avec la creation dans commandes: user_id, reference, delivery_address (id), billing_address (id), state
+        //creation de la reference commande au format YYMMDD12345:
+        const currentDate = new Date();
+        let reference = 'C'+currentDate.getFullYear().toString().slice(-2)+(currentDate.getMonth() + 1).toString().padStart(2, '0')+currentDate.getDate().toString().padStart(2, '0')
+        reference += Math.floor(Math.random() * (9999 - 1000 + 1)) + 1000
+
+        Commande.create({
+            user_id,
+            reference,
+            delivery_address,
+            billing_address,
+            status: 'new',
+        }).then((commande) => {
+            //creation dans commande_lines pour chaque element de lines : commande_id, product_id, price_ht, tva, quantity
+            const formatedLines = lines.map(line=>{
+                return {
+                    commande_id:commande.id,
+                    product_id:line.product_id,
+                    price_ht:line.price_ht,
+                    tva:line.tva,
+                    quantity:line.quantity
+                }
+            })
+            Commande_line.bulkCreate(formatedLines)
+            .then((createdLines) => {
+                //renvoi un array de commande_line avec une clé dataValues ayant les détails de la creation
+                
+                //payment avec stripe : type, name, number, expiration, crypto, code, amount - TODO
+                const sripeConfirm=true //mis artificiellement à true pour le moment
+                
+
+
+
+
+                //m a jour commandes : state, payment_ref
+                Commande.update(
+                    { payement_ref:'01234',
+                        state:'new' },
+                    { where: { id:commande.id } }
+                ).then(() => {
+
+                    //répondre confirmation à l'utilisateur
+                    res.status(200).send({ message: "merci pour votre achat" });
+
+                }).catch()//catch du update de commande
+            }).catch((error) => {})//catch du Commande_line.bulkCreate   
+        }).catch()//catch du creat command
+    }).catch()//catch des addresses du client - TODO: gerer erreurs payement
 }

@@ -12,7 +12,7 @@ exports.tokenVerif = (req, res, next) => {
     //-------------verifier le token access
     jwt.verify(token_access, process.env.SECRET_JWT, (err, user) => {
         if (err) {
-            return res.sendStatus(403).send({ message: "Token invalide !" });
+          return res.sendStatus(403).send({ message: "Token invalide !" });
         }
         req.user = user;
         next();
@@ -27,10 +27,10 @@ exports.adminVerif = (req, res, next) => {
   //-------------verifier le token access
   jwt.verify(token_access, process.env.SECRET_JWT, (err, user) => {
       if (err) {
-          return res.sendStatus(401).send({ message: "Token invalide !" });
+          return res.status(401).send({ message: "Token invalide !" });
       }
       if(user.profil !== 'admin'){
-        return res.sendStatus(403).send({ message: "Réservé aux administrateurs !" });
+        return res.status(403).send({ message: "Réservé aux administrateurs !" });
       }
       req.user = user;
       next();

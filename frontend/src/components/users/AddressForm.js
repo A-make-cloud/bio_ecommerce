@@ -9,11 +9,11 @@ function AddressForm({ address, action }) {
     const [message, setMessage] = useState('')
 
     useEffect(() => {
-        if (action?.method === 'post') {
+        if (Object.keys(address).length === 0 && action?.status !== 'loading') {
             setColor(`warning`)
             setMessage(`Vous n'avez pas d'adresse de ${action.type} enregistrée. Vous pouvez en enregistrer une ci-dessous :`)
         }
-    }, [action])
+    }, [address])
 
     const validationSchema = Yup.object(
         {
@@ -48,10 +48,9 @@ function AddressForm({ address, action }) {
         },
         validationSchema: validationSchema,
         onSubmit: (values) => {
-            
-            if (action?.method === 'post') {
+            if (action?.method === 'post' || action?.type === 'facturation') {
                 values.type = action.type
-                fetch('/commandes/create-address', {
+                fetch('/addresses/create-address', {
                     method: 'POST',
                     headers: {
                         'Content-Type': 'application/json'
@@ -59,31 +58,43 @@ function AddressForm({ address, action }) {
                     body: JSON.stringify(values, null, 2),
                     credentials: 'include'
                 })
-                    .then(response => {
-                        if (response.status === 201){
-                            action.method=''
-                            setColor("success")
-                            setMessage(`Votre adresse de ${action.type} a bien été enregistrée.`)
-                            return response.json()
-                        } else{
-                            setColor("error")
-                            setMessage(`L'adresse n'a pas put être enregistrée`)
-                        }
-                    })
-                    .then(result=>{
-                        address.id=result.data.id
-                        address.type=result.data.type
-                    })
-                    .catch(err => { 
+                .then(response => {
+                     
+                    if (response.status === 201){
+                        action.method=''
+                        setColor("success")
+                        setMessage(`Votre adresse de ${action.type} a été enregistrée.`)
+                        return response.json()
+
+                    } else if(response.status === 500 || response.status === 400 ){
                         setColor("error")
-                        setMessage('Une erreur est survenue sur le réseau !')
-                    })
+                        setMessage('erreur serveur')
+                        response.json().then(result=>{
+                            setMessage(result?.error)
+                        })
+                    } else{
+                        setColor("error")
+                        setMessage(`L'adresse n'a pas put être enregistrée`)
+                        response.json().then(result=>{
+                            setMessage(result?.message??result?.error)
+                        })
+                    }
+                })
+                .then(result=>{
+                    address.id=result?.data?.id
+                    address.type=result?.data?.type
+                })
+                .catch(err => { 
+                    console.log(err)
+                    setColor("error")
+                    setMessage('Une erreur est survenue sur le réseau !')
+                })
 
             } else {
                 values.type = address.type
                 values.user_id = address.user_id
                 values.id = address.id
-                fetch('/commandes/update-address', {
+                fetch('/addresses/update-address', {
                     method: 'PUT',
                     headers: {
                         'Content-Type': 'application/json'
@@ -94,7 +105,7 @@ function AddressForm({ address, action }) {
                     .then(response => {
                         if (response.status === 200) {
                             setColor("success")
-                            setMessage(`Votre adresse de ${address.type} a bien été mise à jour.`)
+                            setMessage(`Votre adresse de ${address.type} a été mise à jour.`)
                         }
                         else {
                             setColor("error")

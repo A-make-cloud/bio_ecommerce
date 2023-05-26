@@ -69,28 +69,30 @@ function Addproduct() {
                 body: JSON.stringify(values),
                 credentials: 'include',
             })
-                .then(response => {
-                    // Affiche le statut de la réponse (par exemple, 200 pour OK)
-                    //console.log(response.status, response)
-                    if (response.status !== 201) {
-                        // alert("error")
-                        setColor("error")
-                    } else {
-                        // alert("OK")
-                        setColor("success")
-                    }
+            .then(response => {
+                if (response.status === 201) {
                     return response.json();
-                })
-                .then(result => {
-                    console.log(result.message)
-                    setMessage(result.message)
-                })
-                .catch(err => {
-                    console.log('y 1 erreur : ', err)
-                    if (err.message === 'Failed to fetch')
-                        alert('Une erreur est survenue sur le réseau !')
-                    //alert('Une erreur est survenue ! ', err);
-                })
+                } else {
+                    setColor("error")
+                    response.json().then(result=>{
+                        setMessage(result.error)
+                    })
+                }
+            })
+            .then(result => {
+                setColor("success")
+                setMessage(result.message)
+            })
+            .catch(err => {
+                console.log('y 1 erreur : ', err)
+                if (err.message === 'Failed to fetch'){
+                    setColor("error")
+                    setMessage('Une erreur est survenue sur le réseau !')
+                }else{
+                    setColor("error")
+                    setMessage(err.message)
+                }
+            })
         },
     });
 

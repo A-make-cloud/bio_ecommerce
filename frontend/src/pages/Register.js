@@ -3,18 +3,18 @@ import { useFormik } from 'formik';
 import * as yup from 'yup';
 import TextField from '@mui/material/TextField';
 import Button from '@mui/material/Button';
-import { useNavigate } from 'react-router-dom';
+import { useNavigate, Link } from 'react-router-dom';
 import { useContext, useState } from 'react';
-import { Alert, FormControl, FormControlLabel, FormLabel, Grid, Paper, Radio, RadioGroup } from '@mui/material';
-import RegisterSchema from '../validations/RegisterSchema';
+import { Alert, FormControl, FormControlLabel, FormLabel, Grid, Paper, Radio, RadioGroup, Checkbox } from '@mui/material';
+//import RegisterSchema from '../validations/RegisterSchema';
 import { AuthContext } from './../contexts/AuthContext'
 
 function Register() {
     const { isLogged, setIsLogged } = useContext(AuthContext);
     const navigate = useNavigate();
 
-    const [color, setColor] = useState()
-    const [message, setMessage] = useState()
+    const [color, setColor] = useState('')
+    const [message, setMessage] = useState('')
     const validationSchema = yup.object(
         {
             firstname: yup.string()
@@ -45,12 +45,12 @@ function Register() {
 
     const formik = useFormik({
         initialValues: {
+            civility: 'M',
             firstname: '',
             lastname: '',
             email: '',
             password: '',
             confirmPassword: '',
-
         },
         validationSchema: validationSchema,
         onSubmit: (values) => {
@@ -64,40 +64,42 @@ function Register() {
                 body: JSON.stringify(values, null, 2),
                 credentials: 'include'
             })
-                .then(response => {
-                    // Affiche le statut de la réponse (par exemple, 200 pour OK)
-
-                    if (response.status !== 200) {
-                        // alert("error")
-                        setColor("error")
-                    } else {
-                        // alert("OK")
-                        setColor("success")
-                        // setIsLogged(true)
-                        // navigate('/dashbord')
-                    }
+            .then(response => {
+                if (response.status === 200) {
                     return response.json();
-                })
-                .then(result => {
-                    setMessage(result.message)
-                    // stocker des parametres de l'utilisateur quelque part ? ---> result.firstname id et lastname
-                    //redirection si succès pour se connecter :
-                    //navigate('/login') /!\ gérer message d'erreur
-                })
-                .catch(err => {
-                    console.log('y 1 erreur : ', err)
-                    if (err.message === 'Failed to fetch')
-                        alert('Une erreur est survenue sur le réseau !')
-                    else alert('Une erreur est survenue ! ');
-                })
+                } else if (response.status === 400){
+                    setColor("error")
+                    response.json().then(result=>{
+                        setMessage(result.error)
+                    })
+                }else{
+                    throw new Error()
+                }
+            })
+            .then(result => {
+                setColor("success")
+                setMessage(result.message)
+                // setIsLogged(true)
+                //redirection si succès pour se connecter :
+                //navigate('/login') 
+
+            })
+            .catch(err => {
+                console.log('y 1 erreur : ', err)
+                if (err.message === 'Failed to fetch'){
+                    setColor("error")
+                    setMessage('Une erreur est survenue sur le réseau !')
+                }else{
+                    setColor("error")
+                    setMessage('Une erreur est survenue ! ')
+                }
+            })
         },
     });
 
     return (
 
         <main className="productsPage">
-
-
 
             <Paper
                 sx={{
@@ -120,17 +122,18 @@ function Register() {
                                     row
                                     aria-labelledby="demo-row-radio-buttons-group-label"
                                     name="civility"
+                                    value={formik.values.civility}
+                                    onChange={formik.handleChange}
                                 >
                                     <FormControlLabel value="M" control={<Radio />} label="M" />
                                     <FormControlLabel value="Mme" control={<Radio />} label="Mme" />
-
                                 </RadioGroup>
                             </FormControl>
                             <TextField
                                 fullWidth
                                 id="firstname"
                                 name="firstname"
-                                label="Votre nom"
+                                label="Votre prénom"
                                 value={formik.values.firstname}
                                 onChange={formik.handleChange}
                                 error={formik.touched.firstname && Boolean(formik.errors.firstname)}
@@ -141,7 +144,7 @@ function Register() {
                                 fullWidth
                                 id="lastname"
                                 name="lastname"
-                                label="Votre prénom"
+                                label="Votre nom"
                                 value={formik.values.lastname}
                                 onChange={formik.handleChange}
                                 error={formik.touched.lastname && Boolean(formik.errors.lastname)}
@@ -180,10 +183,23 @@ function Register() {
                                 error={formik.touched.confirmPassword && Boolean(formik.errors.confirmPassword)}
                                 helperText={formik.touched.confirmPassword && formik.errors.confirmPassword}
                             />
+
+                            <Checkbox required /> J'accèpte les <Link to="/conditions">conditions générales de vente</Link>.
+
                             <Button color="primary" variant="contained" fullWidth type="submit">
                                 S'inscrire
                             </Button>
+
                         </form>
+                            <Button
+                                component={Link}
+                                to={`/login`}
+                                variant="contained"
+                                color="primary"
+                                sx={{ backgroundColor: '#FFB300', color: 'black', margin:'auto' }}
+                            >
+                                Déjà client ?
+                            </Button>                        
                     </Grid>
                 </Grid>
             </Paper>

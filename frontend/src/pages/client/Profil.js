@@ -50,7 +50,6 @@ export default function Profil() {
         },
         validationSchema: validationSchema,
         onSubmit: (values) => {
-            //alert(JSON.stringify(values, null, 2));
             fetch('/users/update', {
                 method: 'PUT',
                 headers: {
@@ -60,30 +59,33 @@ export default function Profil() {
                 credentials: 'include' // inclure les cookies dans la requête
             })
                 .then(response => {
-                    // Affiche le statut de la réponse (par exemple, 200 pour OK)
-                    if (response.status !== 200) {
-                        // alert("error")
+                    if (response.status === 200) {
+                        return response.json();
+                    } else if (response.status === 400){
                         setColor("error")
-                    } else {
-                        // alert("OK")
-                        setColor("success")
-                        // navigate('/dashbord')
+                        response.json().then(result=>{
+                            setMessage(result.error)
+                        })
+                    }else{
+                        throw new Error()
                     }
-                    return response.json();
                 })
                 .then(result => {
+                    setColor("success")
                     setMessage(result.message)
-                    //updateProfil(values)
                     connectUser({profil:localUser.profil, id:localUser.id, ...values})
-
-
+                    //updateProfil(values)
                     //pas de redirection si succès pour se connecter, car on est déja connecté
                 })
                 .catch(err => {
                     console.log('y 1 erreur : ', err)
-                    if (err.message === 'Failed to fetch')
-                        alert('Une erreur est survenue sur le réseau !')
-                    //alert('Une erreur est survenue ! ', err);
+                    if (err.message === 'Failed to fetch'){
+                        setColor("error")
+                        setMessage('Une erreur est survenue sur le réseau !')
+                    }else{
+                        setColor("error")
+                        setMessage('Une erreur est survenue ! ')
+                    }
                 })
         },
     });
@@ -124,7 +126,7 @@ export default function Profil() {
                                     fullWidth
                                     id="firstname"
                                     name="firstname"
-                                    label="Votre nom"
+                                    label="Votre prénom"
                                     value={formik.values.firstname}
                                     onChange={formik.handleChange}
                                     error={formik.touched.firstname && Boolean(formik.errors.firstname)}
@@ -135,7 +137,7 @@ export default function Profil() {
                                     fullWidth
                                     id="lastname"
                                     name="lastname"
-                                    label="Votre prénom"
+                                    label="Votre nom"
                                     value={formik.values.lastname}
                                     onChange={formik.handleChange}
                                     error={formik.touched.lastname && Boolean(formik.errors.lastname)}

@@ -99,7 +99,9 @@ function UpdateProduct() {
                     }
                     else {
                         setColor("error")
-                        setMessage('Une erreur est survenue lors de la modification de votre produit !')
+                        response.json().then(result=>{
+                            setMessage(result.error)
+                        })
                     }
                 })
                 .catch(err => { 

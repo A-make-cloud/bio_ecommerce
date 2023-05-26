@@ -45,6 +45,10 @@ app.use("/users", usersRoutes);
 const commandesRoutes = require('./app/routes/commandes.route.js')
 app.use("/commandes", commandesRoutes);
 
+//----------------routes addresses
+const addressesRoutes = require('./app/routes/addresses.route.js')
+app.use("/addresses", addressesRoutes);
+
 //----------------routes autres pour admin
 const adminRoutes = require('./app/routes/admin.route.js')
 app.use("/admin", adminRoutes);

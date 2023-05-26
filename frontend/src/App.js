@@ -7,7 +7,7 @@ import Basket from "./pages/Basket";
 
 import Login from "./pages/Login";
 import Product from "./pages/Product";
-
+import Conditions from "./pages/Conditions";
 import NavBar from './components/layouts/Navbar';
 import Footer from './components/layouts/Footer';
 import Register from './pages/Register';
@@ -29,6 +29,9 @@ import Profil from './pages/client/Profil';
 import Commande from './pages/client/Commande';
 import CommandeDetails from './pages/client/CommandeDetails';
 import Addresses from './pages/client/Addresses';
+import BasketSummary from './pages/client/BasketSummary';
+import PaymentForm from './pages/client/PaymentForm';
+import PaymentConfirm from './pages/client/PaymentConfirm';
 
 function App() {
 
@@ -49,6 +52,7 @@ function App() {
         <Route path="/register" element={<Register />} />
         <Route path="/login" element={<Login />} />
         <Route path="/product/:id" element={<Product />} />
+        <Route path="/conditions" element={<Conditions />} />
 
         {isLogged && profil === "admin" ?
           <>
@@ -74,6 +78,9 @@ function App() {
             <Route path="/client/commandes" element={<Commande />} />
             <Route path="/client/commande-details/:id" element={<CommandeDetails />} />
             <Route path="/client/addresses" element={<Addresses />} />
+            <Route path="/basket-summary" element={<BasketSummary />} />
+            <Route path="/Payment-form" element={<PaymentForm />} />
+            <Route path="/Payment-confirm" element={<PaymentConfirm />} />
             
             {/*ajouter page adresses*/}
           </> : ""}

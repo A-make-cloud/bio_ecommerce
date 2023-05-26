@@ -163,7 +163,6 @@ function CategoriesChange({method}) {
                         </div>
                     </div>
 
-
                     <Grid container spacing={3}>
                         <Grid item xs={12}>
                             <form onSubmit={formik.handleSubmit} className="addProdForm">
@@ -171,7 +170,7 @@ function CategoriesChange({method}) {
                                     fullWidth
                                     id="title"
                                     name="title"
-                                    label="Titre du produit"
+                                    label="Titre de la catégorie"
                                     value={formik.values.title}
                                     onChange={formik.handleChange}
                                     error={formik.touched.title && Boolean(formik.errors.title)}

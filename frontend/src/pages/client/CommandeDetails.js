@@ -50,7 +50,7 @@ export default function Commande() {
                 <p>TVA : {Math.floor((lines?.Commande_lines?.reduce((sum, cur) => (Number(cur.price_ht) * Number(cur.tva) / 100) + sum, 0)) * 100) / 100} €</p>
                 <p>Total TTC : <b>{Math.floor((lines?.Commande_lines?.reduce((sum, cur) => (Number(cur.price_ht) * (Number(cur.tva) + 100) / 100) + sum, 0)) * 100) / 100} €</b></p>
                 <p>*Les frais de livraison ne sont pas inclus</p>
-                <p>Référence payement : {lines.payement_ref}</p>
+                <p>Référence payement : {lines?.payement_ref??<i>Pas de réf. payement, vérifiez que le payement a bien été validé</i>}</p>
                 <Link to="/client/commandes"><Button variant="contained" sx={{ /*width: '100%',*/ backgroundColor: "#FFB300", color: 'black', marginBottom: '10px' }}>Revenir à la liste de vos commandes</Button></Link>
             </div>
         </div>)

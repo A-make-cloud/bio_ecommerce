@@ -6,11 +6,6 @@ const bcrypt = require('bcrypt');
 const { User } = require('../../models');
 
 exports.process = (req, res) => {
-    //1------------valider les post  ==>>TODO
-    //2-------------verifier l 'email ==>>OK
-    //3-------------verifier le password ==>>OK
-    //4--------------generer le JWT  ==>>OK
-
     //recuperer email login 
     email = req.body.email;
     password = req.body.password;
@@ -36,13 +31,7 @@ exports.process = (req, res) => {
                             },
                                 process.env.SECRET_JWT, { expiresIn: 3 * 60 * 60 }
                             );
-                            //----methode 1 Cookie
-                            /*const cookie = new Cookies(req, res).set("access_token", accessToken, {
-                                httpOnly: true, //utilisation uniquement via requete http
-                                secure: false, //true pour forcer l'utilisation https
-                            });*/
                             res.cookie("access_token", accessToken, { maxAge: 3 * 60 * 60 * 1000, httpOnly: true, secure: false });
-                                //console.log('accessToken',accessToken)
                             res.status(200).send({
                                 message: "connexion ok",
                                 user: {
@@ -64,7 +53,7 @@ exports.process = (req, res) => {
             }
         })
         .catch(err => {
-            res.status(500).send({ message: "Error retrieving User with email=" + email });
+            res.status(500).send({ message: "Erreur pour trouver l'utilisateur avec email=" + email });
         });
 }
 

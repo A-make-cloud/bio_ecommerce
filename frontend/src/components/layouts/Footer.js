@@ -1,5 +1,5 @@
 import React from "react";
-
+import { Link } from "react-router-dom";
 import CardMedia from '@mui/material/CardMedia';
 import { CardActionArea } from '@mui/material';
 import { styled } from '@mui/material/styles';
@@ -63,7 +63,9 @@ function Footer() {
 
                     <div>
                         <h6>Informations légales</h6>
-                        <h6>Nos conditions d’achat</h6>
+                        <Link to="conditions" style={{ color: "inherit", textDecoration: "none", margin: 0 }} >
+                            <h6>Nos conditions de vente</h6>
+                        </Link>
                         <h6>Nous contacter</h6>
 
                     </div>

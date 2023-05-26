@@ -3,26 +3,27 @@ const router = express.Router();
 const Controller = require('../../src/controllers/UserController.js')
 const authController = require('../../src/controllers/AuthenticationController')
 const registerController = require('../../src/controllers/RegisterController')
-const middelwareAuth = require('../../src/middelwares/middelwareAuth.js')
+const {tokenVerif, adminVerif} = require('../../src/middelwares/middelwareAuth.js')
+const {cleanUserForm, cleanUpdateUser} = require('../../src/middelwares/sanitizeValidate.js')
+const { param } = require('express-validator');
+
 //--------------login user
 router.post("/login", authController.process);
 //--------------delete JWT cookie when unlogin
 router.delete("/delete-cookie", authController.deletecookie);
-//--------------register new user 
-router.post("/register", registerController.process);
+//--------------register new user
+router.post("/register", cleanUserForm, registerController.process);
 //find all user
-router.get("/find-all", middelwareAuth.adminVerif, Controller.findAll);
-//create  form user by admin
-router.get("/create", middelwareAuth.adminVerif, Controller.create);
+router.get("/find-all", adminVerif, Controller.findAll);
 //find user itself via token
-router.get("/find-self", middelwareAuth.tokenVerif, Controller.findSelf);
+router.get("/find-self", tokenVerif, Controller.findSelf);
 //find user by id
-router.get("/find/:id", middelwareAuth.adminVerif, Controller.findById);
+//router.get("/find/:id", adminVerif, Controller.findById);
 //find user by email
-router.get("/findByEmail/:email", middelwareAuth.adminVerif, Controller.findByEmail);
+//router.get("/findByEmail/:email", adminVerif, Controller.findByEmail);
 //update user
-router.put("/update", middelwareAuth.tokenVerif, Controller.update);
+router.put("/update", tokenVerif, cleanUpdateUser, Controller.update);
 //delete user by admin
-router.get("/delete/:id", middelwareAuth.adminVerif, Controller.delete);
+router.delete("/delete/:id", adminVerif, param("id").isInt().escape(), Controller.delete);
 
 module.exports = router;

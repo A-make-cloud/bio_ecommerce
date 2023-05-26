@@ -36,19 +36,20 @@ function UsersComponent() {
     function deleteRow(id, email){
         const confirmDelete = window.confirm(`Voulez vous vraiment supprimer l'utilisateur ${email} ?`)
         if(!confirmDelete) return
-        fetch(`/users/delete/${id}`)
+        fetch(`/users/delete/${id}`, {
+            method: 'DELETE',
+            credentials: 'include', // inclus les cookies dans la requête
+            })
         .then(res => {
-            if (res.status === 204)
-                return
-            else {
+            if (res.status === 204){
+                setColor("success")
+                setMessage(`Utilisateur supprimé ! (${email})`)
+                setUsers(users.filter(cat => cat.id !== id))
+            } else {
+                console.log(res)
                 setColor("error")
                 setMessage("L'utilisateur n'a pas pu être supprimé")
             }
-        })
-        .then(result => {
-            setColor("success")
-            setMessage(`Utilisateur supprimé ! (${email})`)
-            setUsers(users.filter(cat => cat.id !== id))
         })
         .catch(err => {                
             setColor("error")

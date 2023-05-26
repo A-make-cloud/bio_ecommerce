@@ -1,11 +1,14 @@
 import { useState, useEffect, useContext } from 'react';
 import { BasketContext } from '../contexts/BasketContext'
+import { AuthContext } from './../contexts/AuthContext'
 import Button from '@mui/material/Button';
-import { Link } from "react-router-dom";
+import { Link, useNavigate } from "react-router-dom";
 import AddShoppingCartIcon from '@mui/icons-material/AddShoppingCart';
 import RemoveShoppingCartIcon from '@mui/icons-material/RemoveShoppingCart';
 
 function Basket() {
+    const { isLogged, user } = useContext(AuthContext);
+    const navigate = useNavigate();
     const { basket, removeLast, emptyBasket, getItemsWithDetails, removeOne, removeLine, addOneOfThis, getTotalTva, getTotalTtc } = useContext(BasketContext);
     const [basketSummary, setBasketSummary] = useState([]);
 
@@ -17,6 +20,14 @@ function Basket() {
     useEffect(() => {
         setBasketSummary(getItemsWithDetails)
     }, [basket])
+
+    function validate(){
+        if (isLogged){
+            navigate('/basket-summary')
+        }else{
+            navigate('/register')
+        }
+    }
 
     return (
         <>
@@ -59,7 +70,7 @@ function Basket() {
                         <p>Sous-total TTC : {Math.floor((getTotalTtc()) * 100) / 100} €</p>
                         <p>Expedition : Les frais de livraison sont calculés lors du paiement.</p>
                         <p><b>Total : {Math.floor((getTotalTtc()) * 100) / 100} €</b></p>
-                        <Button variant="contained" sx={{ width: '100%' }}>Valider le panier</Button>
+                        <Button variant="contained" sx={{ width: '100%' }} onClick={validate}>Valider le panier</Button>
                         <p style={{ textAlign: 'center' }}>ou <Link to="/products">continuer vos achats</Link></p>
                     </>
                     : <p>panier vide</p>}
