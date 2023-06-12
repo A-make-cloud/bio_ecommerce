@@ -4,6 +4,10 @@ const Controller = require('../../src/controllers/ProductController.js')
 const { adminVerif } = require('../../src/middelwares/middelwareAuth.js')
 const { cleanProductForm, cleanQueryFindall } = require('../../src/middelwares/sanitizeValidate.js')
 const { param } = require('express-validator');
+const multer = require('multer');
+// Configuration multer pour gérer les fichiers envoyés
+const storage = multer.memoryStorage();
+const upload = multer({ storage: storage, limits: { fileSize: 10 * 1024 * 1024 } });
 
 //find all products on sale
 router.get("/find-all", cleanQueryFindall, Controller.findAllActive);
@@ -11,8 +15,9 @@ router.get("/find-all", cleanQueryFindall, Controller.findAllActive);
 router.get("/admin-find-all", adminVerif, cleanQueryFindall, Controller.findAll);
 //find by categories
 //router.get("/find-by-category", Controller.findByCategory);
-//create  form product
-router.post("/create", adminVerif, cleanProductForm, Controller.create);
+//create from product-add form
+router.post("/create", adminVerif, upload.single('image_file'), cleanProductForm, Controller.create);
+
 //find product by id
 router.get("/find/:id", param("id").isInt().escape(), Controller.findById);
 //find top products with limit in querry string : ...path?limit=10

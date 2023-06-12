@@ -20,7 +20,7 @@ export default function Commande() {
         <div className="clientBody">
             <NavbarClient />
             <div className="clientContent">
-                <h1>Détails de la commande # {lines?.reference} {lines?.createdAt ?? ''}</h1>
+                <h1>Détails de la commande # {lines?.reference} {lines?.createdAt ? new Date(lines?.createdAt).toLocaleString("fr-FR") : ''}</h1>
                 {lines.length === 0 && <p>Vous n'avez pas de commande en cours</p>}
                 {lines?.Commande_lines?.map((line, i) => {
                     return (

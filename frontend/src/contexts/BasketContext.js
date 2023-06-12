@@ -1,6 +1,5 @@
 import { useState, createContext, useEffect } from 'react'
 const BasketContext = createContext()
-
 function BasketProvider({ children }) {
     const [basket, setBasket] = useState({ items: [] });
     //Aller chercher le panier dans le local storage s'il existe dès le début
@@ -88,8 +87,8 @@ function BasketProvider({ children }) {
     }
 
     return (
-        <BasketContext.Provider value={{ basket, addOne, getItemsWithDetails, emptyBasket, removeLast, removeOne, 
-            removeLine, addOneOfThis, getTotalTva, getTotalTtc }} >
+        <BasketContext.Provider value={{ basket, addOne, getItemsWithDetails, emptyBasket, 
+            removeLast, removeOne, removeLine, addOneOfThis, getTotalTva, getTotalTtc }} >
             {children}
         </BasketContext.Provider>
     )

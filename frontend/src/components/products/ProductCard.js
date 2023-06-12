@@ -9,14 +9,14 @@ import { Link } from "react-router-dom";
 
 function ProductCard({ product }) {
   const priceTTC= Math.round( (product.price_ht * (1 + product.tva / 100))*100 )/100
-
+  const maxImage= product.Images.find(i=>i.type==='max')
   return (
     <Card className='productCard'>
       <Link to={`/product/${product.id}`} style={{ color: "inherit", textDecoration: "none" }}>
         <CardMedia
           sx={{ height: 160 }}
-          image="https://placehold.co/600x400"
-          title="toto"
+          image={maxImage?.url??"https://res.cloudinary.com/dxqhz3pif/image/upload/v1685885905/bioshop-product-images/23.png"}
+          title={maxImage?.title??"default image"}
         />
       </Link>
       <CardContent>

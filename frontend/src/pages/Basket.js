@@ -34,7 +34,7 @@ function Basket() {
             <main className="basketPage">
                 <h1>Votre panier</h1>
                 {basketSummary.length > 0 ?
-                    <>
+                    <> {console.log(basketSummary)}
                         {/* <Button onClick={emptyBasket} variant="contained" color="warning" startIcon={<RemoveShoppingCartIcon />} >Vider le panier</Button> */}
                         {/* <Button onClick={removeLast} variant="contained" sx={{ margin: '6px' }} style={{ backgroundColor: "#FFB300", color: 'black' }}>Enlever le dernier article ajouté</Button> */}
                         <h2>Produits dans votre panier : </h2>
@@ -46,12 +46,12 @@ function Basket() {
                                     boxShadow: '0px 2px 4px -1px rgba(0,0,0,0.2), 0px 4px 5px 0px rgba(0,0,0,0.14), 0px 1px 10px 0px rgba(0,0,0,0.12)'
                                 }}>
                                     <div style={{
-                                        width: '100px', height: '100px', backgroundImage: `url(https://placehold.co/450x400)`, backgroundRepeat: 'no-repeat',
+                                        width: '100px', height: '100px', backgroundImage: 'url('+articleType.Images.find(i=>i.type==='max').url+')', backgroundRepeat: 'no-repeat',
                                         backgroundPosition: 'center', backgroundSize: 'cover'
                                     }}>
                                     </div>
                                     <div>
-                                        <h3>{articleType.title} {articleType.id}</h3>
+                                        <h3>{articleType.title} #{articleType.id}</h3>
                                         <p>{articleType.pickedQuantity} unité{articleType.pickedQuantity > 1 && 's'}</p>
                                     </div>
                                     <p>{

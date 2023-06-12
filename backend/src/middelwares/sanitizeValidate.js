@@ -104,6 +104,13 @@ exports.cleanProductForm=[
     body('top').if(body('top').not().isEmpty())
         .trim()
         .escape(),
+    body('image_title').if(body('image_title').not().isEmpty())
+        .trim()
+        .escape(),
+    body('image_type').if(body('image_type').not().isEmpty())
+        .trim()
+        .matches(/^(min|max)$/).withMessage('Le champ "type" de l\'image doit être soit "max" soit "min".')
+        .escape(),
 ]
 
 exports.cleanQueryFindall = [

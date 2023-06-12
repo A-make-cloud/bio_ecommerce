@@ -11,6 +11,7 @@ function UpdateProduct() {
     const [product, setProduct] = useState({});
     const [color, setColor] = useState('info')
     const [message, setMessage] = useState('Chargement en cours...')
+    const [selectedImage, setSelectedImage] = useState(null);
 
     useEffect(() => {
         fetch("/products/find/"+id)
@@ -30,6 +31,7 @@ function UpdateProduct() {
             setColor("")
             setMessage("")
             setProduct(result.data)
+            setSelectedImage(result.data.Images.find(i=>i.type==='max').url)
         })
         .catch((err) => { })
     }, []);
@@ -68,6 +70,9 @@ function UpdateProduct() {
             .min(0, 'Pas de négatif')
             .max(1000000000, 'Trop gros!')
             .required('Required'),
+        image_title: yup
+            .string('Entrez le titre de l\'image')
+            .max(50, '50 charactères maxi pour le titre de l\'image')
     });
 
     const formik = useFormik({
@@ -80,16 +85,20 @@ function UpdateProduct() {
             quantity: product?.quantity ?? '',
             status: product?.status ?? '',
             top: product?.top ?? '',
+            /*image_file: product.Images.find(i=>i.type==='max').url,
+            image_title: product.Images.find(i=>i.type==='max').url,
+            image_type: 'max'*/
         },
         enableReinitialize: true,
         validationSchema: validationSchema,
         onSubmit: (values) => {
+            const formData = new FormData();
+            for (const [key, value] of Object.entries(values)) {
+                formData.append(key, value);
+            }
             fetch(`/products/update/${id}`, {
                 method: 'PUT',
-                headers: {
-                    "content-Type": "application/json"
-                },
-                body: JSON.stringify(values, null, 2),
+                body: formData,
                 credentials: 'include'
             })
                 .then(response => {
@@ -100,7 +109,7 @@ function UpdateProduct() {
                     else {
                         setColor("error")
                         response.json().then(result=>{
-                            setMessage(result.error)
+                            setMessage(result?.error??result?.message)
                         })
                     }
                 })
@@ -227,6 +236,42 @@ function UpdateProduct() {
                                     error={formik.touched.top && Boolean(formik.errors.top)}
                                     helperText={formik.touched.top && formik.errors.top}
                                 />
+                                <InputLabel id="imageFile">Modifier l'image principale :</InputLabel>
+                                <TextField
+                                    id="imageFile"
+                                    type="file"
+                                    onChange={e => {
+                                        const file = e.target.files[0];
+                                        if(file)
+                                            setSelectedImage(URL.createObjectURL(file));
+                                        else
+                                            setSelectedImage(null)
+                                        formik.setFieldValue('image_file', file)}
+                                    }
+                                />{console.log(selectedImage)}
+                                {formik.values.image_file &&
+                                    <>
+                                    <img
+                                        src={selectedImage}
+                                        alt="Aperçu"
+                                        style={{ width: 80}}
+                                    />
+                                    <TextField
+                                    fullWidth
+                                    spacing={5}
+                                    id="image_title"
+                                    name="image_title"
+                                    label="titre de l'image"
+                                    type="image_title"
+                                    value={formik.values.image_title}
+                                    onChange={formik.handleChange}
+                                    error={formik.touched.image_title && Boolean(formik.errors.image_title)}
+                                    helperText={formik.touched.image_title && formik.errors.image_title}
+                                />
+                                    </>
+                                }
+
+
                                 <Button color="primary" variant="contained" fullWidth type="submit">
                                     Mettre à jour le produit
                                 </Button>

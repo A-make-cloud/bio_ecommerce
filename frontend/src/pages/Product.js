@@ -14,7 +14,7 @@ function Product() {
     const [product, setProduct] = useState();
     const params = useParams()
     const productId = params.id;
-    const [listeImage, setListeImage] = useState([])
+    //const [listeImage, setListeImage] = useState([])
 
     // const product = { name: 'toto', description: 'titi', price_ht: 'tutu' } //fetcher le produit avec un await...
     const Item = styled(Paper)(({ theme }) => ({
@@ -34,7 +34,7 @@ function Product() {
             //if status 200 ==>OK 
             if (response.status === 200) {
                 const json = await response.json();
-                //console.log(json)
+                console.log(json)
                 setProduct(json.data)
             } else {
                 console.log("no product")
@@ -55,9 +55,9 @@ function Product() {
                                 <CardMedia
                                     xs={8}
                                     component="img"
-                                    sx={{ width: 900 }}
-                                    image={listeImage && listeImage.length > 0 ? listeImage[0].url : 'https://images.unsplash.com/photo-1551963831-b3b1ca40c98e'}
-                                    alt={listeImage && listeImage.length > 0 ? listeImage[0].title : 'fake image'}
+                                    sx={{ width: 700 }}
+                                    image={product?.Images[0]?.url ?? 'https://res.cloudinary.com/dxqhz3pif/image/upload/v1685885905/bioshop-product-images/23.png'}
+                                    alt={product?.Images[0]?.title ?? 'fake image'}
 
                                 // image="https://images.unsplash.com/photo-1551963831-b3b1ca40c98e"
                                 // alt="Live from space album cover"
@@ -86,8 +86,8 @@ function Product() {
             <div>
 
 
-                <p>Nom :{product ? product.title : ''}</p>
-                <p>Description :{product ? product.description.slice(0, 40) + "..." : ''}</p>
+                <p>Nom : {product ? product.title : ''}</p>
+                <p>Description : {product ? product.description: ''}</p>
 
 
 
