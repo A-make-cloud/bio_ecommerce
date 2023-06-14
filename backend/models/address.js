@@ -12,8 +12,9 @@ module.exports = (sequelize, DataTypes) => {
     static associate(models) {
 
       // define association here
-      Address.hasMany(models.Commande)
-      Address.belongsTo(models.User)
+      Address.belongsTo(models.User)      
+      Address.hasMany(models.Commande, { as: 'deliveryAddress', foreignKey: 'delivery_address' })
+      Address.hasMany(models.Commande, { as: 'billingAddress', foreignKey: 'billing_address' })
 
     }
   }
@@ -33,7 +34,6 @@ module.exports = (sequelize, DataTypes) => {
     },
     complement: {
       type: DataTypes.STRING,
-
     },
     city: {
       allowNull: false,
@@ -47,12 +47,10 @@ module.exports = (sequelize, DataTypes) => {
       type: DataTypes.TEXT,
 
     },
-
-
   }, {
     sequelize,
     modelName: 'Address',
-    underscored: true
+    underscored: true,
   }, {
     classMethods: {
       associate: function (models) {
@@ -60,5 +58,22 @@ module.exports = (sequelize, DataTypes) => {
       }
     }
   });
+
+  // hook sequelize for executing a code just after getting datas from database, mais ça ne marche pas
+  /*Address.addHook('afterFind',(result) => {
+    console.log('+-+-+-+-',result)
+    if (Array.isArray(result)) {
+      result.forEach((address) => {
+        if (address.street) {
+          address.street = address.street+'toto';
+        }
+      });
+    } else {
+      if (result.street) {
+        result.street = result.street+'toto';
+      }
+    }
+  });*/
+
   return Address;
 };

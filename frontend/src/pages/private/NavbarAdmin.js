@@ -1,22 +1,30 @@
 
-import { useContext, useState } from 'react';
-import { Link } from 'react-router-dom';
+import { useContext } from 'react';
+import { Link, useLocation } from 'react-router-dom';
 import { AuthContext } from '../../contexts/AuthContext';
+import MenuIcon from '@mui/icons-material/Menu';
+import DashboardOutlinedIcon from '@mui/icons-material/DashboardOutlined';
+import CategoryOutlinedIcon from '@mui/icons-material/CategoryOutlined';
+import ListOutlinedIcon from '@mui/icons-material/ListOutlined';
+import PlaylistAddOutlinedIcon from '@mui/icons-material/PlaylistAddOutlined';
+import PeopleAltOutlinedIcon from '@mui/icons-material/PeopleAltOutlined';
+import LocalShippingOutlinedIcon from '@mui/icons-material/LocalShippingOutlined';
 
 export default function NavbarAdmin() {
-
-    const user = localStorage.getItem('user') ? JSON.parse(localStorage.getItem('user')) : null
-
-
-    return (<div style={{display:'flex', justifyContent:'space-around', alignContent:'center', backgroundColor:'#C8E6C9'}}>
-        <h1>Bio Shop - Espace Admin</h1>
-        <h2>Bonjour {user ? user.firstname : ""}   {user ? user.lastname : ""}  </h2>
-        <div>
-        <Link to="/dashboard" style={{ textDecoration: "none", marginRight: 10 }}>Dashboard</Link>
-        <Link to="/dashboard/add-product" style={{ textDecoration: "none", marginRight: 10 }}>Catégories</Link>
-        <Link to="/dashboard/add-product" style={{ textDecoration: "none", marginRight: 10 }} >Ajouter produit</Link>
-        <Link to="/dashboard/add-product" style={{ textDecoration: "none", marginRight: 10 }}>Users</Link>
-        <Link to="/dashboard/add-product" style={{ textDecoration: "none", marginRight: 10 }}>Commandes</Link>
+    //const { user } = useContext(AuthContext);
+    const location = useLocation();
+    return (
+        <div className="sidebar adminSidebar">
+            <h2><label htmlFor="sidebarBtn"><MenuIcon id="burger"/></label>Espace admin</h2>
+            <input type="checkbox" id="sidebarBtn"/>
+            <ul>
+                <li className={location.pathname==='/dashboard' ? "selected": ""}><Link to="/dashboard" ><DashboardOutlinedIcon/>Dashboard</Link></li>
+                <li className={location.pathname==='/dashboard/products' ? "selected": ""}><Link to="/dashboard/products" ><ListOutlinedIcon/>Produits</Link></li>
+                <li className={location.pathname==='/dashboard/add-product' ? "selected": ""}><Link to="/dashboard/add-product" ><PlaylistAddOutlinedIcon/>Ajouter produit</Link></li>
+                <li className={location.pathname==='/dashboard/categories' ? "selected": ""}><Link to="/dashboard/categories" ><CategoryOutlinedIcon/>Catégories</Link></li>
+                <li className={location.pathname==='/dashboard/users' ? "selected": ""}><Link to="/dashboard/users" ><PeopleAltOutlinedIcon/>Utilisateurs</Link></li>
+                <li className={location.pathname==='/dashboard/orders' ? "selected": ""}><Link to="/dashboard/orders" ><LocalShippingOutlinedIcon/>Commandes</Link></li>
+            </ul>
         </div>
-    </div>)
+    )
 }

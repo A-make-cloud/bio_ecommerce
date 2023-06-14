@@ -1,5 +1,5 @@
 import React from "react";
-
+import { Link } from "react-router-dom";
 import CardMedia from '@mui/material/CardMedia';
 import { CardActionArea } from '@mui/material';
 import { styled } from '@mui/material/styles';
@@ -32,7 +32,7 @@ const div1Style = {
     width: "100vw",
     height: `${footerHeight + footerEltMarginTop}px`,
     backgroundColor: "#346344",
-    marginTop: "30px",
+    marginTop: "0px",
     // position: "absolute",
 };
 
@@ -54,7 +54,7 @@ function Footer() {
                         justifyContent: 'space-around',
                         alignItems: 'center',
                         p: 1,
-                        m: 1,
+                        m: 0,
                         bgcolor: "#346344",
                         color: '#ffff',
                         borderRadius: 1,
@@ -63,7 +63,9 @@ function Footer() {
 
                     <div>
                         <h6>Informations légales</h6>
-                        <h6>Nos conditions d’achat</h6>
+                        <Link to="conditions" style={{ color: "inherit", textDecoration: "none", margin: 0 }} >
+                            <h6>Nos conditions de vente</h6>
+                        </Link>
                         <h6>Nous contacter</h6>
 
                     </div>

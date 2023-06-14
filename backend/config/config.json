@@ -8,10 +8,11 @@
     "dialect": "mysql"
   },
   "test": {
-    "username": "root",
-    "password": null,
-    "database": "database_test",
-    "host": "127.0.0.1",
+    "username": "oeop0676_bioshop",
+    "password": "Ilove_mysql",
+    "database": "oeop0676_bioshop",
+    "host": "oeop0676.odns.fr",
+    "port": 3306,
     "dialect": "mysql"
   },
   "production": {

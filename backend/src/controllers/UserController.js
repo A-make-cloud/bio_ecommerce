@@ -1,10 +1,8 @@
-
 const { User } = require('../../models');
 const bcrypt = require('bcrypt');
 const jwt = require('jsonwebtoken');
 const Cookies = require("cookies");
-
-
+const { validationResult, matchedData } = require('express-validator');
 /**
  * select all user by admin
  * @param {*} req 
@@ -13,8 +11,10 @@ const Cookies = require("cookies");
 exports.findAll = (req, res) => {
     User.findAll()
         .then(data => {
-            console.log(data)
-            res.status(201).json({ message: "Find user", data })
+            if(data.length===0)
+                res.status(204).send({ message: "No user found" })
+            else
+                res.status(200).json({ message: "found user", data })
         })
         .catch(err => {
             res.status(500).send({
@@ -24,41 +24,6 @@ exports.findAll = (req, res) => {
         });
 };
 
-/**
- * 
--à modifier si formulaire 
- * create user by admin 
- * @param {*} req 
- * @param {*} res 
- */
-exports.create = (req, res) => {
-    //1---------------recuperer le body ==>>TODO
-    //2----------------valider form ==>>TODO
-    //3---------------------Ajouter user  ==>>OK
-    //4------------------Envoyer le mail de validation   ==>>TODO
-
-
-    //3---------------------Ajouter ==>>OK
-    const element = {
-        civility: 'M',
-        firstname: 'Bela',
-        lastname: 'Sam',
-        profil: 'admin',
-        email: 's21@gmail.com',
-        password: 'password123',
-        token: 'pdasswfrd123',
-    }
-
-    User.create(element).then((user) => {
-        res.status(201).json({ message: "Created user", user })
-    }).catch(err => {
-        res.status(500).json({ error: err.message || "Error Database." })
-    })
-
-
-}
-
-
 /**find user by id
  * 
  * @param {*} req 
@@ -66,22 +31,38 @@ exports.create = (req, res) => {
  */
 exports.findById = (req, res) => {
     const id = req.params.id;
-
     User.findByPk(id)
         .then(data => {
             if (data) {
-                res.status(201).json({ message: "Find user", data })
+                res.status(200).json({ message: "Find user", data })
             } else {
-                res.status(500).send({
-                    message: `Cannot find user with id=${id}.`
-                });
+                res.status(500).send({ message: `Cannot find user with id=${id}.` });
             }
         })
         .catch(err => {
-            res.status(500).send({
-                message: "Error retrieving User with id=" + id
-            });
+            res.status(500).send({ message: "Error retrieving User with id=" + id });
         });
+}
+/**find user details by himself with the JWT
+ * 
+ * @param {*} req 
+ * @param {*} res 
+ */
+exports.findSelf = (req, res) => {
+    const id = req.user.id// coming from auth middleware checking the JWT
+    User.findByPk(id)
+        .then(data => {
+            if (data){
+                const user = {id:data.id, civility:data.civility, firstname:data.firstname, 
+                    lastname:data.lastname, email:data.email, profil:data.profil, status:data.status}
+                res.status(200).json({ message: "Found user", user })
+            } else 
+                res.status(500).send({ message: `Cannot find user with id=${id}.` })
+        })
+        .catch(err => {
+            res.status(500).send({ message: "Error retrieving User with id=" + id })
+        }
+    )
 }
 
 /**
@@ -95,7 +76,7 @@ exports.findByEmail = (req, res) => {
     User.findOne({ where: { email } })
         .then(data => {
             if (data) {
-                res.status(201).json({ message: "Find user by email", data })
+                res.status(200).json({ message: "Find user by email", data })
             } else {
                 res.status(500).send({
                     message: `Cannot find user with email=${email}.`
@@ -116,68 +97,58 @@ exports.findByEmail = (req, res) => {
  */
 
 exports.update = (req, res) => {
-
-    //1---------------recuperer le body ==>>TODO
-    //2----------------valider form ==>>TODO
-    //3---------------------Ajouter user  ==>>OK
     //4------------------Envoyer le mail de validation   ==>>TODO
 
+    //-----------token vérifié dans middelware middelwareAuth.js qui envoi ancien détails du user dans req.user
+    //-----------et on a les nouveaux détails qui arrivent dans le body
 
-    //------------verification du token dans middelware middelwareAuth.js envoi user dans req.user
+    //valider formulaire
+    const errors = validationResult(req);
+    if (!errors.isEmpty()) {
+        const msg = errors.array().map(e=>e.msg).join(' - ')
+        return res.status(400).json({ error: msg });
+    }
+    //recuperer le body nettoyé par express validator récupérable avec matchedData()
+    const cleanedDBody = matchedData(req);
+    //const userUpdate = {id:req.user.id, ...req.body}
+    const userUpdate = {id:req.user.id, ...cleanedDBody}
 
-    const userUpdate = req.user
-
-    //2----------------valider form ==>>TODO
-    //*
+    //si modif voir s'il existe deja :
     User.findByPk(userUpdate.id)
         .then(user => {
             if (user) {
-
-                // console.log('user-------->>', user)
                 const firstname = userUpdate.firstname;
                 const lastname = userUpdate.lastname;
                 // const password = userUpdate.password ? userUpdate.password : user.password;
-                const email = user.email;//todo si modif voir s'il existe deja 
-
+                const email = user.email;
+                const civility = userUpdate.civility;
                 User.update(
-                    { firstname, lastname, email },
+                    { civility, firstname, lastname, email },
                     { where: { id: user.id } }
                 ).then(() => {
                     res.status(200).send({
                         message: " Votre compte a bien été modifié "
                     });
-
                 }).catch(err => {
                     res.status(500).send({
-                        message: "Error modification "
+                        message: "Erreur modification "
                     });
                 });
-
             } else {
                 res.status(500).send({
-                    message: `Cannot find user with id=${id}.`
+                    message: `Utilisateur ${id} non trouvé.`
                 });
             }
         })
         .catch(err => {
             res.status(500).send({
-                message: "Error retrieving User with id=" + id
+                message: "Erreur lors de la recherche de l'utilisateur " + id
             });
         });
 
-
-
-
     //*/
 
-
-
-
-
-
-
     /*
-    
         User.findOne({ where: { email } })
             .then(exist => {
                 if (!exist) {
@@ -226,8 +197,22 @@ exports.update = (req, res) => {
             });
     //*/
 
-
-
 }
 
+exports.delete = (req, res) => {
+    //vérification epress validator du parametre
+    const errors = validationResult(req)
+    if(!errors.isEmpty){
+        console.log(errors.array())
+        return res.status(400).json({errors:errors.array()})
+    }
 
+    const id = req.params.id;
+    User.destroy(
+        { where:{id} }
+    ).then((data) => {
+        res.status(204).send({ message: `User #${id} supprimée`});
+    }).catch(err => {
+        res.status(500).send({ message: "Erreur lors de la suppression de l'utilisateur" });
+    });
+}
