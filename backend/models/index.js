@@ -25,6 +25,7 @@ sequelize.authenticate()
   .catch((error) => {
     // console.error('La connexion Sequelize a échoué :', error);
   });
+sequelize.options.logging = false;
 fs
   .readdirSync(__dirname)
   .filter(file => {

@@ -25,6 +25,7 @@ const Item = styled(Paper)(({ theme }) => ({
 const div1Style = {
 
     marginTop: "100px",
+    marginBottom: "30px",
 };
 
 
@@ -37,10 +38,10 @@ function TopCategorie() {
 
     // useEffect(function effectFunction() {
     //     async function fetchCateg() {
-    //         const response = await fetch('/categories/findAll');
+    //         const response = await fetch('/categories/find-all');
     //         console.log(response.status)
 
-    //         if (response.status === 201) {
+    //         if (response.status === 200) {
     //             const json = await response.json();
 
     //             console.log(json)
@@ -56,10 +57,9 @@ function TopCategorie() {
 
         async function fetchCateg() {
             //recuperer les info de la base de donnée 
-            await fetch('/categories/findAll')
+            await fetch('/categories/find-all')
                 .then(response => response.json())
                 .then((res) => {
-                    console.log(res.data);
                     setCategories(res.data)
                 })
         }

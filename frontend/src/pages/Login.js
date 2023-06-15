@@ -1,4 +1,3 @@
-
 import { useFormik } from 'formik';
 import * as yup from 'yup';
 import TextField from '@mui/material/TextField';
@@ -11,9 +10,8 @@ import { AuthContext } from './../contexts/AuthContext'
 function Login() {
     const { isLogged, updateIslogged, updateProfil, connectUser } = useContext(AuthContext);
     const navigate = useNavigate();
-
-    const [color, setColor] = useState()
-    const [message, setMessage] = useState()
+    const [color, setColor] = useState('')
+    const [message, setMessage] = useState('')
     const validationSchema = yup.object({
         email: yup
             .string('Entrez votre email')
@@ -37,14 +35,12 @@ function Login() {
                 method: 'POST',
                 headers: {
                     "Content-Type": "application/json"
-
                 },
                 body: JSON.stringify(values, null, 2),
                 credentials: 'include'
             })
                 .then(response => {
                     // Affiche le statut de la réponse (par exemple, 200 pour OK)
-
                     if (response.status !== 200) {
                         setColor("error")
                     } else {
@@ -56,9 +52,7 @@ function Login() {
                     setMessage(result.message)
                     if (result.user) {
                         // stocker des parametres de l'utilisateur quelque part ? ---> result.firstname id et lastname
-                        connectUser(result.user) //add user to local storage //AuthContext.js
-
-                        //setISlogged and add to local storage // AuthContext.js
+                        connectUser(result.user) //add user to local storage //AuthContext.js /!\ Non, pas besoin, on l'ajoute au contexte
                         updateIslogged('true')
 
                         //redirection vers espace admin || client
@@ -69,41 +63,34 @@ function Login() {
                             navigate('/dashboard')
                         else if (profil === "client")
                             navigate('/client')
-
                     }
-
-
                 })
                 .catch(err => {
-                    console.log('y 1 erreur : ', err)
-                    if (err.message === 'Failed to fetch')
-                        alert('Une erreur est survenue sur le réseau !')
-                    //alert('Une erreur est survenue ! ', err);
+                    //console.log('y 1 erreur : ', err)
+                    if (err.message === 'Failed to fetch'){
+                        setMessage('Une erreur est survenue sur le réseau !')
+                    }
+                    else {
+                        setMessage('Le serveur a rencontré un problème. Si le problème persiste, veuillez réesseyer plus tard.')
+                    }
                 })
-
-
         },
     });
 
-
     return (
-
         <main className="productsPage">
-
-
             <Paper
                 sx={{
                     p: 2,
-                    margin: 'auto',
+                    m: 'auto',
+                    my: 3, 
                     maxWidth: 700,
                     flexGrow: 1,
                     backgroundColor: (theme) =>
                         theme.palette.mode === 'dark' ? '#1A2027' : '#fff',
                 }}
             >
-
                 <h1 >Fromulaire de connexion</h1>
-
                 {message ? <Alert severity={color}>{message}</Alert> : ""}
                 <Grid container spacing={3}>
                     <Grid item xs={12} >
@@ -119,6 +106,7 @@ function Login() {
                                 error={formik.touched.email && Boolean(formik.errors.email)}
                                 helperText={formik.touched.email && formik.errors.email}
                                 spacing={5}
+                                autoComplete="email"
                             />
                             <TextField
                                 fullWidth
@@ -130,6 +118,7 @@ function Login() {
                                 onChange={formik.handleChange}
                                 error={formik.touched.password && Boolean(formik.errors.password)}
                                 helperText={formik.touched.password && formik.errors.password}
+                                autoComplete="current-password"
                             />
                             <Button color="primary" variant="contained" fullWidth type="submit">
                                 Se connecter
@@ -138,10 +127,7 @@ function Login() {
                     </Grid>
                 </Grid>
             </Paper>
-
         </main>
-
     );
 }
-
 export default Login;
