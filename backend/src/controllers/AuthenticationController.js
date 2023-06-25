@@ -31,7 +31,7 @@ exports.process = (req, res) => {
                             },
                                 process.env.SECRET_JWT, { expiresIn: 3 * 60 * 60 }
                             );
-                            res.cookie("access_token", accessToken, { maxAge: 3 * 60 * 60 * 1000, httpOnly: true, secure: false });
+                            res.cookie("access_token", accessToken, { maxAge: 3 * 60 * 60 * 1000, httpOnly: true, secure: false, sameSite: 'strict' });
                             res.status(200).send({
                                 message: "connexion ok",
                                 user: {

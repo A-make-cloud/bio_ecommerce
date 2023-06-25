@@ -29,12 +29,12 @@ const div1Style = {
 };
 
 
-function TopCategorie() {
+function TopCategorie( {setColor, setMessage} ) {
     const theme = useTheme();
 
     const params = useParams()
     const categId = params.id;
-    const [categories, setCategories] = useState([]);
+    const [categories, setCategories] = useState([{ id: 1, title: ' ', img: "https://placehold.co/600x400" }]);
 
     // useEffect(function effectFunction() {
     //     async function fetchCateg() {
@@ -58,9 +58,19 @@ function TopCategorie() {
         async function fetchCateg() {
             //recuperer les info de la base de donnée 
             await fetch('/categories/find-all')
-                .then(response => response.json())
+                .then(response => {
+                    if(response.status !== 200)
+                        throw new Error()
+                    return response.json()
+                })
                 .then((res) => {
                     setCategories(res.data)
+                    setColor('success')
+                    setMessage('')
+                })
+                .catch(err=>{
+                    setColor('error')
+                    setMessage('Une erreur est survenue')
                 })
         }
         fetchCateg()

@@ -1,14 +1,11 @@
 import { useFormik } from 'formik';
 import * as yup from 'yup';
-import TextField from '@mui/material/TextField';
-import Button from '@mui/material/Button';
 import { useNavigate } from 'react-router-dom';
 import { useContext, useState } from 'react';
-import { Alert, Grid, Paper } from '@mui/material';
-
+import { Alert, Grid, Paper, Button, TextField } from '@mui/material';
 import { AuthContext } from './../contexts/AuthContext'
 function Login() {
-    const { isLogged, updateIslogged, updateProfil, connectUser } = useContext(AuthContext);
+    const { updateIslogged, updateProfil, connectUser } = useContext(AuthContext);
     const navigate = useNavigate();
     const [color, setColor] = useState('')
     const [message, setMessage] = useState('')
@@ -22,7 +19,6 @@ function Login() {
             .min(8, 'Le mot de passe doit être de 8 charactères minimum')
             .required('Mot de passe est requis'),
     });
-
     const formik = useFormik({
         initialValues: {
             email: '',
@@ -33,32 +29,24 @@ function Login() {
             //alert(JSON.stringify(values, null, 2));
             fetch('/users/login', {
                 method: 'POST',
-                headers: {
-                    "Content-Type": "application/json"
-                },
+                headers: { "Content-Type": "application/json" },
                 body: JSON.stringify(values, null, 2),
                 credentials: 'include'
             })
                 .then(response => {
-                    // Affiche le statut de la réponse (par exemple, 200 pour OK)
-                    if (response.status !== 200) {
-                        setColor("error")
-                    } else {
-                        setColor("success")
-                    }
+                    if (response.status !== 200) throw new Error()
+                    else setColor("success")
                     return response.json();
                 })
                 .then(result => {
                     setMessage(result.message)
                     if (result.user) {
-                        // stocker des parametres de l'utilisateur quelque part ? ---> result.firstname id et lastname
-                        connectUser(result.user) //add user to local storage //AuthContext.js /!\ Non, pas besoin, on l'ajoute au contexte
+                        // stocker des parametres de l'utilisateur
+                        connectUser(result.user)
                         updateIslogged('true')
-
-                        //redirection vers espace admin || client
                         const profil = result.user.profil
                         updateProfil(profil)
-
+                        // redirection selon profile
                         if (profil === "admin")
                             navigate('/dashboard')
                         else if (profil === "client")
@@ -66,35 +54,23 @@ function Login() {
                     }
                 })
                 .catch(err => {
-                    //console.log('y 1 erreur : ', err)
-                    if (err.message === 'Failed to fetch'){
-                        setMessage('Une erreur est survenue sur le réseau !')
-                    }
-                    else {
-                        setMessage('Le serveur a rencontré un problème. Si le problème persiste, veuillez réesseyer plus tard.')
-                    }
+                    setColor("error")
+                    if (err.message === 'Failed to fetch') setMessage('Une erreur est survenue sur le réseau !')
+                    else setMessage('Le serveur a rencontré un problème. Si le problème persiste, veuillez réesseyer plus tard.')
                 })
         },
     });
-
     return (
         <main className="productsPage">
             <Paper
-                sx={{
-                    p: 2,
-                    m: 'auto',
-                    my: 3, 
-                    maxWidth: 700,
-                    flexGrow: 1,
-                    backgroundColor: (theme) =>
-                        theme.palette.mode === 'dark' ? '#1A2027' : '#fff',
+                sx={{p: 2, m: 'auto', my: 3, maxWidth: 700, flexGrow: 1,
+                    backgroundColor: (theme) => theme.palette.mode === 'dark' ? '#1A2027' : '#fff',
                 }}
             >
                 <h1 >Fromulaire de connexion</h1>
                 {message ? <Alert severity={color}>{message}</Alert> : ""}
                 <Grid container spacing={3}>
                     <Grid item xs={12} >
-
                         <form onSubmit={formik.handleSubmit} className="loginForm">
                             <TextField
                                 fullWidth

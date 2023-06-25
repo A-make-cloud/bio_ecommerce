@@ -77,14 +77,6 @@ h1, h2, h3{
   background-color:#1976d2;
 }
 
-@keyframes spinner-spin {
-  from {
-    transform: rotate(0deg);
-  }
-  to {
-    transform: rotate(-360deg);
-  }
-}
 .LoadingSpinner {
   font-size: large;
   display:flex;
@@ -92,8 +84,17 @@ h1, h2, h3{
   height : 35px;
 }
 
+@keyframes rotateSpinner {
+  from {
+    transform: rotate(0deg);
+  }
+  to {
+    transform: rotate(-360deg);
+  }
+}
+
 .LoadingSpinner svg{
-  animation: spinner-spin infinite 1s linear;
+  animation: rotateSpinner infinite 1s linear;
 }
 
 .basketTable{
@@ -165,6 +166,7 @@ h1, h2, h3{
   background-color: #abcfad;
 }
 @media (max-width: 767px) {
+  /*règles CSS pour petits écrans*/
   .sidebar{
     border-bottom-right-radius:12px;
   }
@@ -202,6 +204,8 @@ h1, h2, h3{
     display:block;
   }
 }
+/*personnalisation des spacing dans le formulaire page dashboard/order/:id */
+
 .progressForm>div{
   margin-bottom:20px;
 }
@@ -213,3 +217,4 @@ h1, h2, h3{
 .progressForm{
   margin-bottom:20px;
 }
+

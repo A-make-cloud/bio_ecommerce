@@ -5,6 +5,8 @@ import Concept from '../components/layouts/Concept.js';
 import Phare from '../components/layouts/Phare.js';
 import TopCategorie from '../components/layouts/TopCategorie.js';
 import Button from '@mui/material/Button';
+import { useState } from 'react';
+import { Alert } from '@mui/material'
 
 // import Card from '@mui/material/Card';
 // import CardContent from '@mui/material/CardContent';
@@ -33,6 +35,8 @@ const Item = styled(Paper)(({ theme }) => ({
 
 }));
 function Home() {
+    const [color, setColor] = useState('info')
+    const [message, setMessage] = useState('Chargement en cours...')
 
     return (
         <div>
@@ -51,9 +55,10 @@ function Home() {
             </div>
 
             <Container>
+                {message ? <Alert severity={color}>{message}</Alert> : ""}
                 <Concept />
                 { <Phare /> }
-                <TopCategorie />
+                <TopCategorie setColor={setColor} setMessage={setMessage}/>
             </Container>
 
         </div>

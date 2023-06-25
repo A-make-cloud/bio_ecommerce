@@ -87,11 +87,10 @@ exports.findAll = (req, res) => {
 };
 
 exports.findTop = (req, res) => {
-    const limit = req.query.limit ? parseInt(req.query.limit) : null;
-    Product.findAll({ order: [['top', 'DESC'], ['quantity', 'DESC']], limit: limit, include: Image })
+    const limit = req.query.limit ? parseInt(req.query.limit) : 5;
+    Product.findAll({ order: [['top', 'DESC'], ['quantity', 'DESC']],  where: { status: '1' }, limit: limit, include: Image })
         .then(async data => {
-            if (data) {
-
+            if (data) {                
                 await Promise.allSettled(data.map(async (product) => {
                     const images = await product.getImages();
                     product.dataValues.listeImage = images;
@@ -100,7 +99,7 @@ exports.findTop = (req, res) => {
                 res.status(200).json({ data });
             } else {
                 res.status(500).send({
-                    message: `Cannot find Products.`
+                    message: `Cannot find top Products.`
                 });
             }
         })
@@ -153,7 +152,11 @@ exports.findByCategory = (req, res) => {
 }
 
 exports.create = (req, res) => {
-    // todo : il faut valider image...
+    //validation image :
+    if (req.fileValidationError) {
+        return res.status(400).json({ error: "Il y a eu une erreur avec l'image" });
+      }
+
     //valider ou non le formulaire
     const errors = validationResult(req);
     if (!errors.isEmpty()) {
@@ -164,6 +167,7 @@ exports.create = (req, res) => {
     const newProduct = matchedData(req);
     // Récupérer le fichier envoyé via req.file.buffer
     const fileBuffer = req?.file?.buffer??null;
+    //Démarche :
     //create product to get the product_id   
         //if image exists:
         //create image first, to get the image_id
@@ -179,13 +183,22 @@ exports.create = (req, res) => {
         .then(image=>{
             // Convertir le Buffer en flux (stream)
             const bufferStream = streamifier.createReadStream(fileBuffer);
+
             const uploadStream = cloudinary.uploader.upload_stream({ folder: 'bioshop-product-images', public_id: 'default'/*image.dataValues.id*/ },
                 (error, result) => {
                     if (error) {
                         //défaire la création de l'image
                         Image.destroy( { where:{id:image.dataValues.id} }
-                            ).then((data) => { throw new Error(error) }  
-                            ).catch(err => { throw new Error(err) } ); 
+                            ).then((data) => { 
+                                //défaire creéation du produit ici, car les erreurs ne peuvent pas etre propagées en dehors de la méthode cloudinary
+                                Product.destroy(
+                                    { where:{id:product.dataValues.id} }
+                                ).then((data) => res.status(500).send({ message: "Le produit n'a pas été enregistrée à cause d'un problème avec l'image" })    
+                                ).catch(err => res.status(500).send({ message: "Erreur base de données" }) ); 
+                            }  
+                            ).catch(err => {
+                                res.status(500).send({ message: "Erreur base de données" })
+                        })
                     } else {
                         // Récupérer l'URL de l'image dans result.secure_url
                         const imageUrl = result.secure_url;
@@ -196,14 +209,14 @@ exports.create = (req, res) => {
                         ).then(()=>
                             res.status(201).json({ message: `Produit "${product.title}" ajouté`, product })
                         ).catch(err=>{
-                            //console.log(err)
-                            throw new Error(err)
+                            res.status(500).send({ message: "Erreur base de données" })
                         })
                     }
-                }
+                } 
             )
-            // Piping du flux du buffer vers le flux d'envoi à Cloudinary
+            // Piping du flux du buffer vers le flux d'envoi à Cloudinary         
             bufferStream.pipe(uploadStream);
+
         })
         .catch(err=>{
             console.log("err image",err)

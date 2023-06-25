@@ -173,7 +173,9 @@ export default function AdminOrder() {
                             onChange={formik.handleChange}
                         >
                             {Object.entries(stateColors).map(s=>
-                                <FormControlLabel key={'c_'+s[0]} value={s[0]} control={<Radio />} label={s[0]+' '} style={{backgroundColor:s[1]}} />
+                                <FormControlLabel key={'c_'+s[0]} value={s[0]} control={<Radio />} label={s[0]+' '} 
+                                    sx={{backgroundColor:s[1]}}
+                                />
                             )}
 
                         </RadioGroup>

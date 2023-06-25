@@ -18,5 +18,4 @@ router.get("/admin-order/:id", adminVerif, param("id").isInt().escape(), Control
 //Update the progress and notes on an order by an admin
 router.put("/admin-order/update/:id", adminVerif, param("id").isInt().escape(), cleanOrderUpdate, Controller.adminOrderProgress);
 
-
 module.exports = router;

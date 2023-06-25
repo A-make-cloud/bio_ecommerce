@@ -20,7 +20,7 @@ exports.process = (req, res) => {
     User.findOne({ where: { email } })
         .then(exist => {
             if (!exist) {
-                //Ajouter dans bdd
+                //Ajouter dans bdd. Le modèle "user" s'occupe de crypter le mot de passe
                 User.create({
                     civility,
                     firstname,
@@ -31,7 +31,7 @@ exports.process = (req, res) => {
                     password,
                     token: '',
                 }).then((user) => {
-                    //generer le JWT - todo : à tester
+                    //generer le JWT
                     let accessToken = jwt.sign({
                         id: user.id,
                         firstname: user.firstname,
@@ -44,7 +44,7 @@ exports.process = (req, res) => {
                         httpOnly: true, //utilisation uniquement via requete http
                         secure: false, //true pour forcer l'utilisation https
                     });*/
-                    res.cookie("access_token", accessToken, { maxAge: 3 * 60 * 60 * 1000, httpOnly: true, secure: false });
+                    res.cookie("access_token", accessToken, { maxAge: 3 * 60 * 60 * 1000, httpOnly: true, secure: false, sameSite: 'strict' });
 
                     res.status(200).json({ message: "Votre compte a bien été enregistré", user })
                 }).catch(err => {

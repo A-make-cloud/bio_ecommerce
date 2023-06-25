@@ -8,6 +8,7 @@ exports.cleanUserForm=[
         .not().isEmpty().withMessage('Le champ "prénom" est requis.')
         .isAlpha().withMessage('Le champ "prénom" doit être composé de lettres.')
         .isLength({min:2}).withMessage('Le champ "prénom" doit faire au moins deux charactères.')
+        .isLength({max:255}).withMessage('Le champ "prénom" ne doit pas dépasser 255 charactères.')
         .escape(),
     body('lastname').trim()
         .not().isEmpty().withMessage('Le champ "nom" est requis.')
@@ -118,6 +119,10 @@ exports.cleanQueryFindall = [
     query('limit').if(query('limit').not().isEmpty()).escape()
 ]
 
+exports.cleanQueryFindTop = [
+    query('limit').if(query('limit').not().isEmpty()).escape()
+]
+
 //type defaut enum('livraison', 'facturation'), 
 //street varchar(50), 
 //complement null varchar(255), city varchar(50), zipcode varchar(10), information null 1500
@@ -174,8 +179,5 @@ exports.cleanOrderUpdate = [
 ] 
 
 exports.cleanOrderForm = [
-
-
-
     
 ]

@@ -1,7 +1,7 @@
 const { User } = require('../../models');
-const bcrypt = require('bcrypt');
-const jwt = require('jsonwebtoken');
-const Cookies = require("cookies");
+//const bcrypt = require('bcrypt');
+//const jwt = require('jsonwebtoken');
+//const Cookies = require("cookies");
 const { validationResult, matchedData } = require('express-validator');
 /**
  * select all user by admin

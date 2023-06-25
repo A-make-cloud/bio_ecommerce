@@ -83,10 +83,8 @@ function Addproduct() {
                 if (response.status === 201) {
                     return response.json();
                 } else {
-                    //throw new Error()
-                    setColor("error")
                     response.json().then(result=>{
-                        console.log(result.error)
+                        setColor("error")
                         setMessage(result?.message??result?.error)
                     })
                 }
@@ -96,8 +94,7 @@ function Addproduct() {
                 setMessage(result.message)
             })
             .catch(err => {
-                console.log('y 1 erreur : ', err)
-                if (err.message === 'Failed to fetch'){
+                if (err?.message??err?.error === 'Failed to fetch'){
                     setColor("error")
                     setMessage('Une erreur est survenue, vérifiez votre connexion.')
                 }else{

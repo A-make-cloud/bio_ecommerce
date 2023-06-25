@@ -78,7 +78,7 @@ npx sequelize-cli model:generate --name Category --attributes title:string
 
 ### ----------------Pour Agnès et David
 
-##l--creer la table bioshop
+## l--creer la table bioshop
 npx sequelize-cli db:create
 
 ## 2----lancer la creation des tables
