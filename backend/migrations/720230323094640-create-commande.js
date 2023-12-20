@@ -40,10 +40,10 @@ module.exports = {
         }
       },
 
-      payement_card: {
+      /*payement_card: {
         allowNull: true,
         type: Sequelize.STRING
-      },
+      },*/
       payement_ref: {
         type: Sequelize.STRING,
         allowNull: true,
@@ -56,7 +56,12 @@ module.exports = {
       updated_at: {
         allowNull: false,
         type: Sequelize.DATE
-      }
+      },
+      state: {
+        type: Sequelize.ENUM('new', 'process', 'expedited', 'canceled'),
+        defaultValue: "new",
+        allowNull: false,
+      },
     });
   },
   async down(queryInterface, Sequelize) {

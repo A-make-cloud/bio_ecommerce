@@ -1,10 +1,25 @@
 
 @import url('https://fonts.googleapis.com/css2?family=Grandstander:wght@300;400;500;600&family=Montserrat:wght@300;400;500;600;700;800;900&family=Roboto:wght@500&display=swap');
 
+:root {
+  --darkGreen: #346344;
+  --lightGreen: #C8E6C9;
+  --ocher:#FFB300;
+}
+
 h1, h2, h3{
   font-family: Grandstander;
 }
 
+/*----------Home---------*/
+
+.slick-slider{
+  /* box-shadow: 0px 2px 4px -1px rgba(0,0,0,0.2), 0px 4px 5px 0px rgba(0,0,0,0.14), 0px 1px 10px 0px rgba(0,0,0,0.12); */
+  border-radius:20px;
+  padding:20px;
+}
+
+/*---------products---------*/
 .productsPage, .basketPage, .marginPage{
   max-width: 1300px;
   margin-left:auto;
@@ -14,6 +29,27 @@ h1, h2, h3{
 /* .homeHeader{
   background-image:url("./static/head.jpg"), 
 } */
+.categoryCartouche{
+  display:flex;
+  list-style:none;
+  width:300px;
+  border-radius:5px;
+  margin:3px;
+  justify-content:space-around;
+  height:61px;
+  box-shadow: 0px 2px 4px -1px rgba(0,0,0,0.2), 0px 4px 5px 0px rgba(0,0,0,0.14), 0px 1px 10px 0px rgba(0,0,0,0.12);
+  cursor:pointer;
+  transition: transform 90ms;
+}
+.categoryCartouche:hover{
+  transform:scale(104%);
+  transition: transform 90ms;
+}
+.categoryCartouche:active{
+  transform:scale(104%);
+  box-shadow: inset 0px 2px 4px -1px rgba(0,0,0,0.2), inset 0px 4px 5px 0px rgba(0,0,0,0.14), inset 0px 1px 10px 0px rgba(0,0,0,0.12);
+  transition: transform 90ms, box-shadow 90ms;
+}
 
 .priceAndAdd{
   display : flex;
@@ -26,15 +62,25 @@ h1, h2, h3{
   flex-wrap: wrap;
 }
 
+.productCard{ 
+  width: 359px;
+  margin: 6px; 
+}
+
 .addButton:hover{
   cursor:pointer;
+  /* transform:scale(114%) */
+  color:rgb(52, 99, 68);
+}
+
+.addButton .MuiTooltip-tooltip{
+  background-color:#1976d2;
 }
 
 @keyframes spinner-spin {
   from {
     transform: rotate(0deg);
   }
-
   to {
     transform: rotate(-360deg);
   }
@@ -55,9 +101,115 @@ h1, h2, h3{
   width: 100%;
 }
 
-
 .loginForm>div, .loginForm>button, .addProdForm>div, .addProdForm>button{
   /*margin-top:30px;*/
   margin-bottom:30px;
 }
-
+/*espace client avec la sidebar + espace admin : */
+.clientBody, .adminBody{
+  display: flex;
+  /* flex-wrap: wrap; */
+  justify-content: flex-start;
+}
+.sidebar{
+  padding-top:12px;
+  /* padding-left:10px; */
+  width : 210px;
+  align-items: stretch;
+  background-color: var(--lightGreen);
+  margin: 0 8px 0 0;
+  font-weight: bold;
+  flex-shrink: 0;
+   padding-bottom:1px; 
+}
+.sidebar h2, .sidebar li{
+   padding-left:10px;
+   padding-bottom:6px;
+}
+.sidebar a{
+  text-decoration: none;
+}
+.sidebar a :first-child, #burger{
+  position:relative;
+  top:5px;
+  margin-right:15px;
+}
+#burger{margin-right:5px;}
+.adminSidebar{
+  background-color: rgb(196, 196, 196);
+}
+.sidebar ul{ 
+  list-style-type: none;
+  padding-left:0; 
+}
+/*La page admin des products est particulière à cause de l'élément MUI DataGrid*/
+ .adminProductsBody{
+  display: flex;
+  justify-content: flex-start;
+}
+.adminProductsMain{
+  max-width: calc(100% - 235px); 
+  margin:'auto';
+  height: 600px
+} 
+#sidebarBtn{
+  display:none !important;
+}
+#burger{
+  display:none;
+}
+.adminSidebar .selected{
+  background-color: rgb(176, 176, 176);
+}
+.clientSidebar .selected{
+  background-color: #abcfad;
+}
+@media (max-width: 767px) {
+  .sidebar{
+    border-bottom-right-radius:12px;
+  }
+  .adminProductsBody{
+    flex-wrap: wrap; 
+  }
+  .adminProductsMain{
+    max-width: 100%; 
+  }
+  .sidebar ul{
+    display:none;
+  }
+  #burger{
+    display:inline;
+  }
+  #burger:hover{
+    cursor:pointer;
+  }
+  #sidebar ul{
+    display:none;
+  }
+  #sidebarBtn:checked ~ul{
+    display:block !important;
+    position :absolute;
+    z-index: 1501;
+    margin:0;
+    padding-bottom:20px;
+    width:210px;
+    background-color: var(--lightGreen);    
+  }
+  .adminSidebar #sidebarBtn:checked ~ul{
+    background-color: rgb(196, 196, 196);
+  }  
+  .clientBody, .adminBody{
+    display:block;
+  }
+}
+.progressForm>div{
+  margin-bottom:20px;
+}
+.progressForm .MuiFormControlLabel-root{
+  padding-right: 5px;
+  border-radius: 7px;
+  margin-left :0px;
+}
+.progressForm{
+  margin-bottom:20px;
+}

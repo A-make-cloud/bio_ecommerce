@@ -4,27 +4,23 @@ const Cookies = require("cookies");
 require('dotenv').config();
 //const UserController = require('./UserController');
 const { User } = require('../../models');
+const { validationResult, matchedData } = require('express-validator');
 
 exports.process = (req, res) => {
+    //valider formulaire
+    const errors = validationResult(req);
+    if (!errors.isEmpty()) {
+        const msg = errors.array().map(e=>e.msg).join(' - ')
+        return res.status(400).json({ error: msg });
+    }
+    //recuperer le body nettoyé par express validator récupérable avec matchedData()
+    const cleanedBody = matchedData(req);
+    const { email, password, firstname, lastname, civility } = cleanedBody
 
-    //1---------------recuperer le body ==>>TODO
-    //2----------------valider form ==>>TODO
-    //3---------------------Ajouter user  ==>>OK
-    //4------------------Envoyer le mail de validation   ==>>TODO
-
-
-    //1---------------recuperer le body ==>>OK
-
-    const email = req.body.email;
-    const password = req.body.password;
-    const firstname = req.body.firstname;
-    const lastname = req.body.lastname;
-    const civility = req.body.civility ? req.body.civility : "M";
-    //2----------------valider form ==>>TODO
     User.findOne({ where: { email } })
         .then(exist => {
             if (!exist) {
-                //3---------------------Ajouter ==>>OK
+                //Ajouter dans bdd
                 User.create({
                     civility,
                     firstname,
@@ -35,7 +31,7 @@ exports.process = (req, res) => {
                     password,
                     token: '',
                 }).then((user) => {
-                    //4--------------generer le JWT  ==>>OK
+                    //generer le JWT - todo : à tester
                     let accessToken = jwt.sign({
                         id: user.id,
                         firstname: user.firstname,
@@ -44,27 +40,25 @@ exports.process = (req, res) => {
                     },
                         process.env.SECRET_JWT, { expiresIn: 604800 }
                     );
-                    new Cookies(req, res).set("access_token", accessToken, {
+                    /*new Cookies(req, res).set("access_token", accessToken, {
                         httpOnly: true, //utilisation uniquement via requete http
                         secure: false, //true pour forcer l'utilisation https
-                    });
-
+                    });*/
+                    res.cookie("access_token", accessToken, { maxAge: 3 * 60 * 60 * 1000, httpOnly: true, secure: false });
 
                     res.status(200).json({ message: "Votre compte a bien été enregistré", user })
                 }).catch(err => {
-                    res.status(500).json({ error: err.message || "Error Database." })
+                    res.status(500).json({ error: err.message || "Erreur avec la base de données" })
                 })
-
-
             } else {
                 res.status(500).send({
-                    message: "Email  existe deja "
+                    message: "Email existe dejà"
                 });
             }
         })
         .catch(err => {
             res.status(500).send({
-                message: "Error retrieving User with email=" + email
+                message: "Erreur pour récupérer l'email : " + email
             });
         });
 }

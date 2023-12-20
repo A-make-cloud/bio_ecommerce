@@ -36,31 +36,7 @@ function Home() {
 
     return (
         <div>
-            {/* 
-            <Box sx={{ flexGrow: 1 }}>
-                <Grid spacing={2} columns={16}>
-                    <Grid item xs={12}>
-                        <Item>
-                            <div sx={{ maxWidth: 2000 }} cols={2}>
-                                <header>
-                                    
-                                    <CardMedia
-                                        component="img"
-                                        height="400"
-                                        image={imageHead}
-                                        alt="image head"
 
-                                    />
-                                     
-                                </header>
-                            </div>
-                        </Item>
-                    </Grid>
-
-
-                </Grid>
-            </Box>
-            */}
             <div className='monHeader' style={{
                 width: '61px', height: '61px', backgroundImage: `url(${imageHead})`,
                 backgroundRepeat: 'no-repeat', backgroundPosition: 'center', width: '100%', height: '330px',
@@ -76,7 +52,7 @@ function Home() {
 
             <Container>
                 <Concept />
-                {/* <Phare /> */}
+                { <Phare /> }
                 <TopCategorie />
             </Container>
 

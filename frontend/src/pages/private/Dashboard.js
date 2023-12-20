@@ -1,84 +1,61 @@
-
-
-import Button from '@mui/material/Button';
-import { Link } from "react-router-dom";
-import ControlPointIcon from '@mui/icons-material/ControlPoint';
 import { useState, useEffect } from 'react';
-import { DataGrid } from '@mui/x-data-grid';
-
+import NavbarAdmin from './NavbarAdmin';
+import { Link } from "react-router-dom";
+import { Alert } from '@mui/material';
 
 function Dashboard() {
-    const [products, setProducts] = useState([]);
-    let rows = products
+    const [color, setColor] = useState('info')
+    const [message, setMessage] = useState('Chargement en cours...')
+    const [adminSummary, setAdminSummary] = useState({});
+
     useEffect(() => {
-
-        //RECUPERATION des produits dans BDD
-        async function fetchCat() {
-            const response = await fetch(`/products/findAll?offset=0&limit=1000`)
-            if (response.status !== 500) {
-                const json = await response.json()
-                rows = json.data
-                console.log(json.data)
-                setProducts(json.data)
-            } else {
-                console.log('probleme récupération des produits')
-            }
-        }
-        fetchCat()
-
+        /*Promise.allSettled([ 
+            fetch("/admin/summary").then((res) => res.json()),
+            fetch("/products/out-of-stockk").then((res) => res.json()),
+          ])
+            .then(([summary, outOfStock]) => {
+                setAdminSummary({
+                    totalProd:summary.value.data[0].total + summary.value.data[1].total, 
+                    activProd:summary.value.data[0].total ,
+                    outOfStock:outOfStock.value.results[0].total,
+                    lowStock:outOfStock.value.results[1].total})
+            })
+            .catch((err) => console.error(err));*/
+        //Il est préférable de faire qu'un seul fetch et de traiter avec la bdd côté serveur en une seul requete SQL
+        fetch("/admin/summary")
+        .then((res) => {
+            if(res.status === 200)
+                return res.json()
+            else if(res.status === 500){
+                setColor("error")
+                setMessage("Une erreur est survenue !")
+            }else
+                throw new Error()
+        }).then((result) => {
+            setColor("")
+            setMessage("")
+            setAdminSummary(result.overview)
+        }).catch((err) => {
+            console.log(err)
+            setColor("error")
+            setMessage("Une erreur est survenue sur le réseau !")
+        })
     }, []);
 
-    // useEffect(() => {
-    //     rows = products
-    // }, [products]);
-
-    const columns = [
-        { field: 'id', headerName: 'ID', width: 70 },
-        { field: 'category_id', headerName: 'Catégory', width: 130 },
-        { field: 'title', headerName: 'Titre produit', width: 130 },
-        // {
-        //   field: 'age',
-        //   headerName: 'Age',
-        //   type: 'number',
-        //   width: 90,
-        // },
-        { field: 'description', headerName: 'Description', width: 180 },
-        { field: 'price_ht', headerName: 'Prix HT', width: 130 },
-        { field: 'tva', headerName: 'TVA', width: 130 },
-        { field: 'quantity', headerName: 'Quantité', width: 130 },
-        { field: 'status', headerName: 'Status', width: 130 },
-        { field: 'top', headerName: 'Top', width: 130 },
-        { field: 'createdAt', headerName: 'Créé le', width: 130 },
-        { field: 'updatedAt', headerName: 'mis à jour le', width: 130 },
-        // {
-        //   field: 'fullName',
-        //   headerName: 'Full name',
-        //   description: 'This column has a value getter and is not sortable.',
-        //   sortable: false,
-        //   width: 160,
-        //   valueGetter: (params) =>
-        //     `${params.row.firstName || ''} ${params.row.lastName || ''}`,
-        // },
-    ];
-
     return (
-        <main className="">
-            
-            
-            <h1> Dashbord</h1>
-            <div style={{ height: 600, width: '100%' }}>
-                <DataGrid
-                    rows={rows}
-                    columns={columns}
-                    pageSize={5}
-                    rowsPerPageOptions={[5]}
-                    checkboxSelection
-                />
-            </div>
-
-
-        </main>
+        <div className="adminBody">
+            <NavbarAdmin />
+            <main>
+                <h1>Espace d'administration</h1>
+                <h2>Résumé des informations :</h2>
+                {message ? <Alert severity={color}>{message}</Alert> : ""}                
+                <p>Il y a <b>{adminSummary?.totalProd}</b> <Link to="/dashboard/products">produits</Link> enregistrés, dont <b>{adminSummary?.activProd}</b> proposés à la vente.</p>
+                <p>Il y a <b>{adminSummary?.outOfStock}</b> produits en rupture de stock, et <b>{adminSummary?.lowStock}</b> produits en faible quantité.</p>
+                <p>Les produits sont répartis en <b>{adminSummary?.totalCateg}</b> <Link to="/dashboard/categories">catégories</Link>.</p>
+                <p>Il y a <b>{adminSummary?.newOrders}</b> <Link to="/dashboard/commands">commande{adminSummary?.newOrders!==0 && 's'}</Link> en attente de traitement, et <b>{adminSummary?.ordersInProccess}</b> commande{adminSummary?.ordersInProccess!==0 && 's'} en cours de traitement.</p>
+                <p>Il y a <b>{adminSummary?.totalUsers}</b> <Link to="/dashboard/users">utilisateurs</Link>, dont <b>{adminSummary?.newUsers}</b> nouveaux cette semaine.</p>
+            </main>
+        </div>
     )
-
 }
 export default Dashboard
